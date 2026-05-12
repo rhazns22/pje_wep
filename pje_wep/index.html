@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>박주은 | Fullstack Developer Portfolio</title>
+    <meta name="description" content="사용자의 문제를 제품으로 해결하는 Product-Minded Fullstack Developer 박주은의 포트폴리오입니다.">
+    
+    <!-- Fonts -->
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;800&display=swap" rel="stylesheet">
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Background Elements -->
+    <div class="grid-bg"></div>
+    <div class="blob-bg"></div>
+    
+    <!-- Custom Cursor -->
+    <div class="cursor-dot" id="cursor-dot"></div>
+    <div class="cursor-outline" id="cursor-outline"></div>
+
+    <!-- Scroll Progress Bar -->
+    <div class="progress-container">
+        <div class="progress-bar" id="scroll-progress"></div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="glass" id="navbar">
+        <div class="container nav-content">
+            <a href="#" class="logo">JU EUN PARK<span>.</span></a>
+            <ul class="nav-links">
+                <li><a href="#about">About</a></li>
+                <li><a href="#projects">Projects</a></li>
+                <li><a href="#skills">Skills</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+            <div class="menu-toggle" id="mobile-menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="hero section">
+        <div class="container hero-container">
+            <div class="hero-badge reveal">Product-Minded Developer</div>
+            <h1 class="reveal">
+                사용자의 문제를 제품으로 해결하는<br>
+                <span class="text-gradient" id="typing-text">Fullstack Developer</span>
+            </h1>
+            <p class="reveal">
+                기획, UI 설계, 프론트엔드 구현, 백엔드 연동, 배포까지<br>
+                서비스가 완성되는 전체 흐름을 이해하고 구현합니다.
+            </p>
+            <div class="hero-btns reveal">
+                <a href="#projects" class="btn btn-primary magnetic">프로젝트 보기</a>
+                <a href="#skills" class="btn btn-secondary magnetic">기술 스택</a>
+                <a href="#contact" class="btn btn-outline magnetic">연락하기</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- About Section -->
+    <section id="about" class="section">
+        <div class="container">
+            <h2 class="section-title reveal">About Me</h2>
+            <p class="section-subtitle reveal">단순히 코드를 작성하는 것을 넘어, 사용자의 불편함을 발견하고 제품으로 가공하는 과정에 몰입합니다.</p>
+            
+            <div class="about-grid">
+                <div class="about-card glass reveal">
+                    <h3>Vision</h3>
+                    <p>기술은 목적이 아닌 수단입니다. 가장 효율적인 도구로 최고의 사용자 가치를 만드는 개발자가 되는 것이 목표입니다.</p>
+                </div>
+                <div class="about-card glass reveal">
+                    <h3>Approach</h3>
+                    <p>복잡한 문제를 작게 쪼개어 해결하며, 사용자 피드백을 기반으로 지속적으로 개선하는 애자일한 방식을 선호합니다.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Core Strength -->
+    <section class="section strength">
+        <div class="container">
+            <div class="strength-grid">
+                <div class="strength-item reveal">
+                    <div class="icon">💡</div>
+                    <h3>Product Thinking</h3>
+                    <p>사용자의 문제를 기능으로 연결하고 비즈니스 가치를 고려합니다.</p>
+                </div>
+                <div class="strength-item reveal">
+                    <div class="icon">🎨</div>
+                    <h3>UI Implementation</h3>
+                    <p>반응형 UI와 매끄러운 인터랙션을 통해 최적의 UX를 제공합니다.</p>
+                </div>
+                <div class="strength-item reveal">
+                    <div class="icon">⚙️</div>
+                    <h3>Fullstack Flow</h3>
+                    <p>인증, DB, API, 배포까지 서비스 전체 아키텍처를 이해합니다.</p>
+                </div>
+                <div class="strength-item reveal">
+                    <div class="icon">🤖</div>
+                    <h3>AI Integration</h3>
+                    <p>Gemini 등 최신 AI API를 서비스 기능에 유연하게 결합합니다.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="section projects">
+        <div class="container">
+            <h2 class="section-title reveal">Projects</h2>
+            <p class="section-subtitle reveal">실제 문제를 해결하기 위해 고민하고 구현한 프로젝트 케이스 스터디입니다.</p>
+            
+            <div class="projects-container" id="projects-list">
+                <!-- Case Study: PetLog -->
+                <article class="project-card glass reveal">
+                    <div class="project-img">
+                        <img src="assets/screenshots/petlog_banner.jpg" alt="PetLog">
+                    </div>
+                    <div class="project-content">
+                        <div class="project-header">
+                            <span class="tag">AI / Fullstack</span>
+                            <h3>PetLog</h3>
+                        </div>
+                        <p class="summary">AI 기반 반려동물 병원비 기록 및 분석 서비스</p>
+                        
+                        <div class="case-study">
+                            <div class="case-item">
+                                <strong>Problem</strong>
+                                <p>반려동물 병원 영수증의 복잡한 항목으로 인해 보호자가 지출 내역을 체계적으로 관리하기 어려움.</p>
+                            </div>
+                            <div class="case-item">
+                                <strong>Solution</strong>
+                                <p>OCR과 Gemini API를 활용해 영수증을 자동 분석하고 지출 항목을 카테고리별로 시각화.</p>
+                            </div>
+                            <div class="case-item">
+                                <strong>My Role</strong>
+                                <p>기획, UI 설계, Firebase 연동, AI 분석 파이프라인 구축 및 프론트엔드 전체 구현.</p>
+                            </div>
+                            <div class="case-item">
+                                <strong>Result</strong>
+                                <p>수동 입력 대비 기록 시간 80% 단축. 베타 테스트를 통해 사용자 편의성 검증.</p>
+                            </div>
+                        </div>
+
+                        <div class="tech-stack">
+                            <span>React</span>
+                            <span>TypeScript</span>
+                            <span>Firebase</span>
+                            <span>Gemini API</span>
+                        </div>
+                        
+                        <div class="project-links">
+                            <a href="https://petlogwep.vercel.app/" class="btn btn-sm btn-primary">Live wep</a>
+                            <a href="https://petlog-eight.vercel.app/" class="btn btn-sm btn-outline">Live App</a>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Case Study: Admin Dashboard -->
+                <article class="project-card glass reveal">
+                    <div class="project-img">
+                        <img src="assets/screenshots/vetflow.png" alt="Admin Dashboard" onerror="this.src='https://images.unsplash.com/photo-1551288049-bbda48652ad8?auto=format&fit=crop&q=80&w=800'">
+                    </div>
+                    <div class="project-content">
+                        <div class="project-header">
+                            <span class="tag">Fullstack / SaaS Dashboard</span>
+                            <h3>VetFlow</h3>
+                        </div>
+                        <p class="summary">동물병원 운영 흐름을 실시간으로 관리하는 SaaS 대시보드</p>
+                        
+                        <div class="case-study">
+                            <div class="case-item">
+                                <strong>Problem</strong>
+                                <p>예약, 진료차트, 수납, 입원, 재고, 후속관리 업무가 분리되어 있어 병원 운영 흐름을 즉시 파악하기 어렵습니다.</p>
+                            </div>
+                            <div class="case-item">
+                                <strong>Solution</strong>
+                                <p>Firestore 실시간 데이터와 운영 중심 UI를 결합해, 병원의 오늘 업무 상태와 미완료 작업을 한 화면에서 확인할 수 있도록 설계했습니다.</p>
+                            </div>
+                            <div class="case-item">
+                                <strong>Key Features</strong>
+                                <p>예약 Flowboard, 환자 관리, SOAP 차트, 수납 관리, 입원 모니터링, 재고 알림, CRM 후속관리, 매출 리포트.</p>
+                            </div>
+                        </div>
+
+                        <div class="tech-stack">
+                            <span>Next.js</span>
+                            <span>TypeScript</span>
+                            <span>Tailwind CSS</span>
+                            <span>Firebase</span>
+                            <span>Firestore</span>
+                            <span>Recharts</span>
+                        </div>
+                        
+                        <div class="project-links">
+                            <a href="https://vetflow-pi.vercel.app/" class="btn btn-sm btn-primary">Live wep</a>
+                        </div>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tech Stack Section -->
+    <section id="skills" class="section skills">
+        <div class="container">
+            <h2 class="section-title reveal">Tech Stack</h2>
+            <p class="section-subtitle reveal">문제를 해결하기 위해 활용하는 기술 도구들입니다.</p>
+            
+            <div class="skills-grid">
+                <div class="skill-category glass reveal">
+                    <h3>Frontend</h3>
+                    <div class="skill-list">
+                        <div class="skill-item">React</div>
+                        <div class="skill-item">TypeScript</div>
+                        <div class="skill-item">JavaScript</div>
+                        <div class="skill-item">HTML/CSS</div>
+                        <div class="skill-item">Tailwind</div>
+                    </div>
+                </div>
+                <div class="skill-category glass reveal">
+                    <h3>Backend & DB</h3>
+                    <div class="skill-list">
+                        <div class="skill-item">Firebase</div>
+                        <div class="skill-item">Node.js</div>
+                        <div class="skill-item">Firestore</div>
+                        <div class="skill-item">REST API</div>
+                    </div>
+                </div>
+                <div class="skill-category glass reveal">
+                    <h3>Design & Tools</h3>
+                    <div class="skill-list">
+                        <div class="skill-item">Figma</div>
+                        <div class="skill-item">GitHub</div>
+                        <div class="skill-item">Vercel</div>
+                        <div class="skill-item">Adobe XD</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Process Section -->
+    <section class="section process">
+        <div class="container">
+            <h2 class="section-title reveal">Work Process</h2>
+            <div class="process-steps">
+                <div class="step reveal">
+                    <span class="step-num">01</span>
+                    <h3>Problem Definition</h3>
+                    <p>사용자의 불편함을 데이터와 관찰을 통해 정의합니다.</p>
+                </div>
+                <div class="step reveal">
+                    <span class="step-num">02</span>
+                    <h3>UI/UX Design</h3>
+                    <p>문제 해결을 위한 최적의 화면 구조와 흐름을 설계합니다.</p>
+                </div>
+                <div class="step reveal">
+                    <span class="step-num">03</span>
+                    <h3>Development</h3>
+                    <p>안정적이고 확장 가능한 코드로 기능을 구현합니다.</p>
+                </div>
+                <div class="step reveal">
+                    <span class="step-num">04</span>
+                    <h3>Iterate</h3>
+                    <p>테스트와 피드백을 통해 제품을 완성도 있게 다듬습니다.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Career Section -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title reveal">Experience</h2>
+            
+            <div class="timeline reveal">
+                <div class="timeline-item">
+                    <div class="time">2022.10 - 2022.12</div>
+                    <div class="content">
+                        <h3>대전과학기술대학교 컴퓨터공학 그래픽과</h3>
+                        <p class="role">학과홍보요원</p>
+                        <p>인스타그램, 페이스북 SNS 관리 및 다양한 홍보물 제작 주도</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="time">2022.07 - 2022.12</div>
+                    <div class="content">
+                        <h3>대전과학기술대학교 LINC3.0 리빙랩 사업</h3>
+                        <p class="role">학생연구원 (042팀)</p>
+                        <p>지역 사회 문제 해결을 위한 리빙랩 프로젝트 참여 및 기술 연구</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Awards Section -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title reveal">Awards</h2>
+            
+            <div class="awards-grid reveal">
+                <div class="award-card glass">
+                    <div class="award-icon">🏆</div>
+                    <h3>최종성과공유회 최우수상</h3>
+                    <p>LINC3.0 리빙랩 사업</p>
+                </div>
+                <div class="award-card glass">
+                    <div class="award-icon">🥈</div>
+                    <h3>메이커톤 아이디어 경진대회 2등</h3>
+                    <p>LINC3.0 리빙랩 사업</p>
+                </div>
+                <div class="award-card glass">
+                    <div class="award-icon">🥉</div>
+                    <h3>1인 크리에이터 동영상 컨텐츠 경진대회 우수상</h3>
+                    <p>2022년도 교내 경진대회</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <footer id="contact" class="section footer">
+        <div class="container">
+            <h2 class="section-title reveal">Get In Touch</h2>
+            <p class="section-subtitle reveal">함께 일하고 싶은 팀이나 궁금한 점이 있다면 언제든 연락주세요.</p>
+            
+            <div class="contact-links reveal">
+                <a href="mailto:example@email.com" class="contact-item glass magnetic">
+                    <span class="icon">📧</span>
+                    <span>Email</span>
+                </a>
+                <a href="https://github.com/rhazns22" class="contact-item glass magnetic">
+                    <span class="icon">🐙</span>
+                    <span>GitHub</span>
+                </a>
+                <a href="#" class="contact-item glass magnetic">
+                    <span class="icon">💼</span>
+                    <span>LinkedIn</span>
+                </a>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2026 박주은. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Toast Notification -->
+    <div class="toast-container" id="toast-container"></div>
+
+    <!-- Project Modal -->
+    <div class="modal" id="project-modal">
+        <div class="modal-overlay"></div>
+        <div class="modal-content glass">
+            <button class="modal-close">&times;</button>
+            <div id="modal-body"></div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="script.js"></script>
+</body>
+</html>
