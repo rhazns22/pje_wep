@@ -5,7 +5,7 @@
 
 document.addEventListener('DOMContentLoaded', () => {
   initSplash();
-  initNavbar();
+  initHeaderScroll();
   initTyping();
   initScrollReveal();
   initProjectInteractions();
@@ -60,7 +60,7 @@ function initBackgroundGlow() {
   });
 }
 
-// 1. Splash Intro Logic (Portfolio Launch Core - Creative Cinematic Sequence)
+// 1. Splash Intro Logic (Portfolio System Wake-up - Soft Cinematic Sequence)
 function initSplash() {
   const splash = document.getElementById('splash');
   if (!splash) return;
@@ -87,6 +87,7 @@ function initSplash() {
   if (alreadySeen) {
     splash.classList.add('is-hidden');
     document.body.classList.remove('is-splash-open');
+    document.body.classList.add('splash-complete');
     const mainContent = document.getElementById('main-content');
     if (mainContent) mainContent.classList.add('is-visible');
     return;
@@ -95,11 +96,18 @@ function initSplash() {
   document.body.classList.add('is-splash-open');
 
   const fragmentTexts = [
-    'const app = "portfolio";', 'render(<Portfolio />);', 'type Project = "PetLog" | "VetFlow";',
-    'firebase.connected();', 'gemini.integrated = true;', 'deploy.target = "vercel";',
-    'status: 200 OK;', 'build.success = true;', 'route: /projects;', 'component.mounted();'
+    'interface.mount()', 'projects.connect()', 'data.flow()',
+    'deploy.target = "vercel"', 'system.status = 200', 'module.init()',
+    'api.integrate()', 'route.ready()', 'component.awake()'
   ];
-  const moduleLabels = ['PetLog', 'VetFlow', 'React', 'TypeScript', 'Firebase', 'Gemini API', 'Vercel'];
+
+  function lerp(start, end, t) {
+    return start * (1 - t) + end * t;
+  }
+
+  function easeInOutCubic(t) {
+    return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+  }
 
   function resize() {
     const dpr = Math.min(2, window.devicePixelRatio || 1);
@@ -115,39 +123,33 @@ function initSplash() {
   function createParticles() {
     particles = [];
     let count;
-    if (width > 1024) count = 140; // Desktop (slightly reduced for perf)
-    else if (width > 768) count = 90; // Tablet
-    else count = 40; // Mobile
+    if (width > 1024) count = 85; // Desktop
+    else if (width > 768) count = 55; // Tablet
+    else count = 28; // Mobile
 
     for (let i = 0; i < count; i++) {
-      const type = i % 3 === 0 ? 'fragment' : (i % 7 === 0 ? 'module' : 'spark');
-      const text = type === 'fragment' 
-        ? fragmentTexts[Math.floor(Math.random() * fragmentTexts.length)]
-        : (type === 'module' ? moduleLabels[Math.floor(Math.random() * moduleLabels.length)] : '');
-      
+      const isFragment = i % 4 === 0;
       const angle = Math.random() * Math.PI * 2;
-      const orbitRadius = 100 + Math.random() * (Math.min(width, height) * 0.35);
+      const orbitRadius = 120 + Math.random() * (Math.min(width, height) * 0.3);
       
+      const x = centerX + Math.cos(angle) * orbitRadius;
+      const y = centerY + Math.sin(angle) * orbitRadius;
+
       particles.push({
-        text,
-        type,
-        x: centerX + Math.cos(angle) * orbitRadius,
-        y: centerY + Math.sin(angle) * orbitRadius,
-        vx: (Math.random() - 0.5) * 0.6,
-        vy: (Math.random() - 0.5) * 0.6,
-        angle: angle,
-        orbitRadius: orbitRadius,
-        orbitSpeed: (0.0006 + Math.random() * 0.001) * (Math.random() > 0.5 ? 1 : -1),
-        size: type === 'module' ? 14 : (type === 'fragment' ? 10 : 2.5),
-        alpha: 0.25 + Math.random() * 0.45,
-        depth: Math.random(),
-        offset: Math.random() * 1000
+        text: isFragment ? fragmentTexts[Math.floor(Math.random() * fragmentTexts.length)] : '',
+        type: isFragment ? 'fragment' : 'spark',
+        x: x,
+        y: y,
+        startX: x,
+        startY: y,
+        curveOffsetX: (Math.random() - 0.5) * 160,
+        curveOffsetY: (Math.random() - 0.5) * 160,
+        size: isFragment ? 10 : 1.5,
+        alpha: 0.12 + Math.random() * 0.22,
+        orbitOffset: Math.random() * Math.PI * 2,
+        driftSpeed: 0.0002 + Math.random() * 0.0004
       });
     }
-  }
-
-  function easeInExpo(t) {
-    return t === 0 ? 0 : Math.pow(2, 10 * t - 10);
   }
 
   function draw(time) {
@@ -158,98 +160,86 @@ function initSplash() {
       launchProgress = Math.min(1, (time - launchStartTime) / 1000);
     }
 
-    const eased = easeInExpo(launchProgress);
+    const eased = easeInOutCubic(launchProgress);
 
-    // Draw Central Deploy Core
-    const corePulse = Math.sin(time / 400) * 4;
+    // Draw Central Soft Core
+    const corePulse = Math.sin(time / 800) * 3;
     const coreRadius = isLaunching 
-      ? (launchProgress < 0.85 ? 90 + eased * 260 : 5) 
-      : 60 + corePulse;
+      ? 80 + eased * 100
+      : 80 + corePulse;
     const coreAlpha = isLaunching 
-      ? (launchProgress < 0.85 ? 0.25 + eased * 0.75 : 1)
-      : 0.12;
+      ? 0.18 + eased * 0.27
+      : 0.15;
 
-    if (launchProgress < 0.85 || !isLaunching) {
+    if (launchProgress < 1) {
       const gradient = ctx.createRadialGradient(centerX, centerY, 0, centerX, centerY, coreRadius);
       gradient.addColorStop(0, `rgba(74, 222, 128, ${coreAlpha})`);
-      gradient.addColorStop(0.5, `rgba(96, 165, 250, ${coreAlpha * 0.4})`);
+      gradient.addColorStop(0.4, `rgba(96, 165, 250, ${coreAlpha * 0.3})`);
       gradient.addColorStop(1, 'rgba(2, 6, 23, 0)');
       ctx.fillStyle = gradient;
       ctx.beginPath();
       ctx.arc(centerX, centerY, coreRadius, 0, Math.PI * 2);
       ctx.fill();
-    } else {
-      // Final Flash
-      const flashSize = (launchProgress - 0.85) / 0.15;
-      ctx.fillStyle = `rgba(255, 255, 255, ${1 - flashSize})`;
-      ctx.beginPath();
-      ctx.arc(centerX, centerY, 5 + flashSize * Math.max(width, height), 0, Math.PI * 2);
-      ctx.fill();
-      
-      // Compressed point
-      ctx.fillStyle = '#fff';
-      ctx.beginPath();
-      ctx.arc(centerX, centerY, 2.5, 0, Math.PI * 2);
-      ctx.fill();
     }
 
-    const now = time;
     particles.forEach(p => {
       if (isLaunching) {
+        // Curved movement toward center
+        const curveX = Math.sin(launchProgress * Math.PI) * p.curveOffsetX;
+        const curveY = Math.sin(launchProgress * Math.PI) * p.curveOffsetY;
+
+        p.x = lerp(p.startX, centerX, eased) + curveX;
+        p.y = lerp(p.startY, centerY, eased) + curveY;
+
+        const currentAlpha = Math.max(0, p.alpha * (1 - eased * 1.2));
+        
+        // Soft Trails
+        const trailLen = Math.min(width > 768 ? 160 : 80, 20 + eased * 140);
         const dx = centerX - p.x;
         const dy = centerY - p.y;
-        const dist = Math.sqrt(dx * dx + dy * dy);
         const angle = Math.atan2(dy, dx);
-        
-        // Acceleration toward center
-        const moveStep = (0.038 + eased * 0.32) * (dist + 20);
-        p.x += Math.cos(angle) * moveStep;
-        p.y += Math.sin(angle) * moveStep;
-        
+
         ctx.save();
         ctx.translate(p.x, p.y);
         ctx.rotate(angle);
-
-        // Trails - Draw first
-        const trailLength = 25 + eased * 480;
-        ctx.globalAlpha = p.alpha * 0.5 * (1 - eased);
-        ctx.fillStyle = p.type === 'module' ? 'rgba(96, 165, 250, 0.7)' : 'rgba(74, 222, 128, 0.5)';
-        ctx.fillRect(0, -1, trailLength, 1.5);
-
-        // Draw object with stretch
-        const stretch = 1 + eased * 6.5;
-        ctx.scale(stretch, Math.max(0.1, 1 - eased * 0.9));
-        ctx.globalAlpha = Math.max(0, p.alpha * (1 - eased * 1.15));
-        ctx.fillStyle = p.type === 'module' ? '#60a5fa' : '#4ade80';
+        ctx.globalAlpha = currentAlpha * 0.45;
+        ctx.fillStyle = `rgba(148, 255, 210, 0.25)`;
+        ctx.fillRect(0, -0.5, trailLen, 1);
         
+        // Object
+        ctx.globalAlpha = currentAlpha;
+        ctx.fillStyle = '#4ade80';
         if (p.type === 'spark') {
-          ctx.fillRect(0, -0.75, 4, 1.5);
+          ctx.beginPath();
+          ctx.arc(0, 0, p.size, 0, Math.PI * 2);
+          ctx.fill();
         } else {
           ctx.font = `${p.size}px ui-monospace, monospace`;
           ctx.fillText(p.text, 0, 0);
         }
         ctx.restore();
       } else {
-        // Idle behavior
-        if (p.type === 'module') {
-          p.angle += p.orbitSpeed;
-          p.x = centerX + Math.cos(p.angle) * p.orbitRadius;
-          p.y = centerY + Math.sin(p.angle) * p.orbitRadius;
-        } else {
-          p.x += p.vx + Math.cos(p.offset + now / 1000) * 0.25;
-          p.y += p.vy + Math.sin(p.offset + now / 1000) * 0.25;
-        }
+        // Idle Drift
+        const idleAngle = p.orbitOffset + time * p.driftSpeed;
+        const driftX = Math.cos(idleAngle) * 15;
+        const driftY = Math.sin(idleAngle * 0.8) * 15;
+        
+        const currentX = p.startX + driftX;
+        const currentY = p.startY + driftY;
 
         ctx.globalAlpha = p.alpha;
-        ctx.fillStyle = p.type === 'module' ? '#60a5fa' : '#4ade80';
+        ctx.fillStyle = '#4ade80';
         if (p.type === 'spark') {
           ctx.beginPath();
-          ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+          ctx.arc(currentX, currentY, p.size, 0, Math.PI * 2);
           ctx.fill();
         } else {
           ctx.font = `${p.size}px ui-monospace, monospace`;
-          ctx.fillText(p.text, p.x, p.y);
+          ctx.fillText(p.text, currentX, currentY);
         }
+        // Update current for start point of launch
+        p.x = currentX;
+        p.y = currentY;
       }
     });
 
@@ -267,21 +257,28 @@ function initSplash() {
       return;
     }
     isLaunching = true;
-    launchStartTime = 0; // Will be set in draw(time)
+    launchStartTime = 0;
+    // Capture positions at the moment of launch
+    particles.forEach(p => {
+      p.startX = p.x;
+      p.startY = p.y;
+    });
     splash.classList.add('is-launching');
   }
 
   function closeSplashFinal() {
     cancelAnimationFrame(rafId);
-    splash.classList.add('is-hidden');
-    document.body.classList.remove('is-splash-open');
-    sessionStorage.setItem('portfolioSplashSeen', 'true');
-    const mainContent = document.getElementById('main-content');
-    if (mainContent) {
-      setTimeout(() => {
-        mainContent.classList.add('is-visible');
-      }, 50);
-    }
+    splash.classList.add('is-revealing');
+    
+    setTimeout(() => {
+      splash.classList.add('is-hidden');
+      document.body.classList.remove('is-splash-open');
+      document.body.classList.add('splash-complete');
+      sessionStorage.setItem('portfolioSplashSeen', 'true');
+      
+      const mainContent = document.getElementById('main-content');
+      if (mainContent) mainContent.classList.add('is-visible');
+    }, 400); // Wait for is-revealing transition
   }
 
   window.addEventListener('resize', () => {
@@ -292,7 +289,7 @@ function initSplash() {
   createParticles();
   rafId = requestAnimationFrame(draw);
 
-  // Timeline Sequence
+  // Timeline Sequence (Softer & Smoother)
   setTimeout(() => {
     brand.classList.add('is-visible');
     system.classList.add('is-visible');
@@ -303,18 +300,18 @@ function initSplash() {
     statusItems.forEach((item, index) => {
       setTimeout(() => {
         item.classList.add('is-visible');
-      }, index * 150); // Ends at ~1.4s (350 + 1050)
+      }, index * 250); // Slower reveal (0.25s per item)
     });
-  }, 350);
+  }, 450);
 
   setTimeout(() => {
     readyMsg.classList.add('is-visible');
     enterBtn.classList.add('is-visible');
-  }, 1550);
+  }, 1700);
 
   setTimeout(() => {
-    startLaunch(); // Auto-launch
-  }, 1750);
+    startLaunch(); // Auto-launch at 1.95s (approx)
+  }, 1950);
 
   // Triggers
   enterBtn.addEventListener('click', startLaunch);
@@ -325,29 +322,68 @@ function initSplash() {
   });
 }
 
-// 2. Navbar Logic
-function initNavbar() {
-  const navbar = document.getElementById('navbar');
+// 2. Header Scroll & Mobile Navigation
+function initHeaderScroll() {
+  const header = document.querySelector('.site-header');
   const mobileMenu = document.getElementById('mobile-menu');
-  const nav = document.querySelector('nav');
+  if (!header) return;
+
+  let lastScrollY = window.scrollY;
+  let ticking = false;
+  const threshold = 8;
+
+  function updateHeader() {
+    const currentScrollY = window.scrollY;
+    const scrollDelta = currentScrollY - lastScrollY;
+    const isNavActive = header.classList.contains('nav-active');
+
+    // 1. Position Top Handling
+    if (currentScrollY <= 20) {
+      header.classList.remove('is-hidden', 'is-scrolled');
+      header.classList.add('is-visible');
+      lastScrollY = currentScrollY;
+      ticking = false;
+      return;
+    }
+
+    // 2. Scrolled State
+    header.classList.add('is-scrolled');
+
+    // 3. Direction Handling with Threshold
+    if (Math.abs(scrollDelta) > threshold) {
+      if (scrollDelta > 0 && !isNavActive) {
+        // Scrolling Down & Menu Closed
+        header.classList.add('is-hidden');
+        header.classList.remove('is-visible');
+      } else {
+        // Scrolling Up or Menu Open
+        header.classList.remove('is-hidden');
+        header.classList.add('is-visible');
+      }
+      lastScrollY = currentScrollY;
+    }
+
+    ticking = false;
+  }
 
   window.addEventListener('scroll', () => {
-    if (window.scrollY > 50) {
-      navbar.style.top = '10px';
-      navbar.style.background = 'rgba(10, 10, 12, 0.95)';
-    } else {
-      navbar.style.top = '20px';
-      navbar.style.background = 'var(--glass-bg)';
+    if (!ticking) {
+      window.requestAnimationFrame(updateHeader);
+      ticking = true;
     }
-  });
+  }, { passive: true });
 
-  mobileMenu.addEventListener('click', () => {
-    nav.classList.toggle('nav-active');
-  });
+  // Mobile Menu Toggle
+  if (mobileMenu) {
+    mobileMenu.addEventListener('click', () => {
+      header.classList.toggle('nav-active');
+    });
+  }
 
+  // Close menu on link click
   document.querySelectorAll('.nav-links a').forEach(link => {
     link.addEventListener('click', () => {
-      nav.classList.remove('nav-active');
+      header.classList.remove('nav-active');
     });
   });
 }

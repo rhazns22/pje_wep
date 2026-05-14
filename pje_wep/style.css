@@ -298,7 +298,7 @@ img {
 }
 
 /* Splash Screen */
-/* Splash Screen: Portfolio Launch Core */
+/* Splash Screen: Portfolio System Wake-up */
 .splash-screen {
   position: fixed;
   inset: 0;
@@ -307,12 +307,17 @@ img {
   background: #020617;
   display: grid;
   place-items: center;
-  transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1), visibility 0.8s;
+  transition: opacity 0.45s ease, visibility 0.45s;
 }
 
 .splash-screen.is-hidden {
   opacity: 0;
   visibility: hidden;
+  pointer-events: none;
+}
+
+.splash-screen.is-revealing {
+  opacity: 0;
   pointer-events: none;
 }
 
@@ -330,21 +335,21 @@ img {
   width: min(520px, 90vw);
   padding: 40px;
   border-radius: 24px;
-  background: rgba(2, 6, 23, 0.75);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(2, 6, 23, 0.65);
+  border: 1px solid rgba(255, 255, 255, 0.08);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   text-align: left;
   transition:
-    transform 0.8s cubic-bezier(0.85, 0, 0.15, 1),
-    opacity 0.45s ease,
-    filter 0.45s ease;
+    opacity 0.65s ease,
+    transform 0.85s cubic-bezier(0.22, 1, 0.36, 1),
+    filter 0.65s ease;
 }
 
 .splash-screen.is-launching .splash-terminal {
   opacity: 0;
-  transform: scale(0.48) translateY(-6px);
-  filter: blur(16px);
+  transform: scale(0.92) translateY(-8px);
+  filter: blur(6px);
   pointer-events: none;
 }
 
@@ -370,7 +375,7 @@ img {
 .splash-brand.is-visible,
 .splash-system.is-visible {
   opacity: 1;
-  animation: fadeInUp 0.5s ease forwards;
+  animation: fadeInUpSoft 0.8s ease forwards;
 }
 
 .splash-compiling {
@@ -395,16 +400,16 @@ img {
 
 .splash-status-list li {
   opacity: 0;
-  transform: translateY(8px);
+  transform: translateY(6px);
   font-family: ui-monospace, SFMono-Regular, monospace;
   font-size: 12px;
-  color: rgba(255, 255, 255, 0.65);
+  color: rgba(255, 255, 255, 0.6);
 }
 
 .splash-status-list li.is-visible {
   opacity: 1;
   transform: translateY(0);
-  transition: all 0.2s ease;
+  transition: all 0.45s ease-out;
 }
 
 .splash-ready {
@@ -414,13 +419,13 @@ img {
   font-weight: 800;
   color: var(--accent-primary);
   opacity: 0;
-  transform: translateY(8px);
+  transform: translateY(6px);
 }
 
 .splash-ready.is-visible {
   opacity: 1;
   transform: translateY(0);
-  transition: all 0.3s ease;
+  transition: all 0.45s ease-out;
 }
 
 .splash-enter {
@@ -433,9 +438,9 @@ img {
   font-size: 13px;
   font-weight: 700;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: all 0.45s ease;
   opacity: 0;
-  transform: translateY(10px);
+  transform: translateY(8px);
 }
 
 .splash-enter.is-visible {
@@ -446,13 +451,13 @@ img {
 .splash-enter:hover {
   background: var(--accent-primary);
   color: #000;
-  box-shadow: 0 0 20px rgba(74, 222, 128, 0.3);
+  box-shadow: 0 0 15px rgba(74, 222, 128, 0.2);
 }
 
-@keyframes fadeInUp {
+@keyframes fadeInUpSoft {
   from {
     opacity: 0;
-    transform: translateY(10px);
+    transform: translateY(8px);
   }
   to {
     opacity: 1;
@@ -473,17 +478,30 @@ img {
   }
 }
 
-/* Main Content Fade-in */
+/* Main Content Fade-in with Hero Reveal */
 .fade-in-content {
   opacity: 0;
   visibility: hidden;
-  transition: opacity 1.2s cubic-bezier(0.4, 0, 0.2, 1), visibility 1.2s;
-  will-change: opacity;
 }
 
 .fade-in-content.is-visible {
   opacity: 1;
   visibility: visible;
+}
+
+body.splash-complete .hero {
+  animation: heroSoftReveal 0.75s ease both;
+}
+
+@keyframes heroSoftReveal {
+  from {
+    opacity: 0;
+    transform: translateY(12px) scale(0.99);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
 }
 
 body.is-splash-open {
@@ -512,15 +530,59 @@ body.is-splash-open {
 }
 
 /* Navigation */
-nav {
+.site-header {
   position: fixed;
-  top: 20px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 90%;
-  max-width: 1000px;
-  z-index: 1000;
-  padding: 12px 24px;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 9000;
+  padding: 20px 0;
+  border-radius: 0; /* Full width transition */
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid transparent;
+  box-shadow: none;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  transform: translateY(0);
+  transition: 
+    transform 0.4s cubic-bezier(0.22, 1, 0.36, 1),
+    padding 0.4s ease,
+    background 0.4s ease,
+    border-color 0.4s ease,
+    backdrop-filter 0.4s ease;
+  will-change: transform;
+}
+
+.site-header.is-hidden {
+  transform: translateY(-110%);
+}
+
+.site-header.is-visible {
+  transform: translateY(0);
+}
+
+.site-header.is-scrolled {
+  padding: 14px 0;
+  background: rgba(2, 6, 23, 0.75);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+}
+
+/* Override .glass when in site-header context to allow for scroll states */
+nav.glass.site-header {
+  background: transparent;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  border: none;
+  border-bottom: 1px solid transparent;
+  border-radius: 0;
+  box-shadow: none;
+  left: 0;
+  transform: none;
+  max-width: none;
 }
 
 .nav-content {
@@ -548,10 +610,27 @@ nav {
   font-size: 0.9rem;
   font-weight: 500;
   color: var(--text-secondary);
+  position: relative;
+  padding: 4px 0;
+}
+
+.nav-links a::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: var(--accent-primary);
+  transition: width 0.3s ease;
 }
 
 .nav-links a:hover {
   color: var(--text-primary);
+}
+
+.nav-links a:hover::after {
+  width: 100%;
 }
 
 .menu-toggle {
