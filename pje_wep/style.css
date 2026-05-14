@@ -826,8 +826,45 @@ nav {
   font-weight: 600;
   margin-right: 6px;
   display: inline-block;
-  min-width: 60px;
+  min-width: 65px;
 }
+
+/* Engineering Decisions Block */
+.engineering-decisions {
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.engineering-decisions h4 {
+  font-size: 0.85rem;
+  color: var(--accent-primary);
+  margin-bottom: 8px;
+  font-weight: 600;
+}
+
+.engineering-decisions ul {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.engineering-decisions li {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  position: relative;
+  padding-left: 14px;
+  line-height: 1.5;
+}
+
+.engineering-decisions li::before {
+  content: "•";
+  position: absolute;
+  left: 0;
+  color: var(--accent-primary);
+}
+
 
 .card-tech {
   display: flex;
@@ -1359,4 +1396,112 @@ nav {
   flex-wrap: wrap;
   gap: 8px;
   justify-content: center;
+}
+/* Skill Description */
+.skill-desc {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  margin-bottom: 1.25rem;
+  line-height: 1.5;
+  word-break: keep-all;
+}
+
+/* Code Quality Focus */
+.code-quality {
+  margin-top: 60px;
+  padding: 32px;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid var(--glass-border);
+  border-radius: 16px;
+}
+
+.code-quality h3 {
+  font-size: 1.25rem;
+  margin-bottom: 24px;
+  text-align: center;
+  color: var(--text-primary);
+}
+
+.quality-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 16px 24px;
+}
+
+.quality-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.quality-item .dot {
+  width: 6px;
+  height: 6px;
+  background: var(--accent-primary);
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.quality-item p {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+}
+
+/* Why Me Section */
+.why-me {
+  background: var(--bg-dark);
+}
+
+.why-me-content {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.highlight-text {
+  font-size: 1.35rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  line-height: 1.6;
+  text-align: center;
+  margin-bottom: 48px;
+  word-break: keep-all;
+}
+
+.why-me-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 40px;
+}
+
+.why-item h4 {
+  font-size: 1.1rem;
+  color: var(--accent-secondary);
+  margin-bottom: 12px;
+  font-weight: 700;
+}
+
+.why-item p {
+  font-size: 0.95rem;
+  color: var(--text-secondary);
+  line-height: 1.7;
+  word-break: keep-all;
+}
+
+/* Disabled/Coming Soon Pill */
+.btn-pill.disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  pointer-events: none;
+  border-color: rgba(255, 255, 255, 0.1);
+  color: var(--text-secondary);
+}
+
+@media (max-width: 768px) {
+  .why-me-grid {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+  .highlight-text {
+    font-size: 1.15rem;
+  }
 }

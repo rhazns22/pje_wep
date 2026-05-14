@@ -185,15 +185,23 @@
                         <div class="card-case-study stagger-item">
                             <div class="cs-item"><strong>Problem</strong> 영수증 관리의 번거로움</div>
                             <div class="cs-item"><strong>Solution</strong> OCR + Gemini AI 자동 분석</div>
-                            <div class="cs-item"><strong>Role</strong> UI/UX & Fullstack Dev</div>
-                            <div class="cs-item"><strong>Result</strong> 데이터 기반 병원비 가계부 구현</div>
+                            <div class="cs-item"><strong>Result</strong> 베타 테스트 과정에서 수기 입력 대비 기록 시간을 크게 줄이는 흐름을 검증했습니다.</div>
                         </div>
-                        <div class="card-tech stagger-item">
-                            <span>React</span><span>TypeScript</span><span>Firebase</span><span>Gemini</span>
+                        
+                        <div class="engineering-decisions stagger-item">
+                            <h4>Engineering Decisions</h4>
+                            <ul>
+                                <li>AI 분석 결과를 바로 저장하지 않고 사용자 확인 단계를 거치도록 설계</li>
+                                <li>영수증 세금/할인 오분류를 막기 위한 검증 로직 설계</li>
+                                <li>Firebase Auth, Firestore 기반 사용자별 데이터 분리</li>
+                                <li>모바일 사용자를 고려한 촬영 및 수기 입력 fallback 구현</li>
+                            </ul>
                         </div>
+
                         <div class="card-links stagger-item">
-                            <a href="https://petlogwep.vercel.app/" class="btn-pill">Web</a>
-                            <a href="https://petlog-eight.vercel.app/" class="btn-pill">App</a>
+                            <a href="https://petlogwep.vercel.app/" target="_blank" rel="noopener noreferrer" class="btn-pill">Live App</a>
+                            <a href="https://petlog-eight.vercel.app/" target="_blank" rel="noopener noreferrer" class="btn-pill">App Store</a>
+                            <a href="#" class="btn-pill outline disabled">GitHub (Coming Soon)</a>
                         </div>
                     </div>
                 </article>
@@ -210,16 +218,23 @@
                             <h3>VetFlow</h3>
                         </div>
                         <div class="card-case-study stagger-item">
-                            <div class="cs-item"><strong>Problem</strong> 병원 운영 데이터의 파편화</div>
-                            <div class="cs-item"><strong>Solution</strong> 실시간 대시보드 시각화</div>
-                            <div class="cs-item"><strong>Role</strong> Lead Developer (Next.js)</div>
-                            <div class="cs-item"><strong>Result</strong> 통합 운영 관리 SaaS 구축</div>
+                            <div class="cs-item"><strong>Focus</strong> 복잡한 병원 운영 상태를 한 화면에서 파악할 수 있도록 예약, 진료, 수납, 입원, 재고 흐름을 운영 중심 UI로 정리했습니다.</div>
+                            <div class="cs-item"><strong>Result</strong> 통합 운영 관리 SaaS 시스템 구축 및 검증</div>
                         </div>
-                        <div class="card-tech stagger-item">
-                            <span>Next.js</span><span>TS</span><span>Firebase</span><span>Recharts</span>
+                        
+                        <div class="engineering-decisions stagger-item">
+                            <h4>Key Features</h4>
+                            <ul>
+                                <li>실시간 대시보드 시각화 및 데이터 동기화</li>
+                                <li>고밀도 UI 최적화로 복잡한 데이터 가독성 확보</li>
+                                <li>사용자별 권한 관리 및 보안 로직 구현</li>
+                            </ul>
                         </div>
+
                         <div class="card-links stagger-item">
-                            <a href="https://vetflow-pi.vercel.app/" class="btn-pill">Live Demo</a>
+                            <a href="https://vetflow-pi.vercel.app/" target="_blank" rel="noopener noreferrer" class="btn-pill">Live Demo</a>
+                            <a href="#" class="btn-pill outline disabled">README</a>
+                            <a href="#" class="btn-pill outline disabled">GitHub</a>
                         </div>
                     </div>
                 </article>
@@ -235,31 +250,57 @@
 
             <div class="skills-grid stagger-container reveal">
                 <div class="skill-category glass stagger-item">
-                    <h3>Frontend</h3>
+                    <h3>React / TypeScript</h3>
+                    <p class="skill-desc">컴포넌트 단위 UI 설계와 타입 기반 데이터 흐름 관리</p>
                     <div class="skill-list">
-                        <div class="skill-item">React</div>
-                        <div class="skill-item">TypeScript</div>
-                        <div class="skill-item">JavaScript</div>
-                        <div class="skill-item">HTML/CSS</div>
-                        <div class="skill-item">Tailwind</div>
+                        <div class="skill-item">Component Architecture</div>
+                        <div class="skill-item">Type Safety</div>
+                        <div class="skill-item">Custom Hooks</div>
                     </div>
                 </div>
                 <div class="skill-category glass stagger-item">
-                    <h3>Backend & DB</h3>
+                    <h3>Firebase / Firestore</h3>
+                    <p class="skill-desc">사용자별 데이터 저장 구조와 실시간 상태 관리</p>
                     <div class="skill-list">
-                        <div class="skill-item">Firebase</div>
-                        <div class="skill-item">Node.js</div>
-                        <div class="skill-item">Firestore</div>
-                        <div class="skill-item">REST API</div>
+                        <div class="skill-item">NoSQL Modeling</div>
+                        <div class="skill-item">Security Rules</div>
+                        <div class="skill-item">Auth Flow</div>
                     </div>
                 </div>
                 <div class="skill-category glass stagger-item">
-                    <h3>Design & Tools</h3>
+                    <h3>Gemini API / Vercel</h3>
+                    <p class="skill-desc">AI 분석 결과의 서비스화 및 안정적인 배포 환경 운영</p>
                     <div class="skill-list">
-                        <div class="skill-item">Figma</div>
-                        <div class="skill-item">GitHub</div>
-                        <div class="skill-item">Vercel</div>
-                        <div class="skill-item">Adobe XD</div>
+                        <div class="skill-item">Prompt Engineering</div>
+                        <div class="skill-item">CI/CD Pipeline</div>
+                        <div class="skill-item">Edge Functions</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Code Quality Focus -->
+            <div class="code-quality reveal stagger-container">
+                <h3 class="stagger-item">Code Quality Focus</h3>
+                <div class="quality-grid">
+                    <div class="quality-item stagger-item">
+                        <span class="dot"></span>
+                        <p>TypeScript 기반 데이터 타입 정의</p>
+                    </div>
+                    <div class="quality-item stagger-item">
+                        <span class="dot"></span>
+                        <p>기능별 컴포넌트 분리 및 재사용성</p>
+                    </div>
+                    <div class="quality-item stagger-item">
+                        <span class="dot"></span>
+                        <p>사용자 입력 / AI 결과 검증 흐름 분리</p>
+                    </div>
+                    <div class="quality-item stagger-item">
+                        <span class="dot"></span>
+                        <p>Firebase 데이터 접근 로직 분리 (Service Layer)</p>
+                    </div>
+                    <div class="quality-item stagger-item">
+                        <span class="dot"></span>
+                        <p>에러 상태와 Fallback UI 처리</p>
                     </div>
                 </div>
             </div>
@@ -355,6 +396,26 @@
                             Project</span><span>Local Innovation</span>
                     </div>
                 </article>
+            </div>
+        </div>
+    </section>
+
+    <!-- Why Me Section -->
+    <section id="why-me" class="section why-me">
+        <div class="container">
+            <h2 class="section-title reveal">Why Me</h2>
+            <div class="why-me-content reveal">
+                <p class="highlight-text">저는 단순히 화면을 구현하는 개발자가 아니라,<br>사용자의 불편함을 제품 흐름으로 정의하고 UI, 데이터, API, 배포까지 연결해 실제 작동하는 서비스를 만듭니다.</p>
+                <div class="why-me-grid">
+                    <div class="why-item">
+                        <h4>Problem Solver</h4>
+                        <p>PetLog에서는 복잡한 병원 영수증을 사용자가 이해할 수 있는 지출 기록으로 바꾸기 위해 OCR, AI API, Firebase 데이터 구조, 사용자 확인 흐름을 직접 설계했습니다.</p>
+                    </div>
+                    <div class="why-item">
+                        <h4>Efficiency Optimizer</h4>
+                        <p>VetFlow에서는 병원 운영의 복잡한 업무 흐름을 대시보드와 실시간 데이터 구조로 정리하며, 사용자가 오늘 해야 할 일을 빠르게 파악할 수 있는 제품 경험을 고민했습니다.</p>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
