@@ -60,15 +60,23 @@ function initBackgroundGlow() {
   });
 }
 
-// 1. Splash Intro Logic (Code Warp Absorb Transition)
+// 1. Splash Intro Logic (Code Warp Tunnel - Animation Engineering Task)
 function initSplash() {
   const splash = document.getElementById('splash');
   if (!splash) return;
 
-  const warpField = document.getElementById('warp-field');
+  const canvas = document.getElementById('splashWarpCanvas');
+  const ctx = canvas.getContext('2d');
   const statusItems = splash.querySelectorAll('.splash-status-list li');
   const completeMsg = splash.querySelector('.splash-complete');
   const enterBtn = document.getElementById('enter-portfolio');
+
+  let width, height, centerX, centerY;
+  let fragments = [];
+  let isWarping = false;
+  let warpStartTime = 0;
+  let warpProgress = 0;
+  let rafId = null;
 
   const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const alreadySeen = sessionStorage.getItem('portfolioSplashSeen') === 'true';
@@ -81,78 +89,177 @@ function initSplash() {
 
   document.body.classList.add('is-splash-open');
 
-  // Fragment Generation
+  // Fragment Pool
   const fragmentTexts = [
     'const app = "portfolio";', 'render(<Portfolio />);', 'PetLog.loaded = true;',
     'VetFlow.linked = true;', 'firebase.connected();', 'deploy: vercel;',
     'status: 200 OK;', 'debug.complete();', 'build.success = true;',
-    'api.integrated = true;', 'npm install', 'module.ready();',
-    'route: /projects;', 'UI.flow.ready();', 'particle.engine.stable;'
+    'api.integrated = true;', 'route: /projects;', 'module.ready();',
+    'system.online = true;', 'UI.flow.ready();', 'particle.engine.stable;',
+    'user.confirmed = true;'
   ];
 
-  const count = window.innerWidth > 768 ? 48 : 12;
-  for (let i = 0; i < count; i++) {
-    const span = document.createElement('span');
-    span.className = 'code-fragment';
-    span.textContent = fragmentTexts[i % fragmentTexts.length];
-    
-    // Random Spatial Props
-    const sx = (Math.random() - 0.5) * 96 + 'vw';
-    const sy = (Math.random() - 0.5) * 84 + 'vh';
-    const sz = (Math.random() * 540 - 360) + 'px';
-    const rot = (Math.random() - 0.5) * 16 + 'deg';
-    const scale = 0.5 + Math.random() * 0.8;
-    const opacity = 0.15 + Math.random() * 0.4;
-    const delay = Math.random() * 0.12 + 's';
+  function resize() {
+    const dpr = window.devicePixelRatio || 1;
+    width = window.innerWidth;
+    height = window.innerHeight;
+    canvas.width = width * dpr;
+    canvas.height = height * dpr;
+    ctx.scale(dpr, dpr);
+    centerX = width / 2;
+    centerY = height / 2;
+  }
 
-    span.style.setProperty('--start-x', sx);
-    span.style.setProperty('--start-y', sy);
-    span.style.setProperty('--start-z', sz);
-    span.style.setProperty('--rot', rot);
-    span.style.setProperty('--scale', scale);
-    span.style.setProperty('--opacity', opacity);
-    span.style.setProperty('--delay', delay);
+  function createFragments() {
+    fragments = [];
+    const count = width > 768 ? 140 : (width > 480 ? 80 : 42);
+    for (let i = 0; i < count; i++) {
+      fragments.push({
+        text: fragmentTexts[i % fragmentTexts.length],
+        x: Math.random() * width,
+        y: Math.random() * height,
+        speed: 0.2 + Math.random() * 0.5,
+        offset: Math.random() * 1000,
+        alpha: 0.15 + Math.random() * 0.35,
+        size: 10 + Math.random() * 4
+      });
+    }
+  }
 
-    warpField.appendChild(span);
+  function easeInExpo(t) {
+    return t === 0 ? 0 : Math.pow(2, 10 * t - 10);
+  }
+
+  function draw() {
+    // Clear with trail effect
+    ctx.fillStyle = isWarping ? `rgba(2, 6, 23, ${0.25 + warpProgress * 0.4})` : 'rgba(2, 6, 23, 0.8)';
+    ctx.fillRect(0, 0, width, height);
+
+    if (isWarping) {
+      const now = Date.now();
+      warpProgress = Math.min(1, (now - warpStartTime) / 1000);
+      const eased = easeInExpo(warpProgress);
+      
+      // Central Glow
+      const glowRadius = (50 + eased * 400) * (1 - eased);
+      if (glowRadius > 0) {
+        const g = ctx.createRadialGradient(centerX, centerY, 0, centerX, centerY, glowRadius);
+        g.addColorStop(0, `rgba(255, 255, 255, ${0.8 * (1 - eased)})`);
+        g.addColorStop(0.2, `rgba(74, 222, 128, ${0.4 * (1 - eased)})`);
+        g.addColorStop(1, 'rgba(2, 6, 23, 0)');
+        ctx.fillStyle = g;
+        ctx.fillRect(0, 0, width, height);
+      }
+    }
+
+    fragments.forEach(f => {
+      const dx = centerX - f.x;
+      const dy = centerY - f.y;
+      const dist = Math.sqrt(dx * dx + dy * dy);
+      const angle = Math.atan2(dy, dx);
+
+      if (isWarping) {
+        const eased = easeInExpo(warpProgress);
+        const moveStep = (0.04 + eased * 0.35) * (dist + 10);
+        f.x += Math.cos(angle) * moveStep;
+        f.y += Math.sin(angle) * moveStep;
+        f.alpha = Math.max(0, f.alpha * (1 - eased * 0.1));
+        
+        // Trail Line
+        const trailLen = 20 + eased * 500;
+        ctx.strokeStyle = `rgba(74, 222, 128, ${0.3 * (1 - eased)})`;
+        ctx.lineWidth = 1;
+        ctx.beginPath();
+        ctx.moveTo(f.x, f.y);
+        ctx.lineTo(f.x - Math.cos(angle) * trailLen, f.y - Math.sin(angle) * trailLen);
+        ctx.stroke();
+      } else {
+        // Idle Float
+        f.x += Math.cos(f.offset + Date.now() / 2000) * 0.2;
+        f.y += Math.sin(f.offset + Date.now() / 2000) * 0.2;
+      }
+
+      ctx.save();
+      ctx.translate(f.x, f.y);
+      if (isWarping) {
+        ctx.rotate(angle);
+        const stretch = 1 + easeInExpo(warpProgress) * 7;
+        ctx.scale(stretch, 1 / Math.max(1, stretch * 0.5));
+      }
+      ctx.fillStyle = `rgba(148, 255, 210, ${f.alpha})`;
+      ctx.font = `${f.size}px ui-monospace, monospace`;
+      ctx.fillText(f.text, 0, 0);
+      ctx.restore();
+    });
+
+    if (warpProgress < 1) {
+      rafId = requestAnimationFrame(draw);
+    } else {
+      closeSplashFinal();
+    }
   }
 
   function startWarp() {
-    if (splash.classList.contains('is-warping') || splash.classList.contains('is-hidden')) return;
-    
-    sessionStorage.setItem('portfolioSplashSeen', 'true');
-
+    if (isWarping) return;
     if (prefersReducedMotion) {
-      splash.classList.add('is-hidden');
-      document.body.classList.remove('is-splash-open');
+      closeSplashFinal();
       return;
     }
-
+    isWarping = true;
+    warpStartTime = Date.now();
     splash.classList.add('is-warping');
-
-    setTimeout(() => {
-      splash.classList.add('is-hidden');
-      document.body.classList.remove('is-splash-open');
-    }, 850);
   }
 
-  // Cinematic Sequence
-  setTimeout(() => splash.classList.add('is-ready'), 200);
+  function closeSplashFinal() {
+    cancelAnimationFrame(rafId);
+    
+    // Smooth reveal
+    splash.classList.add('is-hidden');
+    document.body.classList.remove('is-splash-open');
+    sessionStorage.setItem('portfolioSplashSeen', 'true');
 
+    const mainContent = document.getElementById('main-content');
+    if (mainContent) {
+      // Start fade-in slightly after warp starts to settle
+      setTimeout(() => {
+        mainContent.classList.add('is-visible');
+      }, 100);
+    }
+  }
+
+  // Handle already seen state for fade-in
+  if (alreadySeen) {
+    const mainContent = document.getElementById('main-content');
+    if (mainContent) mainContent.classList.add('is-visible');
+    return;
+  }
+
+  // Lifecycle
+  window.addEventListener('resize', resize);
+  resize();
+  createFragments();
+  rafId = requestAnimationFrame(draw);
+
+  // Diagnostics Sequence
   statusItems.forEach((item, index) => {
     setTimeout(() => {
       item.classList.add('is-visible');
       if (index === statusItems.length - 1) {
         setTimeout(() => {
           completeMsg?.classList.add('is-visible');
-          setTimeout(startWarp, 350); // Final transition trigger
-        }, 250);
+          enterBtn?.classList.add('is-visible');
+          setTimeout(startWarp, 350);
+        }, 300);
       }
     }, 400 + index * 180);
   });
 
+  // Triggers
   enterBtn?.addEventListener('click', startWarp);
   window.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' || e.key === 'Enter') startWarp();
+    if ((e.key === 'Escape' || e.key === 'Enter') && !alreadySeen) {
+      startWarp();
+    }
   });
 }
 

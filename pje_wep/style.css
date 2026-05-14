@@ -298,128 +298,72 @@ img {
 }
 
 /* Splash Screen */
-/* Splash Screen: Code Warp Absorb Transition */
+/* Splash Screen: Code Warp Tunnel (Animation Engineering Task) */
 .splash-screen {
   position: fixed;
   inset: 0;
   z-index: 9999;
   overflow: hidden;
+  background: #020617;
   display: grid;
   place-items: center;
-  perspective: 1400px;
-  transform-style: preserve-3d;
-  background: radial-gradient(circle at center, #0f172a 0%, #000 100%);
+  transition: opacity 1.2s cubic-bezier(0.4, 0, 0.2, 1), visibility 1.2s;
 }
 
-.splash-grid {
+.splash-screen.is-hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+/* Main Content Fade-in */
+.fade-in-content {
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 1.5s cubic-bezier(0.4, 0, 0.2, 1), visibility 1.5s;
+  will-change: opacity;
+}
+
+.fade-in-content.is-visible {
+  opacity: 1;
+  visibility: visible;
+}
+
+.splash-warp-canvas {
   position: absolute;
   inset: 0;
-  background-image: 
-    linear-gradient(rgba(74, 222, 128, 0.03) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(74, 222, 128, 0.03) 1px, transparent 1px);
-  background-size: 50px 50px;
-  mask-image: radial-gradient(circle at center, black, transparent 80%);
-  pointer-events: none;
-  transition: transform 0.75s ease, opacity 0.55s ease;
-}
-
-.splash-screen.is-warping .splash-grid {
-  opacity: 0;
-  transform: scale(0.72);
-}
-
-.code-warp-field {
-  position: absolute;
-  inset: 0;
-  transform-style: preserve-3d;
-  pointer-events: none;
-}
-
-.code-fragment {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
-  font-size: 12px;
-  white-space: nowrap;
-  color: rgba(170, 255, 220, 0.62);
-  text-shadow: 0 0 20px rgba(74, 222, 128, 0.32);
-  transform: translate3d(var(--start-x), var(--start-y), var(--start-z)) rotateZ(var(--rot)) scale(var(--scale));
-  opacity: var(--opacity);
-  will-change: transform, opacity, filter;
-}
-
-.warp-core {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  width: 260px;
-  height: 260px;
-  border-radius: 999px;
-  transform: translate(-50%, -50%) scale(0.7);
-  background: radial-gradient(circle, rgba(255,255,255,0.42) 0%, rgba(74,222,128,0.22) 12%, rgba(96,165,250,0.12) 34%, transparent 70%);
-  filter: blur(20px);
-  opacity: 0;
-  transition: transform 0.65s cubic-bezier(0.76, 0, 0.24, 1), opacity 0.65s ease;
-  pointer-events: none;
-}
-
-.splash-screen.is-ready .warp-core { opacity: 0.28; }
-.splash-screen.is-warping .warp-core {
-  opacity: 0.95;
-  transform: translate(-50%, -50%) scale(1.35);
-}
-
-@keyframes codeWarpAbsorb {
-  0% {
-    opacity: var(--opacity);
-    transform: translate3d(var(--start-x), var(--start-y), var(--start-z)) rotateZ(var(--rot)) scale(var(--scale));
-    filter: blur(0px);
-  }
-  35% {
-    opacity: 1;
-    filter: blur(1px);
-  }
-  70% {
-    opacity: 0.88;
-    transform: translate3d(calc(var(--start-x) * 0.18), calc(var(--start-y) * 0.18), -420px) rotateZ(var(--rot)) scaleX(2.8) scaleY(0.32);
-    filter: blur(3px);
-  }
-  100% {
-    opacity: 0;
-    transform: translate3d(0px, 0px, -1200px) rotateZ(var(--rot)) scaleX(6.5) scaleY(0.04);
-    filter: blur(12px);
-  }
-}
-
-.splash-screen.is-warping .code-fragment {
-  animation: codeWarpAbsorb 0.78s cubic-bezier(0.85, 0, 0.15, 1) forwards;
-  animation-delay: var(--delay);
+  width: 100%;
+  height: 100%;
+  z-index: 1;
 }
 
 .splash-terminal {
   position: relative;
-  z-index: 10;
+  z-index: 2;
   width: min(520px, calc(100vw - 40px));
   padding: 40px;
   border-radius: 24px;
-  background: rgba(2, 6, 23, 0.82);
+  background: rgba(2, 6, 23, 0.68);
   border: 1px solid rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(20px);
+  backdrop-filter: blur(18px);
   text-align: left;
-  transition: transform 0.72s cubic-bezier(0.85, 0, 0.15, 1), opacity 0.52s ease, filter 0.52s ease;
+  transition:
+    opacity 0.45s ease,
+    transform 0.85s cubic-bezier(0.85, 0, 0.15, 1),
+    filter 0.45s ease;
 }
 
 .splash-screen.is-warping .splash-terminal {
   opacity: 0;
-  transform: translateZ(-520px) scale(0.72);
-  filter: blur(10px);
+  transform: scale(0.58) translateY(-10px);
+  filter: blur(14px);
+  pointer-events: none;
 }
 
 .splash-brand {
   margin: 0;
   font-size: 11px;
-  letter-spacing: 0.2em;
+  letter-spacing: 0.22em;
   font-weight: 800;
   color: var(--accent-primary);
   text-transform: uppercase;
@@ -437,7 +381,7 @@ img {
   margin-bottom: 16px;
   font-family: ui-monospace, SFMono-Regular, monospace;
   font-size: 13px;
-  color: rgba(255, 255, 255, 0.5);
+  color: rgba(255, 255, 255, 0.4);
 }
 
 .splash-status-list {
@@ -453,13 +397,13 @@ img {
   transform: translateY(8px);
   font-family: ui-monospace, SFMono-Regular, monospace;
   font-size: 12px;
-  color: rgba(255, 255, 255, 0.7);
+  color: rgba(255, 255, 255, 0.65);
 }
 
 .splash-status-list li.is-visible {
   opacity: 1;
   transform: translateY(0);
-  transition: all 0.25s ease;
+  transition: all 0.2s ease;
 }
 
 .splash-complete {
@@ -489,6 +433,13 @@ img {
   font-weight: 700;
   cursor: pointer;
   transition: all 0.3s ease;
+  opacity: 0;
+  transform: translateY(10px);
+}
+
+.splash-enter.is-visible {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 .splash-enter:hover {
@@ -497,8 +448,9 @@ img {
   box-shadow: 0 0 20px rgba(74, 222, 128, 0.3);
 }
 
-.splash-screen.is-hidden { display: none !important; }
-body.is-splash-open { overflow: hidden; }
+body.is-splash-open {
+  overflow: hidden;
+}
 
 @media (max-width: 768px) {
   .splash-system { font-size: 24px; }
@@ -506,10 +458,8 @@ body.is-splash-open { overflow: hidden; }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .splash-screen.is-warping .code-fragment,
   .splash-screen.is-warping .splash-terminal {
-    animation: none !important;
-    transition: opacity 0.4s ease !important;
+    transition: opacity 0.5s ease !important;
     opacity: 0 !important;
     transform: none !important;
   }
