@@ -60,22 +60,25 @@ function initBackgroundGlow() {
   });
 }
 
-// 1. Splash Intro Logic (Code Warp Tunnel - Animation Engineering Task)
+// 1. Splash Intro Logic (Portfolio Launch Core - Creative Cinematic Sequence)
 function initSplash() {
   const splash = document.getElementById('splash');
   if (!splash) return;
 
-  const canvas = document.getElementById('splashWarpCanvas');
+  const canvas = document.getElementById('splashCoreCanvas');
   const ctx = canvas.getContext('2d');
+  const brand = splash.querySelector('.splash-brand');
+  const system = splash.querySelector('.splash-system');
+  const compiling = splash.querySelector('.splash-compiling');
   const statusItems = splash.querySelectorAll('.splash-status-list li');
-  const completeMsg = splash.querySelector('.splash-complete');
+  const readyMsg = splash.querySelector('.splash-ready');
   const enterBtn = document.getElementById('enter-portfolio');
 
   let width, height, centerX, centerY;
-  let fragments = [];
-  let isWarping = false;
-  let warpStartTime = 0;
-  let warpProgress = 0;
+  let particles = [];
+  let isLaunching = false;
+  let launchStartTime = 0;
+  let launchProgress = 0;
   let rafId = null;
 
   const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -84,23 +87,22 @@ function initSplash() {
   if (alreadySeen) {
     splash.classList.add('is-hidden');
     document.body.classList.remove('is-splash-open');
+    const mainContent = document.getElementById('main-content');
+    if (mainContent) mainContent.classList.add('is-visible');
     return;
   }
 
   document.body.classList.add('is-splash-open');
 
-  // Fragment Pool
   const fragmentTexts = [
-    'const app = "portfolio";', 'render(<Portfolio />);', 'PetLog.loaded = true;',
-    'VetFlow.linked = true;', 'firebase.connected();', 'deploy: vercel;',
-    'status: 200 OK;', 'debug.complete();', 'build.success = true;',
-    'api.integrated = true;', 'route: /projects;', 'module.ready();',
-    'system.online = true;', 'UI.flow.ready();', 'particle.engine.stable;',
-    'user.confirmed = true;'
+    'const app = "portfolio";', 'render(<Portfolio />);', 'type Project = "PetLog" | "VetFlow";',
+    'firebase.connected();', 'gemini.integrated = true;', 'deploy.target = "vercel";',
+    'status: 200 OK;', 'build.success = true;', 'route: /projects;', 'component.mounted();'
   ];
+  const moduleLabels = ['PetLog', 'VetFlow', 'React', 'TypeScript', 'Firebase', 'Gemini API', 'Vercel'];
 
   function resize() {
-    const dpr = window.devicePixelRatio || 1;
+    const dpr = Math.min(2, window.devicePixelRatio || 1);
     width = window.innerWidth;
     height = window.innerHeight;
     canvas.width = width * dpr;
@@ -110,18 +112,36 @@ function initSplash() {
     centerY = height / 2;
   }
 
-  function createFragments() {
-    fragments = [];
-    const count = width > 768 ? 140 : (width > 480 ? 80 : 42);
+  function createParticles() {
+    particles = [];
+    let count;
+    if (width > 1024) count = 140; // Desktop (slightly reduced for perf)
+    else if (width > 768) count = 90; // Tablet
+    else count = 40; // Mobile
+
     for (let i = 0; i < count; i++) {
-      fragments.push({
-        text: fragmentTexts[i % fragmentTexts.length],
-        x: Math.random() * width,
-        y: Math.random() * height,
-        speed: 0.2 + Math.random() * 0.5,
-        offset: Math.random() * 1000,
-        alpha: 0.15 + Math.random() * 0.35,
-        size: 10 + Math.random() * 4
+      const type = i % 3 === 0 ? 'fragment' : (i % 7 === 0 ? 'module' : 'spark');
+      const text = type === 'fragment' 
+        ? fragmentTexts[Math.floor(Math.random() * fragmentTexts.length)]
+        : (type === 'module' ? moduleLabels[Math.floor(Math.random() * moduleLabels.length)] : '');
+      
+      const angle = Math.random() * Math.PI * 2;
+      const orbitRadius = 100 + Math.random() * (Math.min(width, height) * 0.35);
+      
+      particles.push({
+        text,
+        type,
+        x: centerX + Math.cos(angle) * orbitRadius,
+        y: centerY + Math.sin(angle) * orbitRadius,
+        vx: (Math.random() - 0.5) * 0.6,
+        vy: (Math.random() - 0.5) * 0.6,
+        angle: angle,
+        orbitRadius: orbitRadius,
+        orbitSpeed: (0.0006 + Math.random() * 0.001) * (Math.random() > 0.5 ? 1 : -1),
+        size: type === 'module' ? 14 : (type === 'fragment' ? 10 : 2.5),
+        alpha: 0.25 + Math.random() * 0.45,
+        depth: Math.random(),
+        offset: Math.random() * 1000
       });
     }
   }
@@ -130,135 +150,177 @@ function initSplash() {
     return t === 0 ? 0 : Math.pow(2, 10 * t - 10);
   }
 
-  function draw() {
-    // Clear with trail effect
-    ctx.fillStyle = isWarping ? `rgba(2, 6, 23, ${0.25 + warpProgress * 0.4})` : 'rgba(2, 6, 23, 0.8)';
-    ctx.fillRect(0, 0, width, height);
+  function draw(time) {
+    ctx.clearRect(0, 0, width, height);
 
-    if (isWarping) {
-      const now = Date.now();
-      warpProgress = Math.min(1, (now - warpStartTime) / 1000);
-      const eased = easeInExpo(warpProgress);
-      
-      // Central Glow
-      const glowRadius = (50 + eased * 400) * (1 - eased);
-      if (glowRadius > 0) {
-        const g = ctx.createRadialGradient(centerX, centerY, 0, centerX, centerY, glowRadius);
-        g.addColorStop(0, `rgba(255, 255, 255, ${0.8 * (1 - eased)})`);
-        g.addColorStop(0.2, `rgba(74, 222, 128, ${0.4 * (1 - eased)})`);
-        g.addColorStop(1, 'rgba(2, 6, 23, 0)');
-        ctx.fillStyle = g;
-        ctx.fillRect(0, 0, width, height);
-      }
+    if (isLaunching && launchStartTime === 0) launchStartTime = time;
+    if (isLaunching) {
+      launchProgress = Math.min(1, (time - launchStartTime) / 1000);
     }
 
-    fragments.forEach(f => {
-      const dx = centerX - f.x;
-      const dy = centerY - f.y;
-      const dist = Math.sqrt(dx * dx + dy * dy);
-      const angle = Math.atan2(dy, dx);
+    const eased = easeInExpo(launchProgress);
 
-      if (isWarping) {
-        const eased = easeInExpo(warpProgress);
-        const moveStep = (0.04 + eased * 0.35) * (dist + 10);
-        f.x += Math.cos(angle) * moveStep;
-        f.y += Math.sin(angle) * moveStep;
-        f.alpha = Math.max(0, f.alpha * (1 - eased * 0.1));
+    // Draw Central Deploy Core
+    const corePulse = Math.sin(time / 400) * 4;
+    const coreRadius = isLaunching 
+      ? (launchProgress < 0.85 ? 90 + eased * 260 : 5) 
+      : 60 + corePulse;
+    const coreAlpha = isLaunching 
+      ? (launchProgress < 0.85 ? 0.25 + eased * 0.75 : 1)
+      : 0.12;
+
+    if (launchProgress < 0.85 || !isLaunching) {
+      const gradient = ctx.createRadialGradient(centerX, centerY, 0, centerX, centerY, coreRadius);
+      gradient.addColorStop(0, `rgba(74, 222, 128, ${coreAlpha})`);
+      gradient.addColorStop(0.5, `rgba(96, 165, 250, ${coreAlpha * 0.4})`);
+      gradient.addColorStop(1, 'rgba(2, 6, 23, 0)');
+      ctx.fillStyle = gradient;
+      ctx.beginPath();
+      ctx.arc(centerX, centerY, coreRadius, 0, Math.PI * 2);
+      ctx.fill();
+    } else {
+      // Final Flash
+      const flashSize = (launchProgress - 0.85) / 0.15;
+      ctx.fillStyle = `rgba(255, 255, 255, ${1 - flashSize})`;
+      ctx.beginPath();
+      ctx.arc(centerX, centerY, 5 + flashSize * Math.max(width, height), 0, Math.PI * 2);
+      ctx.fill();
+      
+      // Compressed point
+      ctx.fillStyle = '#fff';
+      ctx.beginPath();
+      ctx.arc(centerX, centerY, 2.5, 0, Math.PI * 2);
+      ctx.fill();
+    }
+
+    const now = time;
+    particles.forEach(p => {
+      if (isLaunching) {
+        const dx = centerX - p.x;
+        const dy = centerY - p.y;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+        const angle = Math.atan2(dy, dx);
         
-        // Trail Line
-        const trailLen = 20 + eased * 500;
-        ctx.strokeStyle = `rgba(74, 222, 128, ${0.3 * (1 - eased)})`;
-        ctx.lineWidth = 1;
-        ctx.beginPath();
-        ctx.moveTo(f.x, f.y);
-        ctx.lineTo(f.x - Math.cos(angle) * trailLen, f.y - Math.sin(angle) * trailLen);
-        ctx.stroke();
-      } else {
-        // Idle Float
-        f.x += Math.cos(f.offset + Date.now() / 2000) * 0.2;
-        f.y += Math.sin(f.offset + Date.now() / 2000) * 0.2;
-      }
-
-      ctx.save();
-      ctx.translate(f.x, f.y);
-      if (isWarping) {
+        // Acceleration toward center
+        const moveStep = (0.038 + eased * 0.32) * (dist + 20);
+        p.x += Math.cos(angle) * moveStep;
+        p.y += Math.sin(angle) * moveStep;
+        
+        ctx.save();
+        ctx.translate(p.x, p.y);
         ctx.rotate(angle);
-        const stretch = 1 + easeInExpo(warpProgress) * 7;
-        ctx.scale(stretch, 1 / Math.max(1, stretch * 0.5));
+
+        // Trails - Draw first
+        const trailLength = 25 + eased * 480;
+        ctx.globalAlpha = p.alpha * 0.5 * (1 - eased);
+        ctx.fillStyle = p.type === 'module' ? 'rgba(96, 165, 250, 0.7)' : 'rgba(74, 222, 128, 0.5)';
+        ctx.fillRect(0, -1, trailLength, 1.5);
+
+        // Draw object with stretch
+        const stretch = 1 + eased * 6.5;
+        ctx.scale(stretch, Math.max(0.1, 1 - eased * 0.9));
+        ctx.globalAlpha = Math.max(0, p.alpha * (1 - eased * 1.15));
+        ctx.fillStyle = p.type === 'module' ? '#60a5fa' : '#4ade80';
+        
+        if (p.type === 'spark') {
+          ctx.fillRect(0, -0.75, 4, 1.5);
+        } else {
+          ctx.font = `${p.size}px ui-monospace, monospace`;
+          ctx.fillText(p.text, 0, 0);
+        }
+        ctx.restore();
+      } else {
+        // Idle behavior
+        if (p.type === 'module') {
+          p.angle += p.orbitSpeed;
+          p.x = centerX + Math.cos(p.angle) * p.orbitRadius;
+          p.y = centerY + Math.sin(p.angle) * p.orbitRadius;
+        } else {
+          p.x += p.vx + Math.cos(p.offset + now / 1000) * 0.25;
+          p.y += p.vy + Math.sin(p.offset + now / 1000) * 0.25;
+        }
+
+        ctx.globalAlpha = p.alpha;
+        ctx.fillStyle = p.type === 'module' ? '#60a5fa' : '#4ade80';
+        if (p.type === 'spark') {
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+          ctx.fill();
+        } else {
+          ctx.font = `${p.size}px ui-monospace, monospace`;
+          ctx.fillText(p.text, p.x, p.y);
+        }
       }
-      ctx.fillStyle = `rgba(148, 255, 210, ${f.alpha})`;
-      ctx.font = `${f.size}px ui-monospace, monospace`;
-      ctx.fillText(f.text, 0, 0);
-      ctx.restore();
     });
 
-    if (warpProgress < 1) {
+    if (launchProgress < 1) {
       rafId = requestAnimationFrame(draw);
-    } else {
+    } else if (isLaunching) {
       closeSplashFinal();
     }
   }
 
-  function startWarp() {
-    if (isWarping) return;
+  function startLaunch() {
+    if (isLaunching) return;
     if (prefersReducedMotion) {
       closeSplashFinal();
       return;
     }
-    isWarping = true;
-    warpStartTime = Date.now();
-    splash.classList.add('is-warping');
+    isLaunching = true;
+    launchStartTime = 0; // Will be set in draw(time)
+    splash.classList.add('is-launching');
   }
 
   function closeSplashFinal() {
     cancelAnimationFrame(rafId);
-    
-    // Smooth reveal
     splash.classList.add('is-hidden');
     document.body.classList.remove('is-splash-open');
     sessionStorage.setItem('portfolioSplashSeen', 'true');
-
     const mainContent = document.getElementById('main-content');
     if (mainContent) {
-      // Start fade-in slightly after warp starts to settle
       setTimeout(() => {
         mainContent.classList.add('is-visible');
-      }, 100);
+      }, 50);
     }
   }
 
-  // Handle already seen state for fade-in
-  if (alreadySeen) {
-    const mainContent = document.getElementById('main-content');
-    if (mainContent) mainContent.classList.add('is-visible');
-    return;
-  }
-
-  // Lifecycle
-  window.addEventListener('resize', resize);
+  window.addEventListener('resize', () => {
+    resize();
+    createParticles();
+  });
   resize();
-  createFragments();
+  createParticles();
   rafId = requestAnimationFrame(draw);
 
-  // Diagnostics Sequence
-  statusItems.forEach((item, index) => {
-    setTimeout(() => {
-      item.classList.add('is-visible');
-      if (index === statusItems.length - 1) {
-        setTimeout(() => {
-          completeMsg?.classList.add('is-visible');
-          enterBtn?.classList.add('is-visible');
-          setTimeout(startWarp, 350);
-        }, 300);
-      }
-    }, 400 + index * 180);
-  });
+  // Timeline Sequence
+  setTimeout(() => {
+    brand.classList.add('is-visible');
+    system.classList.add('is-visible');
+  }, 200);
+  
+  setTimeout(() => {
+    compiling.classList.add('is-visible');
+    statusItems.forEach((item, index) => {
+      setTimeout(() => {
+        item.classList.add('is-visible');
+      }, index * 150); // Ends at ~1.4s (350 + 1050)
+    });
+  }, 350);
+
+  setTimeout(() => {
+    readyMsg.classList.add('is-visible');
+    enterBtn.classList.add('is-visible');
+  }, 1550);
+
+  setTimeout(() => {
+    startLaunch(); // Auto-launch
+  }, 1750);
 
   // Triggers
-  enterBtn?.addEventListener('click', startWarp);
+  enterBtn.addEventListener('click', startLaunch);
   window.addEventListener('keydown', (e) => {
-    if ((e.key === 'Escape' || e.key === 'Enter') && !alreadySeen) {
-      startWarp();
+    if ((e.key === 'Escape' || e.key === 'Enter') && !alreadySeen && !isLaunching) {
+      startLaunch();
     }
   });
 }
