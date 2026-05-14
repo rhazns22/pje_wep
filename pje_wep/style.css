@@ -298,20 +298,17 @@ img {
 }
 
 /* Splash Screen */
-/* Splash Screen: GROVVE OS Debug Sequence */
+/* Splash Screen: Code Warp Absorb Transition */
 .splash-screen {
   position: fixed;
   inset: 0;
-  width: 100%;
-  height: 100%;
-  background: radial-gradient(circle at center, #0f172a 0%, #000 100%);
-  z-index: 10000;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: opacity 0.8s cubic-bezier(0.7, 0, 0.2, 1), visibility 0.8s;
+  z-index: 9999;
   overflow: hidden;
-  perspective: 1000px;
+  display: grid;
+  place-items: center;
+  perspective: 1400px;
+  transform-style: preserve-3d;
+  background: radial-gradient(circle at center, #0f172a 0%, #000 100%);
 }
 
 .splash-grid {
@@ -320,149 +317,169 @@ img {
   background-image: 
     linear-gradient(rgba(74, 222, 128, 0.03) 1px, transparent 1px),
     linear-gradient(90deg, rgba(74, 222, 128, 0.03) 1px, transparent 1px);
-  background-size: 40px 40px;
+  background-size: 50px 50px;
   mask-image: radial-gradient(circle at center, black, transparent 80%);
   pointer-events: none;
+  transition: transform 0.75s ease, opacity 0.55s ease;
 }
 
-/* Code Fragments */
-.code-stream {
+.splash-screen.is-warping .splash-grid {
+  opacity: 0;
+  transform: scale(0.72);
+}
+
+.code-warp-field {
   position: absolute;
   inset: 0;
+  transform-style: preserve-3d;
   pointer-events: none;
-  z-index: 1;
 }
 
-.code-stream span {
+.code-fragment {
   position: absolute;
-  top: 50%;
   left: 50%;
-  font-family: ui-monospace, SFMono-Regular, monospace;
-  font-size: 11px;
-  color: #22d3ee;
-  opacity: 0;
+  top: 50%;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 12px;
   white-space: nowrap;
-  transform: translate(var(--x), var(--y));
-  transition: opacity 0.5s ease;
+  color: rgba(170, 255, 220, 0.62);
+  text-shadow: 0 0 20px rgba(74, 222, 128, 0.32);
+  transform: translate3d(var(--start-x), var(--start-y), var(--start-z)) rotateZ(var(--rot)) scale(var(--scale));
+  opacity: var(--opacity);
+  will-change: transform, opacity, filter;
 }
 
-.splash-screen.is-ready .code-stream span {
-  opacity: 0.25;
+.warp-core {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 260px;
+  height: 260px;
+  border-radius: 999px;
+  transform: translate(-50%, -50%) scale(0.7);
+  background: radial-gradient(circle, rgba(255,255,255,0.42) 0%, rgba(74,222,128,0.22) 12%, rgba(96,165,250,0.12) 34%, transparent 70%);
+  filter: blur(20px);
+  opacity: 0;
+  transition: transform 0.65s cubic-bezier(0.76, 0, 0.24, 1), opacity 0.65s ease;
+  pointer-events: none;
 }
 
-/* Absorption Animation */
-.splash-screen.is-absorbing .code-stream span {
-  animation: codeAbsorb 0.65s cubic-bezier(0.7, 0, 0.2, 1) forwards;
+.splash-screen.is-ready .warp-core { opacity: 0.28; }
+.splash-screen.is-warping .warp-core {
+  opacity: 0.95;
+  transform: translate(-50%, -50%) scale(1.35);
 }
 
-.splash-screen.is-absorbing .splash-terminal {
-  animation: terminalAbsorb 0.6s cubic-bezier(0.7, 0, 0.2, 1) forwards;
-}
-
-@keyframes codeAbsorb {
+@keyframes codeWarpAbsorb {
   0% {
-    opacity: 0.25;
-    transform: translate3d(var(--x), var(--y), 0) scale(1);
-    filter: blur(0);
+    opacity: var(--opacity);
+    transform: translate3d(var(--start-x), var(--start-y), var(--start-z)) rotateZ(var(--rot)) scale(var(--scale));
+    filter: blur(0px);
   }
-  40% {
-    opacity: 0.8;
+  35% {
+    opacity: 1;
     filter: blur(1px);
+  }
+  70% {
+    opacity: 0.88;
+    transform: translate3d(calc(var(--start-x) * 0.18), calc(var(--start-y) * 0.18), -420px) rotateZ(var(--rot)) scaleX(2.8) scaleY(0.32);
+    filter: blur(3px);
   }
   100% {
     opacity: 0;
-    transform: translate3d(var(--target-x), var(--target-y), 0) scale(0.1);
+    transform: translate3d(0px, 0px, -1200px) rotateZ(var(--rot)) scaleX(6.5) scaleY(0.04);
     filter: blur(12px);
   }
 }
 
-@keyframes terminalAbsorb {
-  to {
-    opacity: 0;
-    transform: scale(0.92) translateZ(-100px);
-    filter: blur(10px);
-  }
+.splash-screen.is-warping .code-fragment {
+  animation: codeWarpAbsorb 0.78s cubic-bezier(0.85, 0, 0.15, 1) forwards;
+  animation-delay: var(--delay);
 }
 
-/* Terminal Styling */
 .splash-terminal {
-  width: 90%;
-  max-width: 440px;
-  background: rgba(0, 0, 0, 0.85);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 16px;
-  padding: 40px;
-  backdrop-filter: blur(20px);
   position: relative;
   z-index: 10;
-  text-align: center;
+  width: min(520px, calc(100vw - 40px));
+  padding: 40px;
+  border-radius: 24px;
+  background: rgba(2, 6, 23, 0.82);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(20px);
+  text-align: left;
+  transition: transform 0.72s cubic-bezier(0.85, 0, 0.15, 1), opacity 0.52s ease, filter 0.52s ease;
 }
 
-.splash-label {
+.splash-screen.is-warping .splash-terminal {
+  opacity: 0;
+  transform: translateZ(-520px) scale(0.72);
+  filter: blur(10px);
+}
+
+.splash-brand {
+  margin: 0;
   font-size: 11px;
+  letter-spacing: 0.2em;
   font-weight: 800;
-  letter-spacing: 0.4em;
   color: var(--accent-primary);
-  margin-bottom: 24px;
   text-transform: uppercase;
 }
 
-.splash-title {
-  font-size: 18px;
-  font-weight: 700;
+.splash-system {
+  margin: 8px 0 24px;
+  font-size: 32px;
+  line-height: 1.1;
+  font-weight: 800;
   color: #fff;
-  margin-bottom: 32px;
-  letter-spacing: -0.02em;
+}
+
+.splash-diagnostics {
+  margin-bottom: 16px;
+  font-family: ui-monospace, SFMono-Regular, monospace;
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.5);
 }
 
 .splash-status-list {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  margin-bottom: 40px;
-  list-style: none;
+  margin: 0;
   padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 8px;
 }
 
-.status-item {
-  font-family: ui-monospace, SFMono-Regular, monospace;
-  font-size: 13px;
-  color: rgba(255, 255, 255, 0.45);
+.splash-status-list li {
   opacity: 0;
-  transform: translateY(10px);
-  text-align: left;
-  max-width: 280px;
-  margin: 0 auto;
+  transform: translateY(8px);
+  font-family: ui-monospace, SFMono-Regular, monospace;
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.7);
 }
 
-.status-item.active {
-  animation: revealLine 0.4s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
-}
-
-@keyframes revealLine {
-  to {
-    opacity: 1;
-    transform: translateY(0);
-    color: rgba(255, 255, 255, 0.85);
-  }
+.splash-status-list li.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+  transition: all 0.25s ease;
 }
 
 .splash-complete {
+  margin-top: 24px;
+  font-family: ui-monospace, SFMono-Regular, monospace;
   font-size: 14px;
   font-weight: 800;
   color: var(--accent-primary);
-  margin-bottom: 32px;
   opacity: 0;
-  transform: scale(0.95);
-  transition: all 0.4s ease;
+  transform: translateY(8px);
 }
 
-.splash-complete.visible {
+.splash-complete.is-visible {
   opacity: 1;
-  transform: scale(1);
+  transform: translateY(0);
+  transition: all 0.3s ease;
 }
 
 .splash-enter {
+  margin-top: 32px;
   background: transparent;
   border: 1px solid var(--accent-primary);
   color: var(--accent-primary);
@@ -471,14 +488,7 @@ img {
   font-size: 13px;
   font-weight: 700;
   cursor: pointer;
-  opacity: 0;
-  transform: translateY(10px);
   transition: all 0.3s ease;
-}
-
-.splash-enter.visible {
-  opacity: 1;
-  transform: translateY(0);
 }
 
 .splash-enter:hover {
@@ -487,22 +497,22 @@ img {
   box-shadow: 0 0 20px rgba(74, 222, 128, 0.3);
 }
 
+.splash-screen.is-hidden { display: none !important; }
+body.is-splash-open { overflow: hidden; }
+
 @media (max-width: 768px) {
+  .splash-system { font-size: 24px; }
   .splash-terminal { padding: 32px 24px; }
-  .code-stream span:nth-child(n+8) { display: none; }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .splash-screen.is-absorbing .code-stream span,
-  .splash-screen.is-absorbing .splash-terminal {
-    animation: none;
-    opacity: 0;
+  .splash-screen.is-warping .code-fragment,
+  .splash-screen.is-warping .splash-terminal {
+    animation: none !important;
+    transition: opacity 0.4s ease !important;
+    opacity: 0 !important;
+    transform: none !important;
   }
-}
-
-@keyframes scanLines {
-  from { background-position: 0 0; }
-  to { background-position: 0 100%; }
 }
 
 @keyframes fadeInUp {

@@ -60,78 +60,99 @@ function initBackgroundGlow() {
   });
 }
 
-// 1. Splash Intro Logic (GROVVE OS Debug Sequence)
+// 1. Splash Intro Logic (Code Warp Absorb Transition)
 function initSplash() {
-  const splash = document.getElementById('splash-screen');
-  const enterBtn = document.getElementById('enter-portfolio');
+  const splash = document.getElementById('splash');
   if (!splash) return;
 
-  // SESSION CHECK: Guidance for dev - sessionStorage.clear() to reset
-  if (sessionStorage.getItem('splashPlayed')) {
-    splash.style.display = 'none';
-    document.body.style.overflow = 'auto';
+  const warpField = document.getElementById('warp-field');
+  const statusItems = splash.querySelectorAll('.splash-status-list li');
+  const completeMsg = splash.querySelector('.splash-complete');
+  const enterBtn = document.getElementById('enter-portfolio');
+
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const alreadySeen = sessionStorage.getItem('portfolioSplashSeen') === 'true';
+
+  if (alreadySeen) {
+    splash.classList.add('is-hidden');
+    document.body.classList.remove('is-splash-open');
     return;
   }
 
-  document.body.style.overflow = 'hidden';
+  document.body.classList.add('is-splash-open');
 
-  const statusItems = splash.querySelectorAll('.status-item');
-  const completeMsg = splash.querySelector('.splash-complete');
-  const btn = splash.querySelector('.splash-enter');
+  // Fragment Generation
+  const fragmentTexts = [
+    'const app = "portfolio";', 'render(<Portfolio />);', 'PetLog.loaded = true;',
+    'VetFlow.linked = true;', 'firebase.connected();', 'deploy: vercel;',
+    'status: 200 OK;', 'debug.complete();', 'build.success = true;',
+    'api.integrated = true;', 'npm install', 'module.ready();',
+    'route: /projects;', 'UI.flow.ready();', 'particle.engine.stable;'
+  ];
 
-  // Animation Sequence
-  // 0.2s: Logo appears (CSS handles backdrop)
-  setTimeout(() => {
-    splash.classList.add('is-ready'); // Shows code fragments
-  }, 200);
+  const count = window.innerWidth > 768 ? 48 : 12;
+  for (let i = 0; i < count; i++) {
+    const span = document.createElement('span');
+    span.className = 'code-fragment';
+    span.textContent = fragmentTexts[i % fragmentTexts.length];
+    
+    // Random Spatial Props
+    const sx = (Math.random() - 0.5) * 96 + 'vw';
+    const sy = (Math.random() - 0.5) * 84 + 'vh';
+    const sz = (Math.random() * 540 - 360) + 'px';
+    const rot = (Math.random() - 0.5) * 16 + 'deg';
+    const scale = 0.5 + Math.random() * 0.8;
+    const opacity = 0.15 + Math.random() * 0.4;
+    const delay = Math.random() * 0.12 + 's';
 
-  // 0.4s ~ 1.4s: Status lines
+    span.style.setProperty('--start-x', sx);
+    span.style.setProperty('--start-y', sy);
+    span.style.setProperty('--start-z', sz);
+    span.style.setProperty('--rot', rot);
+    span.style.setProperty('--scale', scale);
+    span.style.setProperty('--opacity', opacity);
+    span.style.setProperty('--delay', delay);
+
+    warpField.appendChild(span);
+  }
+
+  function startWarp() {
+    if (splash.classList.contains('is-warping') || splash.classList.contains('is-hidden')) return;
+    
+    sessionStorage.setItem('portfolioSplashSeen', 'true');
+
+    if (prefersReducedMotion) {
+      splash.classList.add('is-hidden');
+      document.body.classList.remove('is-splash-open');
+      return;
+    }
+
+    splash.classList.add('is-warping');
+
+    setTimeout(() => {
+      splash.classList.add('is-hidden');
+      document.body.classList.remove('is-splash-open');
+    }, 850);
+  }
+
+  // Cinematic Sequence
+  setTimeout(() => splash.classList.add('is-ready'), 200);
+
   statusItems.forEach((item, index) => {
     setTimeout(() => {
-      item.classList.add('active');
-      
-      // All lines done
+      item.classList.add('is-visible');
       if (index === statusItems.length - 1) {
-        // 1.5s: Debug Complete
         setTimeout(() => {
-          completeMsg?.classList.add('visible');
-          btn?.classList.add('visible');
-          
-          // 1.7s: Cinematic Absorb Start (if not clicked)
-          setTimeout(() => {
-            if (!splash.classList.contains('is-absorbing')) {
-              startAbsorption();
-            }
-          }, 250);
-        }, 150);
+          completeMsg?.classList.add('is-visible');
+          setTimeout(startWarp, 350); // Final transition trigger
+        }, 250);
       }
-    }, index * 200 + 400);
+    }, 400 + index * 180);
   });
 
-  const startAbsorption = () => {
-    if (splash.classList.contains('is-absorbing')) return;
-    splash.classList.add('is-absorbing');
-    
-    // 0.55s - 0.65s (animation duration) -> close
-    setTimeout(closeSplash, 650);
-  };
-
-  const closeSplash = () => {
-    splash.style.opacity = '0';
-    splash.style.visibility = 'hidden';
-    document.body.style.overflow = 'auto';
-    setTimeout(() => {
-      splash.style.display = 'none';
-      sessionStorage.setItem('splashPlayed', 'true');
-    }, 800);
-  };
-
-  // Immediate triggers
-  enterBtn?.addEventListener('click', startAbsorption);
+  enterBtn?.addEventListener('click', startWarp);
   window.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' || e.key === 'Enter') {
-      startAbsorption();
-    }
+    if (e.key === 'Escape' || e.key === 'Enter') startWarp();
   });
 }
 
