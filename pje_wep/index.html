@@ -1,18 +1,21 @@
 <!DOCTYPE html>
 <html lang="ko">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>박주은 | Fullstack Developer Portfolio</title>
     <meta name="description" content="사용자의 문제를 제품으로 해결하는 Product-Minded Fullstack Developer 박주은의 포트폴리오입니다.">
-    
+
     <!-- Fonts -->
-    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+    <link rel="stylesheet" as="style" crossorigin
+        href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;800&display=swap" rel="stylesheet">
-    
+
     <!-- CSS -->
     <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
     <!-- Custom Cursor -->
     <div id="cursor-dot"></div>
@@ -20,7 +23,7 @@
 
     <!-- Background Interactive Glow -->
     <div class="bg-glow" id="mouse-glow"></div>
-    
+
     <!-- Splash Screen -->
     <div id="splash-screen">
         <div class="splash-content">
@@ -61,6 +64,7 @@
 
     <!-- Hero Section -->
     <header class="hero section">
+        <canvas class="particle-canvas" id="hero-particles" aria-hidden="true"></canvas>
         <div class="container hero-container">
             <div class="hero-badge reveal">Product-Minded Developer</div>
             <h1 class="reveal stagger-1">
@@ -83,8 +87,8 @@
     <section id="about" class="section">
         <div class="container">
             <h2 class="section-title reveal">About Me</h2>
-            <p class="section-subtitle reveal">단순히 코드를 작성하는 것을 넘어, 사용자의 불편함을 발견하고 제품으로 가공하는 과정에 몰입합니다.</p>
-            
+            <p class="section-subtitle reveal">단순히 코드를 작성하는 것을 넘어,<br>사용자의 불편함을 발견하고 제품으로 가공하는 과정에 몰입합니다.</p>
+
             <div class="about-grid">
                 <div class="about-card glass reveal">
                     <h3>Vision</h3>
@@ -101,26 +105,61 @@
     <!-- Core Strength -->
     <section class="section strength">
         <div class="container">
+            <h2 class="section-title reveal">Core Strength</h2>
+            <p class="section-subtitle reveal">제품의 가치를 실현하고 사용자에게 더 나은 경험을 제공하기 위한 핵심 역량입니다.</p>
+            
             <div class="strength-grid">
                 <div class="strength-item reveal">
-                    <div class="icon">💡</div>
+                    <div class="icon-svg">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M12 2v8" />
+                            <path d="m16 6-4 4-4-4" />
+                            <path d="M12 10v12" />
+                            <path d="m8 18 4 4 4-4" />
+                        </svg>
+                    </div>
                     <h3>Product Thinking</h3>
-                    <p>사용자의 문제를 기능으로 연결하고 비즈니스 가치를 고려합니다.</p>
+                    <p>사용자 문제를 기능 요구사항과 서비스 흐름으로 연결합니다.</p>
                 </div>
                 <div class="strength-item reveal">
-                    <div class="icon">🎨</div>
+                    <div class="icon-svg">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect width="18" height="18" x="3" y="3" rx="2" ry="2" />
+                            <line x1="3" x2="21" y1="9" y2="9" />
+                            <line x1="9" x2="9" y1="21" y2="9" />
+                        </svg>
+                    </div>
                     <h3>UI Implementation</h3>
-                    <p>반응형 UI와 매끄러운 인터랙션을 통해 최적의 UX를 제공합니다.</p>
+                    <p>반응형 UI와 인터랙션으로 명확한 사용자 경험을 만듭니다.</p>
                 </div>
                 <div class="strength-item reveal">
-                    <div class="icon">⚙️</div>
+                    <div class="icon-svg">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <ellipse cx="12" cy="5" rx="9" ry="3" />
+                            <path d="M3 5V19A9 3 0 0 0 21 19V5" />
+                            <path d="M3 12A9 3 0 0 0 21 12" />
+                        </svg>
+                    </div>
                     <h3>Fullstack Flow</h3>
-                    <p>인증, DB, API, 배포까지 서비스 전체 아키텍처를 이해합니다.</p>
+                    <p>인증, DB, API, 배포까지 서비스 구현 흐름을 연결합니다.</p>
                 </div>
                 <div class="strength-item reveal">
-                    <div class="icon">🤖</div>
+                    <div class="icon-svg">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path
+                                d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z" />
+                            <path d="M5 3v4" />
+                            <path d="M3 5h4" />
+                            <path d="M21 17v4" />
+                            <path d="M19 19h4" />
+                        </svg>
+                    </div>
                     <h3>AI Integration</h3>
-                    <p>Gemini 등 최신 AI API를 서비스 기능에 유연하게 결합합니다.</p>
+                    <p>AI API 결과를 실제 서비스 기능과 사용자 확인 흐름에 결합합니다.</p>
                 </div>
             </div>
         </div>
@@ -130,54 +169,57 @@
     <section id="projects" class="section projects">
         <div class="container">
             <h2 class="section-title reveal">Projects</h2>
-            <p class="section-subtitle reveal">실제 문제를 해결하기 위해 고민하고 구현한 프로젝트 케이스 스터디입니다.</p>
-            
+            <p class="section-subtitle reveal">실제 문제를 해결하기 위해 고민하고 구현한<br>프로젝트 케이스 스터디입니다.</p>
+
             <div class="projects-grid" id="projects-list">
-                <!-- Featured Project: PetLog -->
-                <article class="project-card compact featured reveal">
-                    <div class="project-img">
+                <!-- Project: PetLog -->
+                <article class="project-card compact reveal stagger-container">
+                    <div class="project-img stagger-item">
                         <img src="assets/screenshots/petlog_banner.jpg" alt="PetLog">
                     </div>
                     <div class="project-info">
-                        <div class="card-header">
+                        <div class="card-header stagger-item">
                             <span class="tag">AI / Fullstack</span>
                             <h3>PetLog</h3>
                         </div>
-                        <p class="card-desc">AI 기반 반려동물 병원비 기록 및 분석 서비스</p>
-                        <div class="card-details">
-                            <div class="detail-item"><strong>Problem:</strong> 복잡한 영수증 항목 관리의 어려움</div>
-                            <div class="detail-item"><strong>Solution:</strong> OCR + Gemini AI 자동 분석 시각화</div>
+                        <div class="card-case-study stagger-item">
+                            <div class="cs-item"><strong>Problem</strong> 영수증 관리의 번거로움</div>
+                            <div class="cs-item"><strong>Solution</strong> OCR + Gemini AI 자동 분석</div>
+                            <div class="cs-item"><strong>Role</strong> UI/UX & Fullstack Dev</div>
+                            <div class="cs-item"><strong>Result</strong> 데이터 기반 병원비 가계부 구현</div>
                         </div>
-                        <div class="card-tech">
-                            <span>React</span><span>TypeScript</span><span>Firebase</span><span>Gemini API</span>
+                        <div class="card-tech stagger-item">
+                            <span>React</span><span>TypeScript</span><span>Firebase</span><span>Gemini</span>
                         </div>
-                        <div class="card-links">
-                            <a href="https://petlogwep.vercel.app/" class="btn-link">Live Web</a>
-                            <a href="https://petlog-eight.vercel.app/" class="btn-link">App</a>
+                        <div class="card-links stagger-item">
+                            <a href="https://petlogwep.vercel.app/" class="btn-pill">Web</a>
+                            <a href="https://petlog-eight.vercel.app/" class="btn-pill">App</a>
                         </div>
                     </div>
                 </article>
 
                 <!-- Project: VetFlow -->
-                <article class="project-card compact reveal">
-                    <div class="project-img">
-                        <img src="assets/screenshots/vetflow.png" alt="VetFlow" onerror="this.src='https://images.unsplash.com/photo-1551288049-bbda48652ad8?auto=format&fit=crop&q=80&w=800'">
+                <article class="project-card compact reveal stagger-container">
+                    <div class="project-img stagger-item">
+                        <img src="assets/screenshots/vetflow.png" alt="VetFlow"
+                            onerror="this.src='https://images.unsplash.com/photo-1551288049-bbda48652ad8?auto=format&fit=crop&q=80&w=800'">
                     </div>
                     <div class="project-info">
-                        <div class="card-header">
+                        <div class="card-header stagger-item">
                             <span class="tag">SaaS / Dashboard</span>
                             <h3>VetFlow</h3>
                         </div>
-                        <p class="card-desc">동물병원 실시간 운영 관리 SaaS 대시보드</p>
-                        <div class="card-details">
-                            <div class="detail-item"><strong>Problem:</strong> 병원 운영 데이터 파편화</div>
-                            <div class="detail-item"><strong>Solution:</strong> 통합 데이터 시각화 및 실시간 워크플로우</div>
+                        <div class="card-case-study stagger-item">
+                            <div class="cs-item"><strong>Problem</strong> 병원 운영 데이터의 파편화</div>
+                            <div class="cs-item"><strong>Solution</strong> 실시간 대시보드 시각화</div>
+                            <div class="cs-item"><strong>Role</strong> Lead Developer (Next.js)</div>
+                            <div class="cs-item"><strong>Result</strong> 통합 운영 관리 SaaS 구축</div>
                         </div>
-                        <div class="card-tech">
-                            <span>Next.js</span><span>TypeScript</span><span>Firebase</span><span>Recharts</span>
+                        <div class="card-tech stagger-item">
+                            <span>Next.js</span><span>TS</span><span>Firebase</span><span>Recharts</span>
                         </div>
-                        <div class="card-links">
-                            <a href="https://vetflow-pi.vercel.app/" class="btn-link">Live Web</a>
+                        <div class="card-links stagger-item">
+                            <a href="https://vetflow-pi.vercel.app/" class="btn-pill">Live Demo</a>
                         </div>
                     </div>
                 </article>
@@ -190,9 +232,9 @@
         <div class="container">
             <h2 class="section-title reveal">Tech Stack</h2>
             <p class="section-subtitle reveal">문제를 해결하기 위해 활용하는 기술 도구들입니다.</p>
-            
-            <div class="skills-grid">
-                <div class="skill-category glass reveal">
+
+            <div class="skills-grid stagger-container reveal">
+                <div class="skill-category glass stagger-item">
                     <h3>Frontend</h3>
                     <div class="skill-list">
                         <div class="skill-item">React</div>
@@ -202,7 +244,7 @@
                         <div class="skill-item">Tailwind</div>
                     </div>
                 </div>
-                <div class="skill-category glass reveal">
+                <div class="skill-category glass stagger-item">
                     <h3>Backend & DB</h3>
                     <div class="skill-list">
                         <div class="skill-item">Firebase</div>
@@ -211,7 +253,7 @@
                         <div class="skill-item">REST API</div>
                     </div>
                 </div>
-                <div class="skill-category glass reveal">
+                <div class="skill-category glass stagger-item">
                     <h3>Design & Tools</h3>
                     <div class="skill-list">
                         <div class="skill-item">Figma</div>
@@ -227,27 +269,29 @@
     <!-- Process Section -->
     <section class="section process">
         <div class="container">
-            <h2 class="section-title reveal">Work Process</h2>
-            <div class="process-steps">
-                <div class="step reveal">
+            <h2 class="section-title reveal">How I Build Products</h2>
+            <p class="section-subtitle reveal">문제를 발견하는 것에서 끝내지 않고, 사용자 흐름, 데이터 구조, UI 구현, 배포 이후 개선까지<br>서비스가 실제로 작동하는
+                과정 전체를 설계합니다.</p>
+            <div class="process-steps reveal-process">
+                <div class="step">
                     <span class="step-num">01</span>
-                    <h3>Problem Definition</h3>
-                    <p>사용자의 불편함을 데이터와 관찰을 통해 정의합니다.</p>
+                    <h3>Define</h3>
+                    <p>사용자 문제를 관찰하고 기능 요구사항으로 정리합니다.</p>
                 </div>
-                <div class="step reveal">
+                <div class="step">
                     <span class="step-num">02</span>
-                    <h3>UI/UX Design</h3>
-                    <p>문제 해결을 위한 최적의 화면 구조와 흐름을 설계합니다.</p>
+                    <h3>Design</h3>
+                    <p>정보 구조와 화면 흐름을 설계해 사용자가 쉽게 행동하도록 만듭니다.</p>
                 </div>
-                <div class="step reveal">
+                <div class="step">
                     <span class="step-num">03</span>
-                    <h3>Development</h3>
-                    <p>안정적이고 확장 가능한 코드로 기능을 구현합니다.</p>
+                    <h3>Build</h3>
+                    <p>UI, 데이터, API 흐름을 연결해 실제 동작하는 서비스로 구현합니다.</p>
                 </div>
-                <div class="step reveal">
+                <div class="step">
                     <span class="step-num">04</span>
-                    <h3>Iterate</h3>
-                    <p>테스트와 피드백을 통해 제품을 완성도 있게 다듬습니다.</p>
+                    <h3>Improve</h3>
+                    <p>테스트와 피드백을 기반으로 안정성과 사용성을 개선합니다.</p>
                 </div>
             </div>
         </div>
@@ -257,8 +301,8 @@
     <section id="experience" class="section">
         <div class="container">
             <h2 class="section-title reveal">Experience & Activities</h2>
-            <p class="section-subtitle reveal">교내 활동과 프로젝트 경험을 통해 협업, 문제 해결, 커뮤니케이션 역량을 쌓아왔습니다.</p>
-            
+            <p class="section-subtitle reveal">교내 활동과 프로젝트 경험을 통해<br>협업, 문제 해결, 커뮤니케이션 역량을 쌓아왔습니다.</p>
+
             <div class="experience-grid reveal">
                 <!-- Item 1: Student Leader -->
                 <article class="exp-card glass">
@@ -266,13 +310,14 @@
                         <span class="exp-time">2025.03 - 2025.06</span>
                         <div class="exp-title-group">
                             <h3>대전과학기술대학교</h3>
-                            <p class="exp-dept">컴퓨터공학 & 그래픽과</p>
+                            <p class="exp-dept">컴퓨터공학 그래픽과</p>
                         </div>
                     </div>
                     <div class="exp-role">학회장 / Department Student Leader</div>
-                    <p class="exp-desc">2025년도 1학기 동안 학과 대표 역할을 맡아 학과 활동 운영과 학생 커뮤니케이션을 조율했습니다. 행사 일정 관리, 구성원 의견 수렴, 교수진과의 소통을 경험하며 협업과 책임감 있는 커뮤니케이션 역량을 쌓았습니다.</p>
+                    <p class="exp-desc">2025학년도 1학기 동안 학과 대표 역할을 맡아 학과 활동 운영과 학생 커뮤니케이션을 조율했습니다. 행사 일정 관리, 구성원 의견 수렴,
+                        교수진과의 소통을 경험하며 협업과 책임감 있는 커뮤니케이션 역량을 쌓았습니다.</p>
                     <div class="exp-tags">
-                        <span>Leadership</span><span>Communication</span><span>Project Coordination</span><span>Responsibility</span><span>Problem Solving</span>
+                        <span>Leadership</span><span>Communication</span><span>Project Coordination</span>
                     </div>
                 </article>
 
@@ -282,29 +327,32 @@
                         <span class="exp-time">2022.10 - 2022.12</span>
                         <div class="exp-title-group">
                             <h3>대전과학기술대학교</h3>
-                            <p class="exp-dept">컴퓨터공학 & 그래픽과</p>
+                            <p class="exp-dept">컴퓨터공학 그래픽과</p>
                         </div>
                     </div>
                     <div class="exp-role">학과홍보요원 / Department PR Assistant</div>
-                    <p class="exp-desc">학과 홍보 콘텐츠를 기획하고 인스타그램, 페이스북 등 SNS 채널 운영과 홍보물 제작을 담당했습니다. 디자인 툴을 활용한 시각 콘텐츠 제작과 정보를 명확하게 전달하는 커뮤니케이션 경험을 쌓았습니다.</p>
+                    <p class="exp-desc">학과 홍보 콘텐츠를 기획하고 SNS 채널 운영과 홍보물 제작을 담당했습니다. 디자인 툴을 활용한 시각 콘텐츠 제작과 정보를 명확하게 전달하는
+                        커뮤니케이션 경험을 쌓았습니다.</p>
                     <div class="exp-tags">
-                        <span>Design</span><span>Content Planning</span><span>SNS Management</span><span>Communication</span><span>Visual Design</span>
+                        <span>Design</span><span>Content Planning</span><span>SNS Management</span>
                     </div>
                 </article>
 
                 <!-- Item 3: Student Researcher -->
                 <article class="exp-card glass">
                     <div class="exp-header">
-                        <span class="exp-time">2022.07 - 2022.12</span>
+                        <span class="exp-time">2022.07 - 2022.11</span>
                         <div class="exp-title-group">
                             <h3>대전과학기술대학교</h3>
                             <p class="exp-dept">LINC3.0 리빙랩 사업</p>
                         </div>
                     </div>
                     <div class="exp-role">학생연구원 / Student Researcher, 042 Team</div>
-                    <p class="exp-desc">지역 사회 문제 해결을 목표로 한 리빙랩 프로젝트에 참여하여 문제 정의, 아이디어 도출, 자료 조사, 기술 적용 가능성 검토 과정을 경험했습니다. 사용자 관점에서 문제를 바라보고 해결 방향을 설계하는 Product Thinking 역량을 기를 수 있었습니다.</p>
+                    <p class="exp-desc">지역 사회 문제 해결을 목표로 한 리빙랩 프로젝트에 참여하여 문제 정의, 아이디어 도출, 자료 조사, 기술 적용 가능성 검토 과정을
+                        경험했습니다. 사용자 관점에서 문제를 바라보고 해결 방향을 설계하는 Product Thinking 역량을 기를 수 있었습니다.</p>
                     <div class="exp-tags">
-                        <span>Research</span><span>Problem Definition</span><span>Product Thinking</span><span>Team Project</span><span>Local Innovation</span>
+                        <span>Research</span><span>Problem Definition</span><span>Product Thinking</span><span>Team
+                            Project</span><span>Local Innovation</span>
                     </div>
                 </article>
             </div>
@@ -315,22 +363,62 @@
     <section class="section">
         <div class="container">
             <h2 class="section-title reveal">Awards</h2>
-            
-            <div class="awards-grid reveal">
-                <div class="award-card glass">
-                    <div class="award-icon">🏆</div>
-                    <h3>최종성과공유회 최우수상</h3>
-                    <p>LINC3.0 리빙랩 사업</p>
+            <p class="section-subtitle reveal">공개 자료로 확인 가능한 수상 이력을 중심으로 정리했습니다.</p>
+
+            <div class="awards-grid">
+                <!-- Award 1 -->
+                <div class="award-card reveal">
+                    <div class="award-header">
+                        <span class="award-date">2022.11</span>
+                        <span class="award-badge">최우수상</span>
+                    </div>
+                    <h3>지역혁신사업 리빙랩 사업 성과공유회</h3>
+                    <div class="award-info">
+                        <p class="org">대전과학기술대학교 042팀</p>
+                        <p class="desc">대전지역 4개 대학이 참여한 배리어프리 리빙랩 사업에서 PM 사용자를 위한 Smart Bump Ramp 성과물을 발표하여 최우수상을
+                            수상했습니다. (2022.11.25)</p>
+                    </div>
+                    <div class="award-links">
+                        <a href="https://www.ccnnews.co.kr/news/articleView.html?idxno=279656&utm_source=chatgpt.com"
+                            target="_blank" rel="noopener noreferrer" class="btn-pill">View Source</a>
+                    </div>
                 </div>
-                <div class="award-card glass">
-                    <div class="award-icon">🥈</div>
-                    <h3>메이커톤 아이디어 경진대회 2등</h3>
-                    <p>LINC3.0 리빙랩 사업</p>
+
+                <!-- Award 2 -->
+                <div class="award-card reveal">
+                    <div class="award-header">
+                        <span class="award-date">2022.09</span>
+                        <span class="award-badge">우수작 선정 / 2등</span>
+                    </div>
+                    <h3>리빙랩 배리어프리 메이커톤 및 아이디어</h3>
+                    <div class="award-info">
+                        <p class="org">042조팀 · 대전과학기술대학교</p>
+                        <p class="desc">4개 대학 연합 리빙랩 경진대회(2022.09.20 - 09.26)에서 퍼스널모빌리티 사용자를 위한 스마트 범프 램프를 제안했고, 우수작으로
+                            선정되었습니다.</p>
+                    </div>
+                    <div class="award-links">
+                        <a href="https://daily.hankooki.com/news/articleView.html?idxno=875958&utm_source=chatgpt.com"
+                            target="_blank" rel="noopener noreferrer" class="btn-pill">View Source</a>
+                    </div>
                 </div>
-                <div class="award-card glass">
-                    <div class="award-icon">🥉</div>
-                    <h3>1인 크리에이터 동영상 컨텐츠 경진대회 우수상</h3>
-                    <p>2022년도 교내 경진대회</p>
+
+                <!-- Award 3 -->
+                <div class="award-card reveal">
+                    <div class="award-header">
+                        <span class="award-date">2022.11</span>
+                        <span class="award-badge">우수상</span>
+                    </div>
+                    <h3>산학협력 EXPO</h3>
+                    <div class="award-info">
+                        <p class="org">컴퓨터공학&그래픽과 · 대전과학기술대학교</p>
+                        <p class="desc">1인 크리에이터 동영상 콘텐츠 경진대회(2022.11.02 - 11.04)에서 우수상을 수상했습니다. (보도일: 2022.11.09)</p>
+                    </div>
+                    <div class="award-links">
+                        <a href="https://www.newsis.com/view/NISX20221109_0002080068" target="_blank"
+                            rel="noopener noreferrer" class="btn-pill">View Source</a>
+                        <a href="https://www.ccnnews.co.kr/news/articleView.html?idxno=275325" target="_blank"
+                            rel="noopener noreferrer" class="btn-pill">Related Article</a>
+                    </div>
                 </div>
             </div>
         </div>
@@ -341,7 +429,7 @@
         <div class="container">
             <h2 class="section-title reveal">Get In Touch</h2>
             <p class="section-subtitle reveal">함께 일하고 싶은 팀이나 궁금한 점이 있다면 언제든 연락주세요.</p>
-            
+
             <div class="contact-links reveal">
                 <a href="mailto:example@email.com" class="contact-item glass magnetic">
                     <span class="icon">📧</span>
@@ -356,7 +444,7 @@
                     <span>LinkedIn</span>
                 </a>
             </div>
-            
+
             <div class="footer-bottom">
                 <p>&copy; 2026 박주은. All rights reserved.</p>
             </div>
@@ -366,4 +454,5 @@
     <!-- Scripts -->
     <script src="script.js"></script>
 </body>
+
 </html>

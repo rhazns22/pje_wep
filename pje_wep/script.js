@@ -13,6 +13,9 @@ document.addEventListener('DOMContentLoaded', () => {
   initSmoothScroll();
   initBackgroundGlow();
   initCustomCursor();
+  initParticles();
+  initHeroMorph();
+  initProcessAnimation();
 });
 
 // 00. Custom Cursor Logic
@@ -160,17 +163,29 @@ function initTyping() {
 
 // 4. Scroll Reveal (IntersectionObserver)
 function initScrollReveal() {
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    document.querySelectorAll('.reveal, .stagger-item').forEach(el => el.classList.add('active'));
+    return;
+  }
+
   const reveals = document.querySelectorAll('.reveal');
   const observerOptions = {
-    threshold: 0.15,
-    rootMargin: '0px 0px -50px 0px'
+    threshold: 0.1,
+    rootMargin: '0px 0px -60px 0px'
   };
   
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
         entry.target.classList.add('active');
-        observer.unobserve(entry.target); // Reveal only once
+        // If it's a stagger container, the items will animate via CSS
+        if (entry.target.classList.contains('stagger-container')) {
+          entry.target.querySelectorAll('.stagger-item').forEach((item, index) => {
+            item.style.transitionDelay = `${index * 0.08}s`;
+            item.classList.add('active');
+          });
+        }
+        observer.unobserve(entry.target);
       }
     });
   }, observerOptions);
@@ -178,7 +193,65 @@ function initScrollReveal() {
   reveals.forEach(reveal => observer.observe(reveal));
 }
 
-// 5. Project Card Interactions (Tilt & Hover) - Optimized for Performance
+// 4-1. Hero Scroll Morph
+function initHeroMorph() {
+  const heroContent = document.querySelector('.hero-content');
+  const heroCanvas = document.getElementById('hero-particles');
+  const gridBg = document.querySelector('.grid-bg');
+  
+  if (!heroContent) return;
+
+  const handleScroll = () => {
+    const scrollY = window.scrollY;
+    // QA: Even smoother fade
+    const opacity = Math.max(0, 1 - scrollY / 1100);
+    const scale = Math.max(0.97, 1 - scrollY / 8000);
+    const translateY = scrollY * 0.12;
+
+    heroContent.style.opacity = opacity;
+    heroContent.style.transform = `translateY(${translateY}px) scale(${scale})`;
+    
+    if (heroCanvas) heroCanvas.style.opacity = opacity * 0.5;
+    if (gridBg) gridBg.style.opacity = 0.2 + (opacity * 0.8);
+  };
+
+  window.addEventListener('scroll', () => {
+    requestAnimationFrame(handleScroll);
+  });
+}
+
+// 4-2. Work Process Animation
+function initProcessAnimation() {
+  const processSection = document.querySelector('.reveal-process');
+  if (!processSection) return;
+
+  const steps = processSection.querySelectorAll('.step');
+  const line = document.getElementById('process-line');
+
+  const observerOptions = {
+    threshold: 0.4,
+    rootMargin: '0px'
+  };
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const stepIndex = Array.from(steps).indexOf(entry.target);
+        
+        // Activate current and previous steps
+        steps.forEach((step, idx) => {
+          if (idx <= stepIndex) {
+            step.classList.add('active');
+          }
+        });
+      }
+    });
+  }, observerOptions);
+
+  steps.forEach(step => observer.observe(step));
+}
+
+// 5. Project Card Interactions (Ultra-Subtle Tilt)
 function initProjectInteractions() {
   if (!window.matchMedia('(pointer: fine)').matches) return;
   
@@ -190,7 +263,6 @@ function initProjectInteractions() {
     
     card.addEventListener('mouseenter', () => {
       rect = card.getBoundingClientRect();
-      card.classList.add('tilting');
     });
     
     card.addEventListener('mousemove', (e) => {
@@ -204,17 +276,17 @@ function initProjectInteractions() {
         const centerX = rect.width / 2;
         const centerY = rect.height / 2;
         
-        const rotateX = (centerY - y) / 30; // Further softened
-        const rotateY = (x - centerX) / 30;
+        // QA: Extremely subtle tilt (divisor increased to 80)
+        const rotateX = (centerY - y) / 80; 
+        const rotateY = (x - centerX) / 80;
         
-        card.style.transform = `perspective(1000px) translateY(-8px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+        card.style.transform = `perspective(2000px) translateY(-5px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
       });
     });
     
     card.addEventListener('mouseleave', () => {
       if (rafId) cancelAnimationFrame(rafId);
-      card.classList.remove('tilting');
-      card.style.transform = `perspective(1000px) translateY(0) rotateX(0) rotateY(0)`;
+      card.style.transform = `perspective(2000px) translateY(0) rotateX(0) rotateY(0)`;
       rect = null;
     });
   });
@@ -256,4 +328,146 @@ function initSmoothScroll() {
       }
     });
   });
+}
+
+// 08. Particle Background Interaction
+function initParticles() {
+  const canvas = document.getElementById('hero-particles');
+  if (!canvas || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+  const ctx = canvas.getContext('2d');
+  let particlesArray = [];
+  let mouse = { x: null, y: null, radius: 100 };
+
+  // Responsive particle count
+  const getParticleCount = () => {
+    const width = window.innerWidth;
+    if (width < 480) return 25;
+    if (width < 768) return 50;
+    return 80;
+  };
+
+  // Adjust canvas size for resolution
+  function handleResize() {
+    const dpr = window.devicePixelRatio || 1;
+    const rect = canvas.getBoundingClientRect();
+    canvas.width = rect.width * dpr;
+    canvas.height = rect.height * dpr;
+    ctx.scale(dpr, dpr);
+    init();
+  }
+
+  class Particle {
+    constructor(x, y) {
+      this.baseX = x;
+      this.baseY = y;
+      this.x = x;
+      this.y = y;
+      this.size = Math.random() * 2 + 1;
+      this.density = (Math.random() * 20) + 1;
+      this.color = Math.random() > 0.5 ? '#4ade80' : '#60a5fa'; // Mint or Blue
+    }
+
+    draw() {
+      ctx.fillStyle = this.color;
+      ctx.beginPath();
+      ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+      ctx.closePath();
+      ctx.fill();
+    }
+
+    update() {
+      let dx = mouse.x - this.x;
+      let dy = mouse.y - this.y;
+      let distance = Math.sqrt(dx * dx + dy * dy);
+      let forceDirectionX = dx / distance;
+      let forceDirectionY = dy / distance;
+      let maxDistance = mouse.radius;
+      let force = (maxDistance - distance) / maxDistance;
+      let directionX = forceDirectionX * force * this.density;
+      let directionY = forceDirectionY * force * this.density;
+
+      if (distance < mouse.radius) {
+        this.x -= directionX;
+        this.y -= directionY;
+      } else {
+        if (this.x !== this.baseX) {
+          let dx = this.x - this.baseX;
+          this.x -= dx / 15;
+        }
+        if (this.y !== this.baseY) {
+          let dy = this.y - this.baseY;
+          this.y -= dy / 15;
+        }
+      }
+    }
+  }
+
+  function init() {
+    particlesArray = [];
+    const count = getParticleCount();
+    const rect = canvas.getBoundingClientRect();
+    for (let i = 0; i < count; i++) {
+      let x = Math.random() * rect.width;
+      let y = Math.random() * rect.height;
+      particlesArray.push(new Particle(x, y));
+    }
+  }
+
+  function connect() {
+    let opacityValue = 1;
+    for (let a = 0; a < particlesArray.length; a++) {
+      for (let b = a; b < particlesArray.length; b++) {
+        let dx = particlesArray[a].x - particlesArray[b].x;
+        let dy = particlesArray[a].y - particlesArray[b].y;
+        let distance = Math.sqrt(dx * dx + dy * dy);
+
+        if (distance < 100) {
+          opacityValue = 1 - (distance / 100);
+          ctx.strokeStyle = `rgba(148, 163, 184, ${opacityValue * 0.2})`; // soft blue/slate
+          ctx.lineWidth = 1;
+          ctx.beginPath();
+          ctx.moveTo(particlesArray[a].x, particlesArray[a].y);
+          ctx.lineTo(particlesArray[b].x, particlesArray[b].y);
+          ctx.stroke();
+        }
+      }
+    }
+  }
+
+  function animate() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    for (let i = 0; i < particlesArray.length; i++) {
+      particlesArray[i].draw();
+      particlesArray[i].update();
+    }
+    connect();
+    requestAnimationFrame(animate);
+  }
+
+  window.addEventListener('mousemove', (event) => {
+    const rect = canvas.getBoundingClientRect();
+    // Only react if mouse is within hero section
+    if (event.clientY <= rect.bottom) {
+      mouse.x = event.clientX;
+      mouse.y = event.clientY - rect.top;
+    } else {
+      mouse.x = undefined;
+      mouse.y = undefined;
+    }
+  });
+
+  // Mobile touch handling - minimalist reaction
+  window.addEventListener('touchstart', (event) => {
+    const rect = canvas.getBoundingClientRect();
+    if (event.touches[0].clientY <= rect.bottom) {
+      mouse.x = event.touches[0].clientX;
+      mouse.y = event.touches[0].clientY - rect.top;
+    }
+  });
+
+  window.addEventListener('resize', handleResize);
+
+  handleResize();
+  animate();
 }
