@@ -60,40 +60,61 @@ function initBackgroundGlow() {
   });
 }
 
-// 1. Splash Intro Logic (JU EUN PARK OS Boot Sequence)
+// 1. Splash Intro Logic (GROVVE OS Debug Sequence)
 function initSplash() {
   const splash = document.getElementById('splash-screen');
   const enterBtn = document.getElementById('enter-portfolio');
   if (!splash) return;
 
-  // DEVELOPMENT TIP: sessionStorage.removeItem('splashPlayed'); to reset
+  // SESSION CHECK: Guidance for dev - sessionStorage.clear() to reset
   if (sessionStorage.getItem('splashPlayed')) {
     splash.style.display = 'none';
     document.body.style.overflow = 'auto';
     return;
   }
 
-  // Prevent scroll during boot
   document.body.style.overflow = 'hidden';
 
   const statusItems = splash.querySelectorAll('.status-item');
-  const readyMsg = splash.querySelector('.splash-ready');
+  const completeMsg = splash.querySelector('.splash-complete');
   const btn = splash.querySelector('.splash-enter');
 
-  // Staggered status line reveal
+  // Animation Sequence
+  // 0.2s: Logo appears (CSS handles backdrop)
+  setTimeout(() => {
+    splash.classList.add('is-ready'); // Shows code fragments
+  }, 200);
+
+  // 0.4s ~ 1.4s: Status lines
   statusItems.forEach((item, index) => {
     setTimeout(() => {
       item.classList.add('active');
       
-      // Show ready state after all lines loaded
+      // All lines done
       if (index === statusItems.length - 1) {
+        // 1.5s: Debug Complete
         setTimeout(() => {
-          if (readyMsg) readyMsg.classList.add('visible');
-          if (btn) btn.classList.add('visible');
-        }, 400);
+          completeMsg?.classList.add('visible');
+          btn?.classList.add('visible');
+          
+          // 1.7s: Cinematic Absorb Start (if not clicked)
+          setTimeout(() => {
+            if (!splash.classList.contains('is-absorbing')) {
+              startAbsorption();
+            }
+          }, 250);
+        }, 150);
       }
-    }, index * 220 + 200);
+    }, index * 200 + 400);
   });
+
+  const startAbsorption = () => {
+    if (splash.classList.contains('is-absorbing')) return;
+    splash.classList.add('is-absorbing');
+    
+    // 0.55s - 0.65s (animation duration) -> close
+    setTimeout(closeSplash, 650);
+  };
 
   const closeSplash = () => {
     splash.style.opacity = '0';
@@ -102,26 +123,16 @@ function initSplash() {
     setTimeout(() => {
       splash.style.display = 'none';
       sessionStorage.setItem('splashPlayed', 'true');
-    }, 600);
+    }, 800);
   };
 
-  // Manual close
-  enterBtn?.addEventListener('click', closeSplash);
-
-  // Keyboard close (ESC)
+  // Immediate triggers
+  enterBtn?.addEventListener('click', startAbsorption);
   window.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape') {
-      closeSplash();
+    if (e.key === 'Escape' || e.key === 'Enter') {
+      startAbsorption();
     }
   });
-
-  // Fallback auto-close (max wait)
-  setTimeout(() => {
-    if (splash.style.display !== 'none') {
-      // We don't force close if user hasn't clicked, 
-      // but if something stalls, we ensure it can't block forever.
-    }
-  }, 5000);
 }
 
 // 2. Navbar Logic

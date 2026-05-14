@@ -24,26 +24,46 @@
     <!-- Background Interactive Glow -->
     <div class="bg-glow" id="mouse-glow"></div>
 
-    <!-- Splash Screen: JU EUN PARK OS Boot Sequence -->
+    <!-- Splash Screen: GROVVE OS Debug Sequence -->
     <div id="splash-screen" class="splash-screen">
-        <div class="splash-terminal">
-            <div class="splash-terminal-header">
-                <span class="dot"></span><span class="dot"></span><span class="dot"></span>
-            </div>
-            <div class="splash-terminal-body">
-                <div class="splash-logo">JU EUN PARK OS</div>
-                <div class="splash-status-list">
-                    <div class="status-item">Initializing Portfolio Modules...</div>
-                    <div class="status-item">[✓] PetLog module loaded</div>
-                    <div class="status-item">[✓] VetFlow dashboard linked</div>
-                    <div class="status-item">[✓] Skills synced</div>
-                    <div class="status-item">[✓] Deployment ready</div>
-                </div>
-                <div class="splash-ready">Portfolio Ready</div>
-                <button id="enter-portfolio" class="splash-enter">Enter Portfolio <span class="key-hint">ESC</span></button>
-            </div>
+        <div class="splash-grid"></div>
+
+        <!-- Code Fragments for Cinematic Absorption -->
+        <div class="code-stream code-stream-left">
+            <span style="--x: -120px; --y: -150px; --target-x: 50vw; --target-y: 50vh;">const app = "GROVVE";</span>
+            <span style="--x: -80px; --y: -50px; --target-x: 50vw; --target-y: 50vh;">firebase.ready()</span>
+            <span style="--x: -150px; --y: 40px; --target-x: 50vw; --target-y: 50vh;">deploy: vercel</span>
+            <span style="--x: -100px; --y: 120px; --target-x: 50vw; --target-y: 50vh;">render(
+                <Portfolio />)
+            </span>
+            <span style="--x: -200px; --y: -80px; --target-x: 50vw; --target-y: 50vh;">status: online</span>
         </div>
-        <div class="scan-line"></div>
+        <div class="code-stream code-stream-right">
+            <span style="--x: 120px; --y: -140px; --target-x: -50vw; --target-y: 50vh;">PetLog.loaded = true</span>
+            <span style="--x: 90px; --y: -30px; --target-x: -50vw; --target-y: 50vh;">VetFlow.linked = true</span>
+            <span style="--x: 160px; --y: 60px; --target-x: -50vw; --target-y: 50vh;">module.synced()</span>
+            <span style="--x: 110px; --y: 150px; --target-x: -50vw; --target-y: 50vh;">npm run build</span>
+            <span style="--x: 220px; --y: -70px; --target-x: -50vw; --target-y: 50vh;">v1.2.4-stable</span>
+        </div>
+
+        <div class="splash-terminal">
+            <p class="splash-label">JU EUN PARK OS</p>
+            <h1 class="splash-title">Running portfolio diagnostics...</h1>
+
+            <ul class="splash-status-list">
+                <li class="status-item">[✓] PetLog module loaded</li>
+                <li class="status-item">[✓] VetFlow dashboard linked</li>
+                <li class="status-item">[✓] Particle engine stable</li>
+                <li class="status-item">[✓] Project links verified</li>
+                <li class="status-item">[✓] Deployment ready</li>
+            </ul>
+
+            <p class="splash-complete">Debug Complete</p>
+
+            <button id="enter-portfolio" class="splash-enter" type="button">
+                Enter Portfolio
+            </button>
+        </div>
     </div>
 
     <!-- Navigation -->
@@ -137,7 +157,7 @@
         <div class="container">
             <h2 class="section-title reveal">Core Strength</h2>
             <p class="section-subtitle reveal">제품의 가치를 실현하고 사용자에게 더 나은 경험을 제공하기 위한 핵심 역량입니다.</p>
-            
+
             <div class="strength-grid">
                 <div class="strength-item reveal">
                     <div class="icon-svg">
@@ -240,8 +260,10 @@
                         </div>
 
                         <div class="project-actions">
-                            <a href="https://petlog-eight.vercel.app/" target="_blank" rel="noopener noreferrer" class="btn-pill pulse">Live App</a>
-                            <a href="https://petlogwep.vercel.app/" target="_blank" rel="noopener noreferrer" class="btn-pill secondary">Project Web</a>
+                            <a href="https://petlog-eight.vercel.app/" target="_blank" rel="noopener noreferrer"
+                                class="btn-pill pulse">Live App</a>
+                            <a href="https://petlogwep.vercel.app/" target="_blank" rel="noopener noreferrer"
+                                class="btn-pill secondary">Project Web</a>
                         </div>
                     </div>
                 </article>
@@ -285,7 +307,8 @@
                         </div>
 
                         <div class="project-actions">
-                            <a href="https://vetflow-pi.vercel.app/" target="_blank" rel="noopener noreferrer" class="btn-pill pulse">Live Demo</a>
+                            <a href="https://vetflow-pi.vercel.app/" target="_blank" rel="noopener noreferrer"
+                                class="btn-pill pulse">Live Demo</a>
                         </div>
                     </div>
                 </article>
@@ -482,7 +505,8 @@
                 </div>
 
                 <div class="why-avatar-card" aria-hidden="true">
-                    <img src="assets/images/avatar-call.png" alt="JU EUN PARK avatar" onerror="this.style.display='none'">
+                    <img src="assets/images/avatar-call.png" alt="JU EUN PARK avatar"
+                        onerror="this.style.display='none'">
                     <span>Frontend · Fullstack</span>
                 </div>
             </div>
@@ -588,7 +612,7 @@
                     </div>
                 </div>
             </div>
-            
+
             <footer class="footer-bottom">
                 <p>&copy; 2026 Ju Eun Park. Built with Passion.</p>
             </footer>

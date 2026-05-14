@@ -298,162 +298,206 @@ img {
 }
 
 /* Splash Screen */
-/* Splash Screen: JU EUN PARK OS Boot Sequence */
+/* Splash Screen: GROVVE OS Debug Sequence */
 .splash-screen {
   position: fixed;
   inset: 0;
   width: 100%;
   height: 100%;
-  background: var(--bg-darker);
+  background: radial-gradient(circle at center, #0f172a 0%, #000 100%);
   z-index: 10000;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1), visibility 0.6s;
+  transition: opacity 0.8s cubic-bezier(0.7, 0, 0.2, 1), visibility 0.8s;
   overflow: hidden;
+  perspective: 1000px;
 }
 
+.splash-grid {
+  position: absolute;
+  inset: 0;
+  background-image: 
+    linear-gradient(rgba(74, 222, 128, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(74, 222, 128, 0.03) 1px, transparent 1px);
+  background-size: 40px 40px;
+  mask-image: radial-gradient(circle at center, black, transparent 80%);
+  pointer-events: none;
+}
+
+/* Code Fragments */
+.code-stream {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.code-stream span {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  font-family: ui-monospace, SFMono-Regular, monospace;
+  font-size: 11px;
+  color: #22d3ee;
+  opacity: 0;
+  white-space: nowrap;
+  transform: translate(var(--x), var(--y));
+  transition: opacity 0.5s ease;
+}
+
+.splash-screen.is-ready .code-stream span {
+  opacity: 0.25;
+}
+
+/* Absorption Animation */
+.splash-screen.is-absorbing .code-stream span {
+  animation: codeAbsorb 0.65s cubic-bezier(0.7, 0, 0.2, 1) forwards;
+}
+
+.splash-screen.is-absorbing .splash-terminal {
+  animation: terminalAbsorb 0.6s cubic-bezier(0.7, 0, 0.2, 1) forwards;
+}
+
+@keyframes codeAbsorb {
+  0% {
+    opacity: 0.25;
+    transform: translate3d(var(--x), var(--y), 0) scale(1);
+    filter: blur(0);
+  }
+  40% {
+    opacity: 0.8;
+    filter: blur(1px);
+  }
+  100% {
+    opacity: 0;
+    transform: translate3d(var(--target-x), var(--target-y), 0) scale(0.1);
+    filter: blur(12px);
+  }
+}
+
+@keyframes terminalAbsorb {
+  to {
+    opacity: 0;
+    transform: scale(0.92) translateZ(-100px);
+    filter: blur(10px);
+  }
+}
+
+/* Terminal Styling */
 .splash-terminal {
-  width: 100%;
-  max-width: 480px;
-  background: #000;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 12px;
-  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.8);
-  padding-bottom: 24px;
+  width: 90%;
+  max-width: 440px;
+  background: rgba(0, 0, 0, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+  padding: 40px;
+  backdrop-filter: blur(20px);
   position: relative;
-  z-index: 2;
+  z-index: 10;
+  text-align: center;
 }
 
-.splash-terminal-header {
-  height: 36px;
-  background: rgba(255, 255, 255, 0.03);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 0 16px;
-}
-
-.splash-terminal-header .dot {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.15);
-}
-
-.splash-terminal-body {
-  padding: 24px 32px;
-  font-family: 'Inter', monospace;
-}
-
-.splash-logo {
-  font-size: 18px;
+.splash-label {
+  font-size: 11px;
   font-weight: 800;
-  letter-spacing: 0.3em;
+  letter-spacing: 0.4em;
   color: var(--accent-primary);
-  margin-bottom: 20px;
-  opacity: 0.9;
-  display: flex;
-  align-items: center;
-  gap: 8px;
+  margin-bottom: 24px;
+  text-transform: uppercase;
 }
 
-.splash-logo::after {
-  content: '_';
-  animation: blink 1s infinite;
-}
-
-@keyframes blink {
-  50% { opacity: 0; }
+.splash-title {
+  font-size: 18px;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 32px;
+  letter-spacing: -0.02em;
 }
 
 .splash-status-list {
   display: flex;
   flex-direction: column;
-  gap: 6px;
-  margin-bottom: 32px;
+  gap: 10px;
+  margin-bottom: 40px;
+  list-style: none;
+  padding: 0;
 }
 
 .status-item {
+  font-family: ui-monospace, SFMono-Regular, monospace;
   font-size: 13px;
-  color: rgba(255, 255, 255, 0.6);
+  color: rgba(255, 255, 255, 0.45);
   opacity: 0;
-  transform: translateY(4px);
+  transform: translateY(10px);
+  text-align: left;
+  max-width: 280px;
+  margin: 0 auto;
 }
 
 .status-item.active {
-  animation: terminalLine 0.4s forwards;
+  animation: revealLine 0.4s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
 }
 
-@keyframes terminalLine {
+@keyframes revealLine {
   to {
     opacity: 1;
     transform: translateY(0);
+    color: rgba(255, 255, 255, 0.85);
   }
 }
 
-.splash-ready {
-  font-size: 12px;
-  font-weight: 700;
-  color: #fff;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  margin-bottom: 16px;
+.splash-complete {
+  font-size: 14px;
+  font-weight: 800;
+  color: var(--accent-primary);
+  margin-bottom: 32px;
   opacity: 0;
-  display: none;
+  transform: scale(0.95);
+  transition: all 0.4s ease;
 }
 
-.splash-ready.visible {
-  display: block;
-  animation: fadeIn 0.5s forwards;
+.splash-complete.visible {
+  opacity: 1;
+  transform: scale(1);
 }
 
 .splash-enter {
-  background: var(--accent-primary);
-  color: #000;
-  border: none;
-  padding: 10px 20px;
-  border-radius: 6px;
+  background: transparent;
+  border: 1px solid var(--accent-primary);
+  color: var(--accent-primary);
+  padding: 12px 28px;
+  border-radius: 100px;
   font-size: 13px;
-  font-weight: 800;
+  font-weight: 700;
   cursor: pointer;
   opacity: 0;
-  display: none;
-  transition: transform 0.2s, background 0.2s;
+  transform: translateY(10px);
+  transition: all 0.3s ease;
 }
 
 .splash-enter.visible {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  animation: fadeInUp 0.5s forwards;
+  opacity: 1;
+  transform: translateY(0);
 }
 
 .splash-enter:hover {
-  transform: translateY(-2px);
-  background: #fff;
+  background: var(--accent-primary);
+  color: #000;
+  box-shadow: 0 0 20px rgba(74, 222, 128, 0.3);
 }
 
-.key-hint {
-  font-size: 10px;
-  opacity: 0.4;
-  font-weight: 400;
-  border: 1px solid rgba(0, 0, 0, 0.1);
-  padding: 2px 4px;
-  border-radius: 4px;
+@media (max-width: 768px) {
+  .splash-terminal { padding: 32px 24px; }
+  .code-stream span:nth-child(n+8) { display: none; }
 }
 
-.scan-line {
-  position: absolute;
-  inset: 0;
-  height: 100%;
-  width: 100%;
-  background: linear-gradient(to bottom, transparent, rgba(74, 222, 128, 0.03), transparent);
-  background-size: 100% 4px;
-  z-index: 1;
-  pointer-events: none;
-  animation: scanLines 8s linear infinite;
+@media (prefers-reduced-motion: reduce) {
+  .splash-screen.is-absorbing .code-stream span,
+  .splash-screen.is-absorbing .splash-terminal {
+    animation: none;
+    opacity: 0;
+  }
 }
 
 @keyframes scanLines {
@@ -1873,7 +1917,7 @@ nav {
 
 /* Why Me Section */
 .why-me {
-  padding: 240px 0;
+  padding: 80px 0;
   background: #000;
   overflow: hidden;
   position: relative;
