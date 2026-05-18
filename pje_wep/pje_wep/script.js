@@ -466,7 +466,7 @@ function initHeaderScroll() {
 function initTyping() {
   const textElement = document.getElementById('typing-text');
   if (!textElement) return;
-  const phrases = ['Fullstack Developer', 'Product Builder', 'UI Engineer'];
+  const phrases = ['Frontend Engineer', 'Product Builder', 'UI Engineer'];
   let phraseIndex = 0;
   let charIndex = 0;
   let isDeleting = false;

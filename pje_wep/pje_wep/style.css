@@ -1778,24 +1778,24 @@ nav.glass.site-header {
 
 /* Compact Experience Card (Subtle hierarchy) */
 .exp-card-compact {
-  padding: 20px;
-  background: rgba(15, 23, 42, 0.25);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  border: 1px dashed rgba(255, 255, 255, 0.12);
-  border-radius: 16px;
+  padding: 16px 20px;
+  background: rgba(255, 255, 255, 0.01);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  border: 1px dashed rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 10px;
   transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
   text-align: left;
 }
 
 .exp-card-compact:hover {
-  border-color: rgba(96, 165, 250, 0.3) !important;
-  background: rgba(15, 23, 42, 0.4);
-  transform: translateY(-3px);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+  border-color: rgba(255, 255, 255, 0.15) !important;
+  background: rgba(255, 255, 255, 0.02);
+  transform: none;
+  box-shadow: none;
 }
 
 .exp-card-compact .compact-header {
