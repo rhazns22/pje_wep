@@ -5,7 +5,7 @@
 
 document.addEventListener('DOMContentLoaded', () => {
   initSplash();
-  initNavbar();
+  initHeaderScroll();
   initTyping();
   initScrollReveal();
   initProjectInteractions();
@@ -13,36 +13,110 @@ document.addEventListener('DOMContentLoaded', () => {
   initSmoothScroll();
   initBackgroundGlow();
   initCustomCursor();
+  initSummaryPeek();
   initParticles();
   initHeroMorph();
   initProcessAnimation();
 });
 
-// 00. Custom Cursor Logic
+// 00. Custom Cursor Logic & Reading Lens
 function initCustomCursor() {
+  if (!window.matchMedia('(pointer: fine)').matches) return;
+
   const dot = document.getElementById('cursor-dot');
   const outline = document.getElementById('cursor-outline');
-  if (!dot || !outline || !window.matchMedia('(pointer: fine)').matches) return;
+  if (!dot || !outline) return;
 
-  window.addEventListener('mousemove', (e) => {
-    const posX = e.clientX;
-    const posY = e.clientY;
+  document.body.classList.add('has-custom-cursor');
 
-    dot.style.left = `${posX}px`;
-    dot.style.top = `${posY}px`;
+  let mouseX = window.innerWidth / 2;
+  let mouseY = window.innerHeight / 2;
+  let outlineX = mouseX;
+  let outlineY = mouseY;
+  let rafId = null;
 
-    // Delay the outline slightly for a trailing effect
-    outline.animate({
-      left: `${posX}px`,
-      top: `${posY}px`
-    }, { duration: 500, fill: "forwards" });
+  const readableSelector = [
+    'p',
+    'li',
+    '.section-subtitle',
+    '.about-card p',
+    '.direction-item p',
+    '.project-heading p',
+    '.project-notes li',
+    '.skill-description',
+    '.quality-item p',
+    '.step p',
+    '.exp-desc',
+    '.award-info .desc',
+    '.contact-command p',
+    '.arch-description'
+  ].join(',');
+
+  const actionSelector = [
+    'a',
+    'button',
+    '.btn',
+    '.btn-pill',
+    '.command-link',
+    '.nav-links a',
+    '.logo',
+    '.menu-toggle'
+  ].join(',');
+
+  const readableTargets = document.querySelectorAll(readableSelector);
+  readableTargets.forEach((target) => {
+    if (target.closest(actionSelector)) return;
+    target.classList.add('is-reading-target');
+
+    target.addEventListener('mouseenter', () => {
+      document.body.classList.add('cursor-reading');
+    });
+
+    target.addEventListener('mouseleave', () => {
+      document.body.classList.remove('cursor-reading');
+    });
   });
 
-  // Hover effect for interactive elements
-  const interactiveElements = document.querySelectorAll('a, button, .project-card, .exp-card, .skill-item');
-  interactiveElements.forEach(el => {
-    el.addEventListener('mouseenter', () => outline.classList.add('hover'));
-    el.addEventListener('mouseleave', () => outline.classList.remove('hover'));
+  const actionTargets = document.querySelectorAll(actionSelector);
+  actionTargets.forEach((target) => {
+    target.addEventListener('mouseenter', () => {
+      document.body.classList.add('cursor-action');
+      document.body.classList.remove('cursor-reading');
+    });
+
+    target.addEventListener('mouseleave', () => {
+      document.body.classList.remove('cursor-action');
+    });
+  });
+
+  window.addEventListener('mousemove', (event) => {
+    mouseX = event.clientX;
+    mouseY = event.clientY;
+
+    dot.style.transform = `translate3d(${mouseX}px, ${mouseY}px, 0) translate(-50%, -50%)`;
+
+    if (!rafId) {
+      rafId = requestAnimationFrame(updateCursor);
+    }
+  }, { passive: true });
+
+  function updateCursor() {
+    outlineX += (mouseX - outlineX) * 0.18;
+    outlineY += (mouseY - outlineY) * 0.18;
+
+    outline.style.transform = `translate3d(${outlineX}px, ${outlineY}px, 0) translate(-50%, -50%)`;
+
+    rafId = requestAnimationFrame(updateCursor);
+  }
+
+  document.addEventListener('mouseleave', () => {
+    dot.style.opacity = '0';
+    outline.style.opacity = '0';
+  });
+
+  document.addEventListener('mouseenter', () => {
+    dot.style.opacity = '0.9';
+    outline.style.opacity = '0.9';
   });
 }
 
@@ -60,93 +134,330 @@ function initBackgroundGlow() {
   });
 }
 
-// 1. Splash Intro Logic (JU EUN PARK OS Boot Sequence)
+// 1. Splash Intro Logic (Portfolio System Wake-up - Soft Cinematic Sequence)
 function initSplash() {
-  const splash = document.getElementById('splash-screen');
-  const enterBtn = document.getElementById('enter-portfolio');
+  const splash = document.getElementById('splash');
   if (!splash) return;
 
-  // DEVELOPMENT TIP: sessionStorage.removeItem('splashPlayed'); to reset
-  if (sessionStorage.getItem('splashPlayed')) {
-    splash.style.display = 'none';
-    document.body.style.overflow = 'auto';
+  const canvas = document.getElementById('splashCoreCanvas');
+  const ctx = canvas.getContext('2d');
+  const brand = splash.querySelector('.splash-brand');
+  const system = splash.querySelector('.splash-system');
+  const compiling = splash.querySelector('.splash-compiling');
+  const statusItems = splash.querySelectorAll('.splash-status-list li');
+  const readyMsg = splash.querySelector('.splash-ready');
+  const enterBtn = document.getElementById('enter-portfolio');
+
+  let width, height, centerX, centerY;
+  let particles = [];
+  let isLaunching = false;
+  let launchStartTime = 0;
+  let launchProgress = 0;
+  let rafId = null;
+
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const alreadySeen = sessionStorage.getItem('portfolioSplashSeen') === 'true';
+
+  if (alreadySeen) {
+    splash.classList.add('is-hidden');
+    document.body.classList.remove('is-splash-open');
+    document.body.classList.add('splash-complete');
+    const mainContent = document.getElementById('main-content');
+    if (mainContent) mainContent.classList.add('is-visible');
     return;
   }
 
-  // Prevent scroll during boot
-  document.body.style.overflow = 'hidden';
+  document.body.classList.add('is-splash-open');
 
-  const statusItems = splash.querySelectorAll('.status-item');
-  const readyMsg = splash.querySelector('.splash-ready');
-  const btn = splash.querySelector('.splash-enter');
+  const fragmentTexts = [
+    'interface.mount()', 'projects.connect()', 'data.flow()',
+    'deploy.target = "vercel"', 'system.status = 200', 'module.init()',
+    'api.integrate()', 'route.ready()', 'component.awake()'
+  ];
 
-  // Staggered status line reveal
-  statusItems.forEach((item, index) => {
-    setTimeout(() => {
-      item.classList.add('active');
+  function lerp(start, end, t) {
+    return start * (1 - t) + end * t;
+  }
+
+  function easeInOutCubic(t) {
+    return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+  }
+
+  function resize() {
+    const dpr = Math.min(2, window.devicePixelRatio || 1);
+    width = window.innerWidth;
+    height = window.innerHeight;
+    canvas.width = width * dpr;
+    canvas.height = height * dpr;
+    ctx.scale(dpr, dpr);
+    centerX = width / 2;
+    centerY = height / 2;
+  }
+
+  function createParticles() {
+    particles = [];
+    let count;
+    if (width > 1024) count = 85; // Desktop
+    else if (width > 768) count = 55; // Tablet
+    else count = 28; // Mobile
+
+    for (let i = 0; i < count; i++) {
+      const isFragment = i % 4 === 0;
+      const angle = Math.random() * Math.PI * 2;
+      const orbitRadius = 120 + Math.random() * (Math.min(width, height) * 0.3);
       
-      // Show ready state after all lines loaded
-      if (index === statusItems.length - 1) {
-        setTimeout(() => {
-          if (readyMsg) readyMsg.classList.add('visible');
-          if (btn) btn.classList.add('visible');
-        }, 400);
+      const x = centerX + Math.cos(angle) * orbitRadius;
+      const y = centerY + Math.sin(angle) * orbitRadius;
+
+      particles.push({
+        text: isFragment ? fragmentTexts[Math.floor(Math.random() * fragmentTexts.length)] : '',
+        type: isFragment ? 'fragment' : 'spark',
+        x: x,
+        y: y,
+        startX: x,
+        startY: y,
+        curveOffsetX: (Math.random() - 0.5) * 160,
+        curveOffsetY: (Math.random() - 0.5) * 160,
+        size: isFragment ? 10 : 1.5,
+        alpha: 0.12 + Math.random() * 0.22,
+        orbitOffset: Math.random() * Math.PI * 2,
+        driftSpeed: 0.0002 + Math.random() * 0.0004
+      });
+    }
+  }
+
+  function draw(time) {
+    ctx.clearRect(0, 0, width, height);
+
+    if (isLaunching && launchStartTime === 0) launchStartTime = time;
+    if (isLaunching) {
+      launchProgress = Math.min(1, (time - launchStartTime) / 1000);
+    }
+
+    const eased = easeInOutCubic(launchProgress);
+
+    // Draw Central Soft Core
+    const corePulse = Math.sin(time / 800) * 3;
+    const coreRadius = isLaunching 
+      ? 80 + eased * 100
+      : 80 + corePulse;
+    const coreAlpha = isLaunching 
+      ? 0.18 + eased * 0.27
+      : 0.15;
+
+    if (launchProgress < 1) {
+      const gradient = ctx.createRadialGradient(centerX, centerY, 0, centerX, centerY, coreRadius);
+      gradient.addColorStop(0, `rgba(74, 222, 128, ${coreAlpha})`);
+      gradient.addColorStop(0.4, `rgba(96, 165, 250, ${coreAlpha * 0.3})`);
+      gradient.addColorStop(1, 'rgba(2, 6, 23, 0)');
+      ctx.fillStyle = gradient;
+      ctx.beginPath();
+      ctx.arc(centerX, centerY, coreRadius, 0, Math.PI * 2);
+      ctx.fill();
+    }
+
+    particles.forEach(p => {
+      if (isLaunching) {
+        // Curved movement toward center
+        const curveX = Math.sin(launchProgress * Math.PI) * p.curveOffsetX;
+        const curveY = Math.sin(launchProgress * Math.PI) * p.curveOffsetY;
+
+        p.x = lerp(p.startX, centerX, eased) + curveX;
+        p.y = lerp(p.startY, centerY, eased) + curveY;
+
+        const currentAlpha = Math.max(0, p.alpha * (1 - eased * 1.2));
+        
+        // Soft Trails
+        const trailLen = Math.min(width > 768 ? 160 : 80, 20 + eased * 140);
+        const dx = centerX - p.x;
+        const dy = centerY - p.y;
+        const angle = Math.atan2(dy, dx);
+
+        ctx.save();
+        ctx.translate(p.x, p.y);
+        ctx.rotate(angle);
+        ctx.globalAlpha = currentAlpha * 0.45;
+        ctx.fillStyle = `rgba(148, 255, 210, 0.25)`;
+        ctx.fillRect(0, -0.5, trailLen, 1);
+        
+        // Object
+        ctx.globalAlpha = currentAlpha;
+        ctx.fillStyle = '#4ade80';
+        if (p.type === 'spark') {
+          ctx.beginPath();
+          ctx.arc(0, 0, p.size, 0, Math.PI * 2);
+          ctx.fill();
+        } else {
+          ctx.font = `${p.size}px ui-monospace, monospace`;
+          ctx.fillText(p.text, 0, 0);
+        }
+        ctx.restore();
+      } else {
+        // Idle Drift
+        const idleAngle = p.orbitOffset + time * p.driftSpeed;
+        const driftX = Math.cos(idleAngle) * 15;
+        const driftY = Math.sin(idleAngle * 0.8) * 15;
+        
+        const currentX = p.startX + driftX;
+        const currentY = p.startY + driftY;
+
+        ctx.globalAlpha = p.alpha;
+        ctx.fillStyle = '#4ade80';
+        if (p.type === 'spark') {
+          ctx.beginPath();
+          ctx.arc(currentX, currentY, p.size, 0, Math.PI * 2);
+          ctx.fill();
+        } else {
+          ctx.font = `${p.size}px ui-monospace, monospace`;
+          ctx.fillText(p.text, currentX, currentY);
+        }
+        // Update current for start point of launch
+        p.x = currentX;
+        p.y = currentY;
       }
-    }, index * 220 + 200);
-  });
+    });
 
-  const closeSplash = () => {
-    splash.style.opacity = '0';
-    splash.style.visibility = 'hidden';
-    document.body.style.overflow = 'auto';
+    if (launchProgress < 1) {
+      rafId = requestAnimationFrame(draw);
+    } else if (isLaunching) {
+      closeSplashFinal();
+    }
+  }
+
+  function startLaunch() {
+    if (isLaunching) return;
+    if (prefersReducedMotion) {
+      closeSplashFinal();
+      return;
+    }
+    isLaunching = true;
+    launchStartTime = 0;
+    // Capture positions at the moment of launch
+    particles.forEach(p => {
+      p.startX = p.x;
+      p.startY = p.y;
+    });
+    splash.classList.add('is-launching');
+  }
+
+  function closeSplashFinal() {
+    cancelAnimationFrame(rafId);
+    splash.classList.add('is-revealing');
+    
     setTimeout(() => {
-      splash.style.display = 'none';
-      sessionStorage.setItem('splashPlayed', 'true');
-    }, 600);
-  };
+      splash.classList.add('is-hidden');
+      document.body.classList.remove('is-splash-open');
+      document.body.classList.add('splash-complete');
+      sessionStorage.setItem('portfolioSplashSeen', 'true');
+      
+      const mainContent = document.getElementById('main-content');
+      if (mainContent) mainContent.classList.add('is-visible');
+    }, 400); // Wait for is-revealing transition
+  }
 
-  // Manual close
-  enterBtn?.addEventListener('click', closeSplash);
+  window.addEventListener('resize', () => {
+    resize();
+    createParticles();
+  });
+  resize();
+  createParticles();
+  rafId = requestAnimationFrame(draw);
 
-  // Keyboard close (ESC)
+  // Timeline Sequence (Softer & Smoother)
+  setTimeout(() => {
+    brand.classList.add('is-visible');
+    system.classList.add('is-visible');
+  }, 200);
+  
+  setTimeout(() => {
+    compiling.classList.add('is-visible');
+    statusItems.forEach((item, index) => {
+      setTimeout(() => {
+        item.classList.add('is-visible');
+      }, index * 250); // Slower reveal (0.25s per item)
+    });
+  }, 450);
+
+  setTimeout(() => {
+    readyMsg.classList.add('is-visible');
+    enterBtn.classList.add('is-visible');
+  }, 1700);
+
+  setTimeout(() => {
+    startLaunch(); // Auto-launch at 1.95s (approx)
+  }, 1950);
+
+  // Triggers
+  enterBtn.addEventListener('click', startLaunch);
   window.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape') {
-      closeSplash();
+    if ((e.key === 'Escape' || e.key === 'Enter') && !alreadySeen && !isLaunching) {
+      startLaunch();
     }
   });
-
-  // Fallback auto-close (max wait)
-  setTimeout(() => {
-    if (splash.style.display !== 'none') {
-      // We don't force close if user hasn't clicked, 
-      // but if something stalls, we ensure it can't block forever.
-    }
-  }, 5000);
 }
 
-// 2. Navbar Logic
-function initNavbar() {
-  const navbar = document.getElementById('navbar');
+// 2. Header Scroll & Mobile Navigation
+function initHeaderScroll() {
+  const header = document.querySelector('.site-header');
   const mobileMenu = document.getElementById('mobile-menu');
-  const nav = document.querySelector('nav');
+  if (!header) return;
+
+  let lastScrollY = window.scrollY;
+  let ticking = false;
+  const threshold = 8;
+
+  function updateHeader() {
+    const currentScrollY = window.scrollY;
+    const scrollDelta = currentScrollY - lastScrollY;
+    const isNavActive = header.classList.contains('nav-active');
+
+    // 1. Position Top Handling
+    if (currentScrollY <= 20) {
+      header.classList.remove('is-hidden', 'is-scrolled');
+      header.classList.add('is-visible');
+      lastScrollY = currentScrollY;
+      ticking = false;
+      return;
+    }
+
+    // 2. Scrolled State
+    header.classList.add('is-scrolled');
+
+    // 3. Direction Handling with Threshold
+    if (Math.abs(scrollDelta) > threshold) {
+      if (scrollDelta > 0 && !isNavActive) {
+        // Scrolling Down & Menu Closed
+        header.classList.add('is-hidden');
+        header.classList.remove('is-visible');
+      } else {
+        // Scrolling Up or Menu Open
+        header.classList.remove('is-hidden');
+        header.classList.add('is-visible');
+      }
+      lastScrollY = currentScrollY;
+    }
+
+    ticking = false;
+  }
 
   window.addEventListener('scroll', () => {
-    if (window.scrollY > 50) {
-      navbar.style.top = '10px';
-      navbar.style.background = 'rgba(10, 10, 12, 0.95)';
-    } else {
-      navbar.style.top = '20px';
-      navbar.style.background = 'var(--glass-bg)';
+    if (!ticking) {
+      window.requestAnimationFrame(updateHeader);
+      ticking = true;
     }
-  });
+  }, { passive: true });
 
-  mobileMenu.addEventListener('click', () => {
-    nav.classList.toggle('nav-active');
-  });
+  // Mobile Menu Toggle
+  if (mobileMenu) {
+    mobileMenu.addEventListener('click', () => {
+      header.classList.toggle('nav-active');
+    });
+  }
 
+  // Close menu on link click
   document.querySelectorAll('.nav-links a').forEach(link => {
     link.addEventListener('click', () => {
-      nav.classList.remove('nav-active');
+      header.classList.remove('nav-active');
     });
   });
 }
@@ -493,4 +804,85 @@ function initParticles() {
 
   handleResize();
   animate();
+}
+
+// 09. Summary Peek Logic
+function initSummaryPeek() {
+  if (!window.matchMedia('(pointer: fine)').matches) return;
+
+  const targets = document.querySelectorAll('[data-summary]');
+  if (!targets.length) return;
+
+  const bubble = document.createElement('div');
+  bubble.className = 'summary-bubble';
+  document.body.appendChild(bubble);
+
+  let activeTarget = null;
+  let mouseX = 0;
+  let mouseY = 0;
+
+  function updatePosition() {
+    const offset = 18;
+    const bubbleRect = bubble.getBoundingClientRect();
+
+    let x = mouseX + offset;
+    let y = mouseY + offset;
+
+    // Check boundary overflows
+    if (x + bubbleRect.width > window.innerWidth - 12) {
+      x = mouseX - bubbleRect.width - offset;
+    }
+
+    if (y + bubbleRect.height > window.innerHeight - 12) {
+      y = mouseY - bubbleRect.height - offset;
+    }
+
+    bubble.style.transform = `translate3d(${x}px, ${y}px, 0)`;
+  }
+
+  function showBubble(target) {
+    const summary = target.getAttribute('data-summary');
+    if (!summary) return;
+
+    activeTarget = target;
+    bubble.textContent = summary;
+    bubble.classList.add('is-visible');
+    updatePosition();
+  }
+
+  function hideBubble() {
+    activeTarget = null;
+    bubble.classList.remove('is-visible');
+  }
+
+  targets.forEach((target) => {
+    target.classList.add('summary-peek');
+
+    if (!target.hasAttribute('tabindex')) {
+      target.setAttribute('tabindex', '0');
+    }
+
+    target.addEventListener('mouseenter', (event) => {
+      mouseX = event.clientX;
+      mouseY = event.clientY;
+      showBubble(target);
+    });
+
+    target.addEventListener('mousemove', (event) => {
+      mouseX = event.clientX;
+      mouseY = event.clientY;
+      if (activeTarget) updatePosition();
+    });
+
+    target.addEventListener('mouseleave', hideBubble);
+
+    target.addEventListener('focus', () => {
+      const rect = target.getBoundingClientRect();
+      mouseX = rect.left + rect.width / 2;
+      mouseY = rect.top + 12;
+      showBubble(target);
+    });
+
+    target.addEventListener('blur', hideBubble);
+  });
 }
