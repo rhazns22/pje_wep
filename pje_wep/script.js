@@ -13,36 +13,110 @@ document.addEventListener('DOMContentLoaded', () => {
   initSmoothScroll();
   initBackgroundGlow();
   initCustomCursor();
+  initSummaryPeek();
   initParticles();
   initHeroMorph();
   initProcessAnimation();
 });
 
-// 00. Custom Cursor Logic
+// 00. Custom Cursor Logic & Reading Lens
 function initCustomCursor() {
+  if (!window.matchMedia('(pointer: fine)').matches) return;
+
   const dot = document.getElementById('cursor-dot');
   const outline = document.getElementById('cursor-outline');
-  if (!dot || !outline || !window.matchMedia('(pointer: fine)').matches) return;
+  if (!dot || !outline) return;
 
-  window.addEventListener('mousemove', (e) => {
-    const posX = e.clientX;
-    const posY = e.clientY;
+  document.body.classList.add('has-custom-cursor');
 
-    dot.style.left = `${posX}px`;
-    dot.style.top = `${posY}px`;
+  let mouseX = window.innerWidth / 2;
+  let mouseY = window.innerHeight / 2;
+  let outlineX = mouseX;
+  let outlineY = mouseY;
+  let rafId = null;
 
-    // Delay the outline slightly for a trailing effect
-    outline.animate({
-      left: `${posX}px`,
-      top: `${posY}px`
-    }, { duration: 500, fill: "forwards" });
+  const readableSelector = [
+    'p',
+    'li',
+    '.section-subtitle',
+    '.about-card p',
+    '.direction-item p',
+    '.project-heading p',
+    '.project-notes li',
+    '.skill-description',
+    '.quality-item p',
+    '.step p',
+    '.exp-desc',
+    '.award-info .desc',
+    '.contact-command p',
+    '.arch-description'
+  ].join(',');
+
+  const actionSelector = [
+    'a',
+    'button',
+    '.btn',
+    '.btn-pill',
+    '.command-link',
+    '.nav-links a',
+    '.logo',
+    '.menu-toggle'
+  ].join(',');
+
+  const readableTargets = document.querySelectorAll(readableSelector);
+  readableTargets.forEach((target) => {
+    if (target.closest(actionSelector)) return;
+    target.classList.add('is-reading-target');
+
+    target.addEventListener('mouseenter', () => {
+      document.body.classList.add('cursor-reading');
+    });
+
+    target.addEventListener('mouseleave', () => {
+      document.body.classList.remove('cursor-reading');
+    });
   });
 
-  // Hover effect for interactive elements
-  const interactiveElements = document.querySelectorAll('a, button, .project-card, .exp-card, .skill-item');
-  interactiveElements.forEach(el => {
-    el.addEventListener('mouseenter', () => outline.classList.add('hover'));
-    el.addEventListener('mouseleave', () => outline.classList.remove('hover'));
+  const actionTargets = document.querySelectorAll(actionSelector);
+  actionTargets.forEach((target) => {
+    target.addEventListener('mouseenter', () => {
+      document.body.classList.add('cursor-action');
+      document.body.classList.remove('cursor-reading');
+    });
+
+    target.addEventListener('mouseleave', () => {
+      document.body.classList.remove('cursor-action');
+    });
+  });
+
+  window.addEventListener('mousemove', (event) => {
+    mouseX = event.clientX;
+    mouseY = event.clientY;
+
+    dot.style.transform = `translate3d(${mouseX}px, ${mouseY}px, 0) translate(-50%, -50%)`;
+
+    if (!rafId) {
+      rafId = requestAnimationFrame(updateCursor);
+    }
+  }, { passive: true });
+
+  function updateCursor() {
+    outlineX += (mouseX - outlineX) * 0.18;
+    outlineY += (mouseY - outlineY) * 0.18;
+
+    outline.style.transform = `translate3d(${outlineX}px, ${outlineY}px, 0) translate(-50%, -50%)`;
+
+    rafId = requestAnimationFrame(updateCursor);
+  }
+
+  document.addEventListener('mouseleave', () => {
+    dot.style.opacity = '0';
+    outline.style.opacity = '0';
+  });
+
+  document.addEventListener('mouseenter', () => {
+    dot.style.opacity = '0.9';
+    outline.style.opacity = '0.9';
   });
 }
 
@@ -730,4 +804,85 @@ function initParticles() {
 
   handleResize();
   animate();
+}
+
+// 09. Summary Peek Logic
+function initSummaryPeek() {
+  if (!window.matchMedia('(pointer: fine)').matches) return;
+
+  const targets = document.querySelectorAll('[data-summary]');
+  if (!targets.length) return;
+
+  const bubble = document.createElement('div');
+  bubble.className = 'summary-bubble';
+  document.body.appendChild(bubble);
+
+  let activeTarget = null;
+  let mouseX = 0;
+  let mouseY = 0;
+
+  function updatePosition() {
+    const offset = 18;
+    const bubbleRect = bubble.getBoundingClientRect();
+
+    let x = mouseX + offset;
+    let y = mouseY + offset;
+
+    // Check boundary overflows
+    if (x + bubbleRect.width > window.innerWidth - 12) {
+      x = mouseX - bubbleRect.width - offset;
+    }
+
+    if (y + bubbleRect.height > window.innerHeight - 12) {
+      y = mouseY - bubbleRect.height - offset;
+    }
+
+    bubble.style.transform = `translate3d(${x}px, ${y}px, 0)`;
+  }
+
+  function showBubble(target) {
+    const summary = target.getAttribute('data-summary');
+    if (!summary) return;
+
+    activeTarget = target;
+    bubble.textContent = summary;
+    bubble.classList.add('is-visible');
+    updatePosition();
+  }
+
+  function hideBubble() {
+    activeTarget = null;
+    bubble.classList.remove('is-visible');
+  }
+
+  targets.forEach((target) => {
+    target.classList.add('summary-peek');
+
+    if (!target.hasAttribute('tabindex')) {
+      target.setAttribute('tabindex', '0');
+    }
+
+    target.addEventListener('mouseenter', (event) => {
+      mouseX = event.clientX;
+      mouseY = event.clientY;
+      showBubble(target);
+    });
+
+    target.addEventListener('mousemove', (event) => {
+      mouseX = event.clientX;
+      mouseY = event.clientY;
+      if (activeTarget) updatePosition();
+    });
+
+    target.addEventListener('mouseleave', hideBubble);
+
+    target.addEventListener('focus', () => {
+      const rect = target.getBoundingClientRect();
+      mouseX = rect.left + rect.width / 2;
+      mouseY = rect.top + 12;
+      showBubble(target);
+    });
+
+    target.addEventListener('blur', hideBubble);
+  });
 }

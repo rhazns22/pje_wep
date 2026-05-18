@@ -121,16 +121,83 @@
         <section id="about" class="section">
             <div class="container">
                 <h2 class="section-title reveal">About Me</h2>
-                <p class="section-subtitle reveal">단순히 코드를 작성하는 것을 넘어,<br>사용자의 불편함을 발견하고 제품으로 가공하는 과정에 몰입합니다.</p>
+                <p class="section-subtitle reveal">디자인을 이해하고, 개발로 구현합니다.<br>사용자가 겪는 불편함을 실제로 동작하는 서비스 흐름으로 바꾸는 데 집중합니다.
+                </p>
 
                 <div class="about-grid">
-                    <div class="about-card glass reveal">
-                        <h3>Vision</h3>
-                        <p>기술은 목적이 아닌 수단입니다. 가장 효율적인 도구로 최고의 사용자 가치를 만드는 개발자가 되는 것이 목표입니다.</p>
+                    <div class="about-card glass reveal"
+                        style="display: flex; flex-direction: column; justify-content: space-between; gap: 16px;">
+                        <h3 style="margin-bottom: 4px;">디자인과 개발의 연결</h3>
+                        <div
+                            style="border-left: 2px solid rgba(74, 222, 128, 0.3); padding-left: 16px; margin: auto 0; display: flex; flex-direction: column; gap: 12px;">
+                            <p
+                                style="font-size: 13px; color: var(--text-secondary); line-height: 1.6; margin: 0; word-break: keep-all;"
+                                data-summary="UI 구성과 서비스 구현 사이의 연결을 중요하게 생각하는 자기소개입니다.">
+                                저는 컴퓨터공학과 그래픽을 전공하며, <strong
+                                    style="color: var(--accent-secondary); font-weight: 600;">UI 구성과 서비스 구현 사이의
+                                    연결</strong>에 관심을 가져왔습니다.
+                            </p>
+                            <p
+                                style="font-size: 13px; color: var(--text-secondary); line-height: 1.6; margin: 0; word-break: keep-all;">
+                                단순히 화면을 만드는 것보다, 사용자가 어떤 흐름으로 기능을 이해하고 사용하는지 고민하며 그 흐름이 <strong
+                                    style="color: var(--text-primary); font-weight: 600;">데이터, UI, 배포</strong>까지 이어지도록
+                                구현하는 과정을 중요하게 생각합니다.
+                            </p>
+                            <p
+                                style="font-size: 13px; color: var(--text-secondary); line-height: 1.6; margin: 0; word-break: keep-all;">
+                                최근에는 <strong style="color: var(--accent-primary); font-weight: 600;">PetLog와
+                                    VetFlow</strong>를 만들며 AI 분석, 사용자 확인 흐름, Firebase 기반 데이터 구조, Vercel 배포까지 이어지는 웹 서비스
+                                제작 경험을 쌓고 있습니다.
+                            </p>
+                        </div>
                     </div>
-                    <div class="about-card glass reveal">
-                        <h3>Approach</h3>
-                        <p>복잡한 문제를 작게 쪼개어 해결하며, 사용자 피드백을 기반으로 지속적으로 개선하는 애자일한 방식을 선호합니다.</p>
+                    <div class="about-card glass reveal"
+                        style="display: flex; flex-direction: column; justify-content: space-between; gap: 16px;">
+                        <h3 style="margin-bottom: 4px;">제가 만들어가는 방향</h3>
+                        <div class="direction-list"
+                            style="display: flex; flex-direction: column; gap: 14px; margin: auto 0;">
+                            <!-- Item 01 -->
+                            <div class="direction-item" style="display: flex; gap: 12px; align-items: flex-start;">
+                                <span class="direction-num"
+                                    style="font-size: 11px; font-weight: 800; color: var(--accent-primary); letter-spacing: 0.05em; line-height: 1.4; padding-top: 2px;">01</span>
+                                <div style="display: flex; flex-direction: column; gap: 4px;">
+                                    <strong
+                                        style="font-size: 14px; font-weight: 600; color: var(--text-primary); line-height: 1.4;">AI를
+                                        기능 흐름에 연결하기</strong>
+                                    <p
+                                        style="font-size: 12.5px; color: var(--text-secondary); line-height: 1.5; margin: 0; word-break: keep-all;">
+                                        AI 결과를 그대로 보여주는 것이 아니라, 사용자가 확인하고 수정할 수 있는 화면 흐름으로 연결합니다.</p>
+                                </div>
+                            </div>
+
+                            <!-- Item 02 -->
+                            <div class="direction-item" style="display: flex; gap: 12px; align-items: flex-start;">
+                                <span class="direction-num"
+                                    style="font-size: 11px; font-weight: 800; color: var(--accent-primary); letter-spacing: 0.05em; line-height: 1.4; padding-top: 2px;">02</span>
+                                <div style="display: flex; flex-direction: column; gap: 4px;">
+                                    <strong
+                                        style="font-size: 14px; font-weight: 600; color: var(--text-primary); line-height: 1.4;">데이터를
+                                        검토 가능한 기록으로 만들기</strong>
+                                    <p
+                                        style="font-size: 12.5px; color: var(--text-secondary); line-height: 1.5; margin: 0; word-break: keep-all;">
+                                        분석 결과, 입력값, 저장 데이터가 사용자의 확인 과정을 거쳐 기록되도록 설계합니다.</p>
+                                </div>
+                            </div>
+
+                            <!-- Item 03 -->
+                            <div class="direction-item" style="display: flex; gap: 12px; align-items: flex-start;">
+                                <span class="direction-num"
+                                    style="font-size: 11px; font-weight: 800; color: var(--accent-primary); letter-spacing: 0.05em; line-height: 1.4; padding-top: 2px;">03</span>
+                                <div style="display: flex; flex-direction: column; gap: 4px;">
+                                    <strong
+                                        style="font-size: 14px; font-weight: 600; color: var(--text-primary); line-height: 1.4;">기획부터
+                                        배포까지 연결하기</strong>
+                                    <p
+                                        style="font-size: 12.5px; color: var(--text-secondary); line-height: 1.5; margin: 0; word-break: keep-all;">
+                                        아이디어와 화면 설계에서 끝나지 않고, 실제 배포된 웹 서비스로 이어지는 제작 과정을 경험하고 있습니다.</p>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -216,7 +283,7 @@
 
                             <div class="project-heading">
                                 <h3>PetLog</h3>
-                                <p>AI 기반 반려동물 병원비 기록 및 분석 서비스</p>
+                                <p data-summary="영수증을 AI 분석 초안으로 바꾸고, 사용자가 확인한 뒤 저장하는 서비스입니다.">AI 기반 반려동물 병원비 기록 및 분석 서비스</p>
                             </div>
 
                             <div class="project-info-grid">
@@ -263,7 +330,7 @@
 
                             <div class="project-heading">
                                 <h3>VetFlow</h3>
-                                <p>동물병원 운영 흐름을 관리하는 SaaS 대시보드</p>
+                                <p data-summary="동물병원 운영 흐름을 실시간 대시보드로 관리하는 프로젝트입니다.">동물병원 운영 흐름을 관리하는 SaaS 대시보드</p>
                             </div>
 
                             <div class="project-info-grid">
@@ -300,40 +367,242 @@
             </div>
         </section>
 
+        <!-- Project Architecture Section -->
+        <section id="architecture" class="section architecture">
+            <div class="container">
+                <h2 class="section-title reveal">Project Architecture</h2>
+                <p class="section-subtitle reveal">
+                    프로젝트가 단순 화면 구현에 그치지 않고,<br>
+                    데이터 입력부터 분석, 검토, 저장, 배포까지 어떤 흐름으로 동작하는지 정리했습니다.
+                </p>
+
+                <div class="architecture-grid stagger-container reveal">
+                    <!-- Card 1: PetLog -->
+                    <article class="architecture-card glass stagger-item">
+                        <div class="arch-card-header">
+                            <span class="arch-badge" style="color: var(--accent-primary); background: rgba(74, 222, 128, 0.08); border-color: rgba(74, 222, 128, 0.16);">PETLOG</span>
+                            <h3>PetLog Architecture</h3>
+                        </div>
+                        <p class="arch-description">
+                            영수증 이미지를 AI 분석 초안으로 변환하고, 사용자가 확인한 뒤 데이터로 저장되는 흐름을 중심으로 설계했습니다.
+                        </p>
+                        <div class="flow-container">
+                            <span class="flow-pill">Receipt Image</span>
+                            <span class="flow-arrow">→</span>
+                            <span class="flow-pill ai">Gemini OCR</span>
+                            <span class="flow-arrow">→</span>
+                            <span class="flow-pill ai">Medical Analysis Engine</span>
+                            <span class="flow-arrow">→</span>
+                            <span class="flow-pill">User Review</span>
+                            <span class="flow-arrow">→</span>
+                            <span class="flow-pill db">Firebase Save</span>
+                            <span class="flow-arrow">→</span>
+                            <span class="flow-pill">Report / Care Record</span>
+                        </div>
+                    </article>
+
+                    <!-- Card 2: VetFlow -->
+                    <article class="architecture-card glass stagger-item">
+                        <div class="arch-card-header">
+                            <span class="arch-badge">VETFLOW</span>
+                            <h3>VetFlow Architecture</h3>
+                        </div>
+                        <p class="arch-description">
+                            병원 운영 데이터를 역할과 화면 흐름에 맞게 정리하고, 실시간 대시보드에서 업무 상태를 확인할 수 있는 구조로 구성했습니다.
+                        </p>
+                        <div class="flow-container">
+                            <span class="flow-pill">Hospital Data</span>
+                            <span class="flow-arrow">→</span>
+                            <span class="flow-pill db">Auth / Role</span>
+                            <span class="flow-arrow">→</span>
+                            <span class="flow-pill ai">Realtime Dashboard</span>
+                            <span class="flow-arrow">→</span>
+                            <span class="flow-pill">Task Monitoring</span>
+                            <span class="flow-arrow">→</span>
+                            <span class="flow-pill">Operation View</span>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+
         <!-- Tech Stack Section -->
         <section id="skills" class="section skills">
             <div class="container">
                 <h2 class="section-title reveal">Tech Stack</h2>
-                <p class="section-subtitle reveal">문제를 해결하기 위해 활용하는 기술 도구들입니다.</p>
+                <p class="section-subtitle reveal">
+                    디자인 툴, 웹 기본기, 프론트엔드, AI API, 데이터 연동, 배포와 AI 활용 흐름까지<br>
+                    서비스 제작 과정에서 사용한 기술들을 정리했습니다.
+                </p>
 
-                <div class="skills-grid stagger-container reveal">
-                    <div class="skill-category glass stagger-item">
-                        <h3>React / TypeScript</h3>
-                        <p class="skill-desc">컴포넌트 단위 UI 설계와 타입 기반 데이터 흐름 관리</p>
-                        <div class="skill-list">
-                            <div class="skill-item">Component Architecture</div>
-                            <div class="skill-item">Type Safety</div>
-                            <div class="skill-item">Custom Hooks</div>
+                <div class="skill-card-grid stagger-container reveal">
+                    <!-- Card 1: Design & UI/UX -->
+                    <article class="skill-card glass stagger-item" data-level="85">
+                        <div class="skill-card-top">
+                            <span class="skill-category">Design</span>
+                            <strong>Design & UI/UX</strong>
                         </div>
-                    </div>
-                    <div class="skill-category glass stagger-item">
-                        <h3>Firebase / Firestore</h3>
-                        <p class="skill-desc">사용자별 데이터 저장 구조와 실시간 상태 관리</p>
-                        <div class="skill-list">
-                            <div class="skill-item">NoSQL Modeling</div>
-                            <div class="skill-item">Security Rules</div>
-                            <div class="skill-item">Auth Flow</div>
+                        <p class="skill-tools">Photoshop · Illustrator · Figma · UI/UX</p>
+                        <p class="skill-description">
+                            디자인 툴을 활용한 화면 구성, 시각 디자인, UI 흐름 설계 경험
+                        </p>
+                        <div class="skill-meter">
+                            <div class="skill-meter-head">
+                                <span>프로젝트 경험 기반 자체 숙련도</span>
+                                <strong>85%</strong>
+                            </div>
+                            <div class="skill-bar">
+                                <span style="--level: 85%;"></span>
+                            </div>
                         </div>
-                    </div>
-                    <div class="skill-category glass stagger-item">
-                        <h3>Gemini API / Vercel</h3>
-                        <p class="skill-desc">AI 분석 결과의 서비스화 및 안정적인 배포 환경 운영</p>
-                        <div class="skill-list">
-                            <div class="skill-item">Prompt Engineering</div>
-                            <div class="skill-item">CI/CD Pipeline</div>
-                            <div class="skill-item">Edge Functions</div>
+                    </article>
+
+                    <!-- Card 2: HTML / CSS / JavaScript -->
+                    <article class="skill-card glass stagger-item" data-level="78">
+                        <div class="skill-card-top">
+                            <span class="skill-category">Web Basics</span>
+                            <strong>HTML / CSS / JavaScript</strong>
                         </div>
-                    </div>
+                        <p class="skill-tools">HTML · CSS · JavaScript</p>
+                        <p class="skill-description">
+                            정적 웹 페이지, 반응형 레이아웃, 기본 인터랙션 구현 경험
+                        </p>
+                        <div class="skill-meter">
+                            <div class="skill-meter-head">
+                                <span>프로젝트 경험 기반 자체 숙련도</span>
+                                <strong>78%</strong>
+                            </div>
+                            <div class="skill-bar">
+                                <span style="--level: 78%;"></span>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- Card 3: React / TypeScript -->
+                    <article class="skill-card glass stagger-item" data-level="72">
+                        <div class="skill-card-top">
+                            <span class="skill-category">Frontend</span>
+                            <strong>React / TypeScript</strong>
+                        </div>
+                        <p class="skill-tools">React · TypeScript</p>
+                        <p class="skill-description">
+                            컴포넌트 기반 UI 구현과 타입 기반 프론트엔드 개발 경험
+                        </p>
+                        <div class="skill-meter">
+                            <div class="skill-meter-head">
+                                <span>프로젝트 경험 기반 자체 숙련도</span>
+                                <strong>72%</strong>
+                            </div>
+                            <div class="skill-bar">
+                                <span style="--level: 72%;"></span>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- Card 4: Gemini API / Vercel -->
+                    <article class="skill-card glass stagger-item" data-level="82">
+                        <div class="skill-card-top">
+                            <span class="skill-category">AI / Deploy</span>
+                            <strong>Gemini API / Vercel</strong>
+                        </div>
+                        <p class="skill-tools">Gemini API · Vercel</p>
+                        <p class="skill-description">
+                            AI API 연동과 Vercel 기반 웹 서비스 배포 경험
+                        </p>
+                        <div class="skill-meter">
+                            <div class="skill-meter-head">
+                                <span>프로젝트 경험 기반 자체 숙련도</span>
+                                <strong>82%</strong>
+                            </div>
+                            <div class="skill-bar">
+                                <span style="--level: 82%;"></span>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- Card 5: Firebase / Firestore -->
+                    <article class="skill-card glass stagger-item" data-level="78">
+                        <div class="skill-card-top">
+                            <span class="skill-category">Backend</span>
+                            <strong>Firebase / Firestore</strong>
+                        </div>
+                        <p class="skill-tools">Firebase Auth · Firestore · Storage</p>
+                        <p class="skill-description">
+                            인증, 사용자별 데이터 저장, 실시간 데이터 흐름 구현 경험
+                        </p>
+                        <div class="skill-meter">
+                            <div class="skill-meter-head">
+                                <span>프로젝트 경험 기반 자체 숙련도</span>
+                                <strong>78%</strong>
+                            </div>
+                            <div class="skill-bar">
+                                <span style="--level: 78%;"></span>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- Card 6: MySQL / Data Flow -->
+                    <article class="skill-card glass stagger-item" data-level="60">
+                        <div class="skill-card-top">
+                            <span class="skill-category">Database</span>
+                            <strong>MySQL / Data Flow</strong>
+                        </div>
+                        <p class="skill-tools">MySQL · Database Connection</p>
+                        <p class="skill-description">
+                            MySQL 연동과 기본적인 데이터 저장/조회 흐름 구현 경험
+                        </p>
+                        <div class="skill-meter">
+                            <div class="skill-meter-head">
+                                <span>프로젝트 경험 기반 자체 숙련도</span>
+                                <strong>60%</strong>
+                            </div>
+                            <div class="skill-bar">
+                                <span style="--level: 60%;"></span>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- Card 7: AI Tools / Workflow -->
+                    <article class="skill-card glass stagger-item" data-level="85">
+                        <div class="skill-card-top">
+                            <span class="skill-category">AI Workflow</span>
+                            <strong>AI Tools / Workflow</strong>
+                        </div>
+                        <p class="skill-tools">ChatGPT · Antigravity · Gemini</p>
+                        <p class="skill-description">
+                            AI 도구를 활용한 기획, 구현 지시, 오류 분석, 프론트엔드 개선 흐름 운영 경험
+                        </p>
+                        <div class="skill-meter">
+                            <div class="skill-meter-head">
+                                <span>프로젝트 경험 기반 자체 숙련도</span>
+                                <strong>85%</strong>
+                            </div>
+                            <div class="skill-bar">
+                                <span style="--level: 85%;"></span>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- Card 8: Product / UI Flow -->
+                    <article class="skill-card glass stagger-item" data-level="80">
+                        <div class="skill-card-top">
+                            <span class="skill-category">Product</span>
+                            <strong>Product / UI Flow</strong>
+                        </div>
+                        <p class="skill-tools">UX Writing · Flow Design · QA</p>
+                        <p class="skill-description">
+                            사용자 흐름, 확인 단계, 예외 처리, 서비스 개선 방향을 구조화한 경험
+                        </p>
+                        <div class="skill-meter">
+                            <div class="skill-meter-head">
+                                <span>프로젝트 경험 기반 자체 숙련도</span>
+                                <strong>80%</strong>
+                            </div>
+                            <div class="skill-bar">
+                                <span style="--level: 80%;"></span>
+                            </div>
+                        </div>
+                    </article>
                 </div>
 
                 <!-- Code Quality Focus -->
@@ -414,6 +683,25 @@
                 <p class="section-subtitle reveal">교내 활동과 프로젝트 경험을 통해<br>협업, 문제 해결, 커뮤니케이션 역량을 쌓아왔습니다.</p>
 
                 <div class="experience-grid reveal">
+                    <!-- Item 0: AI Vibe Coding Course -->
+                    <article class="exp-card glass">
+                        <div class="exp-header">
+                            <span class="exp-time">2026.03 - 2026.06</span>
+                            <div class="exp-title-group">
+                                <h3 style="word-break: keep-all;">[NCS산대특] AI 바이브코딩 웹비즈니스 구축 및 마케팅 실전과정</h3>
+                                <p class="exp-dept">교육 과정 수료</p>
+                            </div>
+                        </div>
+                        <div class="exp-role">수료 / Training Completion</div>
+                        <p class="exp-desc" data-summary="AI 도구를 활용해 웹 제작, 구현 지시, 마케팅 흐름을 학습한 교육 수료 이력입니다.">AI 도구를 활용한 웹 서비스 제작 흐름, 프론트엔드 구현 지시, 웹비즈니스 구조, 마케팅 실무 흐름을 학습했습니다. 포트폴리오 웹,
+                            PetLog, VetFlow 프로젝트를 개선하며 AI 기반 제작 방식과 실제 배포 중심의 작업 흐름을 정리했습니다.</p>
+                        <div class="exp-tags">
+                            <span>AI Vibe Coding</span><span>Web
+                                Business</span><span>Frontend</span><span>Marketing</span><span>Prompt
+                                Engineering</span>
+                        </div>
+                    </article>
+
                     <!-- Item 1: Student Leader -->
                     <article class="exp-card glass">
                         <div class="exp-header">
@@ -424,7 +712,8 @@
                             </div>
                         </div>
                         <div class="exp-role">학회장 / Department Student Leader</div>
-                        <p class="exp-desc">2025학년도 1학기 동안 학과 대표 역할을 맡아 학과 활동 운영과 학생 커뮤니케이션을 조율했습니다. 행사 일정 관리, 구성원 의견 수렴,
+                        <p class="exp-desc" data-summary="학과 대표로 활동하며 일정 관리, 의견 조율, 교수진 소통을 경험했습니다.">2025학년도 1학기 동안 학과 대표 역할을 맡아 학과 활동 운영과 학생 커뮤니케이션을 조율했습니다. 행사 일정 관리, 구성원 의견
+                            수렴,
                             교수진과의 소통을 경험하며 협업과 책임감 있는 커뮤니케이션 역량을 쌓았습니다.</p>
                         <div class="exp-tags">
                             <span>Leadership</span><span>Communication</span><span>Project Coordination</span>
@@ -441,7 +730,8 @@
                             </div>
                         </div>
                         <div class="exp-role">학과홍보요원 / Department PR Assistant</div>
-                        <p class="exp-desc">학과 홍보 콘텐츠를 기획하고 SNS 채널 운영과 홍보물 제작을 담당했습니다. 디자인 툴을 활용한 시각 콘텐츠 제작과 정보를 명확하게 전달하는
+                        <p class="exp-desc" data-summary="학과 홍보 콘텐츠와 SNS 운영을 담당한 디자인·커뮤니케이션 경험입니다.">학과 홍보 콘텐츠를 기획하고 SNS 채널 운영과 홍보물 제작을 담당했습니다. 디자인 툴을 활용한 시각 콘텐츠 제작과 정보를 명확하게
+                            전달하는
                             커뮤니케이션 경험을 쌓았습니다.</p>
                         <div class="exp-tags">
                             <span>Design</span><span>Content Planning</span><span>SNS Management</span>
@@ -458,7 +748,7 @@
                             </div>
                         </div>
                         <div class="exp-role">학생연구원 / Student Researcher, 042 Team</div>
-                        <p class="exp-desc">지역 사회 문제 해결을 목표로 한 리빙랩 프로젝트에 참여하여 문제 정의, 아이디어 도출, 자료 조사, 기술 적용 가능성 검토 과정을
+                        <p class="exp-desc" data-summary="지역 문제 해결을 위한 리빙랩 프로젝트에서 문제 정의와 아이디어 도출을 경험했습니다.">지역 사회 문제 해결을 목표로 한 리빙랩 프로젝트에 참여하여 문제 정의, 아이디어 도출, 자료 조사, 기술 적용 가능성 검토 과정을
                             경험했습니다. 사용자 관점에서 문제를 바라보고 해결 방향을 설계하는 Product Thinking 역량을 기를 수 있었습니다.</p>
                         <div class="exp-tags">
                             <span>Research</span><span>Problem Definition</span><span>Product Thinking</span><span>Team
@@ -513,7 +803,8 @@
                         <h3>지역혁신사업 리빙랩 사업 성과공유회</h3>
                         <div class="award-info">
                             <p class="org">대전과학기술대학교 042팀</p>
-                            <p class="desc">대전지역 4개 대학이 참여한 배리어프리 리빙랩 사업에서 PM 사용자를 위한 Smart Bump Ramp 성과물을 발표했으며, 학과 공개 기록 기준 최우수상 수상 이력이 확인됩니다. (2022.11.25)</p>
+                            <p class="desc" data-summary="PM 사용자를 위한 Smart Bump Ramp 성과물을 발표한 리빙랩 수상 이력입니다.">대전지역 4개 대학이 참여한 배리어프리 리빙랩 사업에서 PM 사용자를 위한 Smart Bump Ramp 성과물을 발표했으며, 학과 공개
+                                기록 기준 최우수상 수상 이력이 확인됩니다. (2022.11.25)</p>
                         </div>
                         <div class="award-links">
                             <a href="https://www.ccnnews.co.kr/news/articleView.html?idxno=279656&utm_source=chatgpt.com"
@@ -530,7 +821,8 @@
                         <h3>리빙랩 배리어프리 메이커톤 및 아이디어</h3>
                         <div class="award-info">
                             <p class="org">042조팀 · 대전과학기술대학교</p>
-                            <p class="desc">4개 대학 연합 리빙랩 경진대회(2022.09.20 - 09.26)에서 퍼스널모빌리티 사용자를 위한 스마트 범프 램프를 제안했고, 우수작으로
+                            <p class="desc" data-summary="배리어프리 아이디어 경진대회에서 스마트 범프 램프를 제안한 이력입니다.">4개 대학 연합 리빙랩 경진대회(2022.09.20 - 09.26)에서 퍼스널모빌리티 사용자를 위한 스마트 범프 램프를 제안했고,
+                                우수작으로
                                 선정되었습니다.</p>
                         </div>
                         <div class="award-links">
@@ -548,7 +840,8 @@
                         <h3>산학협력 EXPO</h3>
                         <div class="award-info">
                             <p class="org">컴퓨터공학&그래픽과 · 대전과학기술대학교</p>
-                            <p class="desc">1인 크리에이터 동영상 콘텐츠 경진대회(2022.11.02 - 11.04)에서 우수상을 수상했습니다. (보도일: 2022.11.09)</p>
+                            <p class="desc" data-summary="산학협력 EXPO 콘텐츠 경진대회 우수상 수상 이력입니다.">1인 크리에이터 동영상 콘텐츠 경진대회(2022.11.02 - 11.04)에서 우수상을 수상했습니다. (보도일: 2022.11.09)
+                            </p>
                         </div>
                         <div class="award-links">
                             <a href="https://www.newsis.com/view/NISX20221109_0002080068" target="_blank"
