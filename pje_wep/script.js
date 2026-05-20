@@ -3,6 +3,10 @@
   Vanilla JavaScript Interactivity Engine (Lightweight Version)
 */
 
+// Remove no-js and add js to html element instantly
+document.documentElement.classList.remove('no-js');
+document.documentElement.classList.add('js');
+
 document.addEventListener('DOMContentLoaded', () => {
   initHeroVideo();
   initSplash();
@@ -281,6 +285,13 @@ function initSplash() {
       startLaunch();
     }
   });
+
+  // 1.5초 후 자동 진입 처리 (사용자 경험 향상)
+  setTimeout(() => {
+    if (sessionStorage.getItem('portfolioSplashSeen') !== 'true') {
+      startLaunch();
+    }
+  }, 1500);
 }
 
 /*
@@ -334,13 +345,17 @@ function initHeaderScroll() {
 
   if (mobileMenu) {
     mobileMenu.addEventListener('click', () => {
-      header.classList.toggle('nav-active');
+      const isActive = header.classList.toggle('nav-active');
+      mobileMenu.setAttribute('aria-expanded', isActive ? 'true' : 'false');
     });
   }
 
   document.querySelectorAll('.nav-links a').forEach(link => {
     link.addEventListener('click', () => {
       header.classList.remove('nav-active');
+      if (mobileMenu) {
+        mobileMenu.setAttribute('aria-expanded', 'false');
+      }
     });
   });
 }
@@ -613,3 +628,27 @@ function initSummaryPeek() {
     target.addEventListener('blur', hideBubble);
   });
 }
+
+// Copy Email Logic
+document.addEventListener('DOMContentLoaded', () => {
+  const copyBtn = document.getElementById('copy-email-btn');
+  if (copyBtn) {
+    copyBtn.addEventListener('click', () => {
+      const email = 'pje698112@naver.com';
+      navigator.clipboard.writeText(email).then(() => {
+        const originalText = copyBtn.innerText;
+        copyBtn.innerText = '✓ Copied';
+        copyBtn.style.borderColor = 'var(--accent-primary)';
+        copyBtn.style.color = 'var(--accent-primary)';
+        
+        setTimeout(() => {
+          copyBtn.innerText = originalText;
+          copyBtn.style.borderColor = '';
+          copyBtn.style.color = '';
+        }, 1500);
+      }).catch(err => {
+        console.error('Failed to copy: ', err);
+      });
+    });
+  }
+});
