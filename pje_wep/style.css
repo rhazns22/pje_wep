@@ -813,6 +813,92 @@ body.is-splash-open {
   color: var(--accent-primary);
 }
 
+/* 01.5 Profile Blueprint Section */
+.profile-blueprint {
+  position: relative;
+  overflow: hidden;
+}
+.profile-grid {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: 30px;
+  margin-top: 30px;
+}
+.profile-intro-panel {
+  background: var(--bg-panel);
+  border: 1px solid var(--glass-border);
+  border-radius: 16px;
+  box-shadow: var(--glass-shadow);
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+.profile-intro-panel .panel-header {
+  background: #090c15;
+  border-bottom: 1px solid var(--glass-border);
+  padding: 14px 20px;
+  margin-bottom: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.profile-intro-body {
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  justify-content: center;
+  flex-grow: 1;
+}
+.profile-intro-body p {
+  font-size: 0.92rem;
+  color: var(--text-secondary);
+  line-height: 1.75;
+  word-break: keep-all;
+}
+.profile-cards-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  justify-content: space-between;
+}
+.profile-spec-card {
+  background: var(--bg-card);
+  border: 1px solid var(--glass-border);
+  border-radius: 12px;
+  padding: 22px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  position: relative;
+  overflow: hidden;
+}
+.profile-spec-card:hover {
+  border-color: rgba(13, 255, 194, 0.35);
+  background: rgba(13, 255, 194, 0.02);
+  box-shadow: 0 8px 30px rgba(13, 255, 194, 0.05);
+  transform: translateY(-2px);
+}
+.spec-card-icon {
+  font-size: 0.65rem;
+  font-weight: 700;
+  color: var(--accent-primary);
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+.spec-card-title {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+.spec-card-desc {
+  font-size: 0.82rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  word-break: keep-all;
+}
+
 /* 02 Featured Case Study Styles */
 .featured-case-study {
   position: relative;
@@ -1644,6 +1730,13 @@ body.is-splash-open {
   .contact-meta-display {
     border-left: none;
     padding-left: 0;
+  }
+  .profile-grid {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+  .profile-cards-stack {
+    gap: 16px;
   }
 }
 
