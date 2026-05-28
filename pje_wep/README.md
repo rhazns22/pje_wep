@@ -1,10 +1,10 @@
-# Product-Minded Frontend Engineer Portfolio
+﻿# Product-Minded Frontend Engineer Portfolio
 
 <div align="center">
   <img src="assets/images/jppimg.png" alt="Ju Eun Park Banner" />
 
   <p align="center">
-    <strong>사용자 흐름과 데이터 연결을 구현하는 프론트엔드 엔지니어, 박주은입니다.</strong>
+    <strong>사용자 흐름과 데이터 연결을 실제 서비스 형태로 구현하는 프론트엔드 엔지니어, 박주은입니다.</strong>
   </p>
 
   <p align="center">
@@ -31,11 +31,11 @@
 
 ## Engineering Philosophy & Value
 
-단순한 화면 구현에 그치지 않고, 기획과 UI 설계, API 연동, 데이터 흐름, 배포까지 이어지는 웹 서비스 제작 흐름을 경험하고 있습니다.
+단순한 화면 구현에 그치지 않고, 기획과 UI 설계, API 연동, 데이터 흐름, 배포까지 이어지는 실제 서비스 제작 흐름을 경험하고 있습니다.
 
 * **문제를 구조화하기**: 사용자가 겪는 불편함을 기능 요구사항과 화면 흐름 단위로 정리합니다.
 * **디자인을 UI 코드로 구현하기**: 시각적 완성도뿐 아니라 컴포넌트 재사용성과 반응형 레이아웃을 고려해 화면을 구현합니다.
-* **데이터 흐름 연결하기**: Firebase Auth, Firestore, MySQL, Gemini API를 활용해 인증, 데이터 저장, AI API 연동 흐름을 프론트엔드 기능과 연결합니다.
+* **데이터 흐름 연결하기**: Firebase Auth, Firestore, MySQL, Gemini API를 사용해 인증, 데이터 저장, AI API 연동 흐름을 프론트엔드 기능과 연결합니다.
 
 ---
 
@@ -45,15 +45,15 @@
 | :--- | :--- | :--- |
 | **Frontend** | React, TypeScript, HTML5, CSS3, JavaScript | 컴포넌트 기반 UI 구현, 반응형 레이아웃, 기본 인터랙션 구현 경험 |
 | **Data & API Integration** | Firebase Auth, Firestore, Storage, MySQL | 인증 흐름, 사용자별 데이터 저장, 기본 CRUD 흐름 구현 경험 |
-| **AI API** | Gemini API | OCR 분석 초안 생성, 에러 처리, 사용자 확인 흐름 연결 경험 |
+| **AI API** | Gemini API | OCR 분석 초안 생성, 오류 처리, 사용자 확인 흐름 연결 경험 |
 | **Design** | Figma, Photoshop, Illustrator | 화면 구성, UI 흐름 설계, 시각 디자인 경험 |
-| **Deployment & Workflow** | Vercel, Git, ChatGPT, Antigravity | 배포, 오류 분석, AI 도구 기반 구현 지시 및 개선 흐름 경험 |
+| **Deployment & Workflow** | Vercel, Git, ChatGPT, Antigravity | 배포, 오류 분석, AI 도구 기반 구현 지원 및 개선 흐름 경험 |
 
 ---
 
 ## Main Projects
 
-### 1. PetLog  
+### 1. PetLog
 **AI 기반 반려동물 병원비 기록 및 분석 서비스**
 
 영수증 이미지를 AI 분석 초안으로 변환하고, 사용자가 확인한 뒤 데이터로 저장되는 서비스입니다.
@@ -64,25 +64,29 @@
 **Core Flow**
 
 1. 사용자가 영수증 이미지를 업로드합니다.
-2. Gemini OCR을 활용해 병원명, 날짜, 항목, 금액 정보를 분석합니다.
+2. Gemini OCR을 사용해 병원명, 날짜, 항목, 금액 정보를 분석합니다.
 3. AI 분석 결과를 바로 저장하지 않고, 사용자가 확인하고 수정할 수 있는 검토 단계를 거칩니다.
 4. 확인된 데이터는 Firebase Firestore에 저장됩니다.
 5. AI 분석이 어려운 경우 수기 입력 fallback 흐름을 제공합니다.
 
 ---
 
-### 2. VetFlow  
-**동물병원 운영 흐름을 관리하는 SaaS형 대시보드**
+### 2. Chaengim
+**정부 혜택 탐색과 신청 준비 관리를 돕는 풀스택 PWA 프로젝트**
 
-동물병원의 업무 상태, 역할별 화면 흐름, 운영 데이터를 대시보드 형태로 정리한 프로젝트입니다.
+챙김은 여러 기관 사이트에 흩어진 정부 혜택 정보를 탐색하고, 관심 혜택의 신청 준비 상태와 마감 일정을 한 곳에서 관리할 수 있도록 설계한 모바일 앱형 PWA입니다.
 
-* **Live Demo**: [VetFlow 바로가기](https://vetflow-pi.vercel.app/)
+* **Project Web**: [Chaengim 상세 설명 웹](https://chaengimweb.vercel.app/)
+* **Live App**: 준비 중
+* **GitHub**: 준비 중
 
 **Core Flow**
 
-1. 역할에 따라 화면 뷰와 접근 흐름을 나눕니다.
-2. 미처리 업무와 대기 환자 상태를 대시보드에서 확인할 수 있도록 구성합니다.
-3. 복잡한 운영 데이터를 카드, 타임라인, 상태 표시 UI로 정리합니다.
+1. GOV24 공공데이터 API를 백엔드에서 동기화하고 Prisma/MySQL 데이터 구조로 저장합니다.
+2. 사용자 프로필 기반 Rule-based Scoring으로 추천 후보를 계산합니다.
+3. Gemini API는 자격 판정이 아니라 사용자가 이해하기 쉬운 추천 이유 생성에만 사용합니다.
+4. 사용자는 관심 혜택을 저장하고 신청 상태, 체크리스트, D-Day 일정을 관리합니다.
+5. 최종 신청 가능 여부는 공식 기관 사이트에서 확인하도록 책임 범위를 분리했습니다.
 
 ---
 
@@ -96,3 +100,4 @@ graph TD
     B --> C[Custom Cursor]
     C --> D[Summary Peek]
     D --> E[Responsive Layout]
+```
