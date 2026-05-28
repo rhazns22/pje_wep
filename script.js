@@ -1,9 +1,14 @@
 /* 
-  박주은 Portfolio Refined Interactivity
-  Stable version with Splash Intro & Compact UI
+  박주은 Portfolio - Blueprint & Pipeline Engine
+  Vanilla JavaScript Interactivity Engine (Lightweight Version)
 */
 
+// Remove no-js and add js to html element instantly
+document.documentElement.classList.remove('no-js');
+document.documentElement.classList.add('js');
+
 document.addEventListener('DOMContentLoaded', () => {
+  initHeroVideo();
   initSplash();
   initHeaderScroll();
   initTyping();
@@ -14,12 +19,112 @@ document.addEventListener('DOMContentLoaded', () => {
   initBackgroundGlow();
   initCustomCursor();
   initSummaryPeek();
-  initParticles();
   initHeroMorph();
-  initProcessAnimation();
 });
 
-// 00. Custom Cursor Logic & Reading Lens
+/*
+  [00. Hero Video Autoplay Management]
+  - 비디오 자동재생 및 브라우저 미디어 정책 충돌 우회를 위한 책임 전담 장치입니다.
+  - 일시정지, 브라우저 백그라운드 전환, 페이지 쇼 등의 이벤트를 감시하여 재생을 안정적으로 유지합니다.
+*/
+function initHeroVideo() {
+  const video = document.querySelector('.custom-video-bg');
+  if (!video) return;
+
+  video.muted = true;
+  video.defaultMuted = true;
+  video.playsInline = true;
+  video.loop = true;
+
+  video.setAttribute('muted', '');
+  video.setAttribute('playsinline', '');
+  video.setAttribute('webkit-playsinline', '');
+  video.setAttribute('loop', '');
+
+  const tryPlay = () => {
+    const playPromise = video.play();
+
+    if (playPromise !== undefined) {
+      playPromise
+        .then(() => {
+          video.classList.remove('video-fallback');
+          video.dataset.autoplayBlocked = 'false';
+        })
+        .catch(() => {
+          // 자동재생 차단은 파일 오류가 아니므로 비디오를 숨기지 않는다.
+          video.dataset.autoplayBlocked = 'true';
+        });
+    }
+  };
+
+  video.addEventListener('loadeddata', () => {
+    video.classList.remove('video-fallback');
+  });
+
+  video.addEventListener('canplay', () => {
+    video.classList.remove('video-fallback');
+  });
+
+  video.addEventListener('playing', () => {
+    video.classList.remove('video-fallback');
+    video.dataset.autoplayBlocked = 'false';
+    console.log('[HeroVideo] playing');
+  });
+
+  video.addEventListener('pause', () => {
+    // pause만으로 fallback 처리하지 않는다.
+    console.log('[HeroVideo] pause');
+    if (!document.hidden && !video.ended) {
+      setTimeout(tryPlay, 300);
+    }
+  });
+
+  video.addEventListener('error', () => {
+    // 실제 파일 로드/디코딩 오류일 때만 숨긴다.
+    console.log('[HeroVideo] error');
+    video.classList.add('video-fallback');
+  });
+
+  document.addEventListener('visibilitychange', () => {
+    if (!document.hidden) tryPlay();
+  });
+
+  window.addEventListener('pageshow', tryPlay);
+  window.addEventListener('click', tryPlay, { once: true, passive: true });
+  window.addEventListener('touchstart', tryPlay, { once: true, passive: true });
+
+  // 비디오가 처음부터 끊김 없이 항시 재생되도록 시작
+  tryPlay();
+
+  // 패럴랙스(움직임) 및 스크롤 연동 투명도 제어 함수
+  const handleScroll = () => {
+    const scrollY = window.scrollY;
+
+    // 1. 패럴랙스: 기기 높이(Viewport Height)에 맞추어 유동적으로 스크롤 짤림을 방지
+    // scale(1.2)로 상하 10%의 여유 마진을 확보하고, 최대 위로 이동하는 한계값을 4%(-4vh)로 고정하여 절대 잘리지 않도록 설계
+    const translateY = Math.max(-4, -scrollY * 0.015);
+    video.style.transform = `scale(1.2) translateY(${translateY}vh)`;
+
+    // 2. 스크롤 연동 페이드: 사용자가 아래로 스크롤할수록 비디오를 점점 어둡게 만들어 콘텐츠에 몰입할 수 있도록 유도
+    // 최상단(scrollY=0)에서는 0.15로 밝기를 유지하고, 800px에 걸쳐 0.03까지 부드럽게 낮아져 매우 깊고 은은한 백그라운드로 전환됩니다.
+    const fadeProgress = Math.min(1, scrollY / 800);
+    const targetOpacity = 0.15 - (fadeProgress * 0.12);
+    video.style.opacity = targetOpacity;
+  };
+
+  window.addEventListener('scroll', () => {
+    requestAnimationFrame(handleScroll);
+  }, { passive: true });
+
+  // 초기 렌더링 시점에 한 번 동작
+  handleScroll();
+}
+
+/*
+  [01. Custom Cursor Logic]
+  - 마우스처럼 정밀한 포인터가 있는 환경(PC)에서만 커스텀 커서를 실행합니다.
+  - 텍스트 위에 올라가면 읽기 모드(cursor-reading), 버튼/링크/카드 위에 올라가면 액션 모드(cursor-action)로 전환합니다.
+*/
 function initCustomCursor() {
   if (!window.matchMedia('(pointer: fine)').matches) return;
 
@@ -35,21 +140,14 @@ function initCustomCursor() {
   let outlineY = mouseY;
   let rafId = null;
 
+  // 읽기 타겟 클래스 지정
   const readableSelector = [
     'p',
     'li',
     '.section-subtitle',
-    '.about-card p',
-    '.direction-item p',
-    '.project-heading p',
-    '.project-notes li',
-    '.skill-description',
-    '.quality-item p',
-    '.step p',
-    '.exp-desc',
-    '.award-info .desc',
-    '.contact-command p',
-    '.arch-description'
+    '.project-brief',
+    '.log-desc',
+    '.contact-prompt-panel p'
   ].join(',');
 
   const actionSelector = [
@@ -57,10 +155,10 @@ function initCustomCursor() {
     'button',
     '.btn',
     '.btn-pill',
-    '.command-link',
-    '.nav-links a',
+    '.console-link',
     '.logo',
-    '.menu-toggle'
+    '.menu-toggle',
+    '.project-blueprint-card'
   ].join(',');
 
   const readableTargets = document.querySelectorAll(readableSelector);
@@ -120,283 +218,86 @@ function initCustomCursor() {
   });
 }
 
-// 0. Background Glow Follow
+/*
+  [02. Background Mouse Glow]
+  - 마우스 위치를 CSS 변수 --mouse-x, --mouse-y에 전달하여 미세한 레이저 글로우 배경을 적용합니다.
+*/
 function initBackgroundGlow() {
   const glow = document.getElementById('mouse-glow');
   if (!glow || !window.matchMedia('(pointer: fine)').matches) return;
 
   window.addEventListener('mousemove', (e) => {
-    const x = e.clientX;
-    const y = e.clientY;
-    
-    document.documentElement.style.setProperty('--mouse-x', `${x}px`);
-    document.documentElement.style.setProperty('--mouse-y', `${y}px`);
+    document.documentElement.style.setProperty('--mouse-x', `${e.clientX}px`);
+    document.documentElement.style.setProperty('--mouse-y', `${e.clientY}px`);
   });
 }
 
-// 1. Splash Intro Logic (Portfolio System Wake-up - Soft Cinematic Sequence)
+/*
+  [03. Splash Intro Logic]
+  - 무거운 canvas 파티클 렌더링을 걷어내고, 가벼운 텍스트 부팅 시퀀스로 리팩토링했습니다.
+  - 세션 스토리지를 활용해 동일 탭에서는 중복 재생을 안정적으로 차단합니다.
+*/
 function initSplash() {
   const splash = document.getElementById('splash');
   if (!splash) return;
 
-  const canvas = document.getElementById('splashCoreCanvas');
-  const ctx = canvas.getContext('2d');
-  const brand = splash.querySelector('.splash-brand');
-  const system = splash.querySelector('.splash-system');
-  const compiling = splash.querySelector('.splash-compiling');
-  const statusItems = splash.querySelectorAll('.splash-status-list li');
-  const readyMsg = splash.querySelector('.splash-ready');
   const enterBtn = document.getElementById('enter-portfolio');
-
-  let width, height, centerX, centerY;
-  let particles = [];
-  let isLaunching = false;
-  let launchStartTime = 0;
-  let launchProgress = 0;
-  let rafId = null;
-
   const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const alreadySeen = sessionStorage.getItem('portfolioSplashSeen') === 'true';
 
   if (alreadySeen) {
-    splash.classList.add('is-hidden');
-    document.body.classList.remove('is-splash-open');
-    document.body.classList.add('splash-complete');
-    const mainContent = document.getElementById('main-content');
-    if (mainContent) mainContent.classList.add('is-visible');
+    skipSplash();
     return;
   }
 
   document.body.classList.add('is-splash-open');
 
-  const fragmentTexts = [
-    'interface.mount()', 'projects.connect()', 'data.flow()',
-    'deploy.target = "vercel"', 'system.status = 200', 'module.init()',
-    'api.integrate()', 'route.ready()', 'component.awake()'
-  ];
-
-  function lerp(start, end, t) {
-    return start * (1 - t) + end * t;
-  }
-
-  function easeInOutCubic(t) {
-    return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
-  }
-
-  function resize() {
-    const dpr = Math.min(2, window.devicePixelRatio || 1);
-    width = window.innerWidth;
-    height = window.innerHeight;
-    canvas.width = width * dpr;
-    canvas.height = height * dpr;
-    ctx.scale(dpr, dpr);
-    centerX = width / 2;
-    centerY = height / 2;
-  }
-
-  function createParticles() {
-    particles = [];
-    let count;
-    if (width > 1024) count = 85; // Desktop
-    else if (width > 768) count = 55; // Tablet
-    else count = 28; // Mobile
-
-    for (let i = 0; i < count; i++) {
-      const isFragment = i % 4 === 0;
-      const angle = Math.random() * Math.PI * 2;
-      const orbitRadius = 120 + Math.random() * (Math.min(width, height) * 0.3);
-      
-      const x = centerX + Math.cos(angle) * orbitRadius;
-      const y = centerY + Math.sin(angle) * orbitRadius;
-
-      particles.push({
-        text: isFragment ? fragmentTexts[Math.floor(Math.random() * fragmentTexts.length)] : '',
-        type: isFragment ? 'fragment' : 'spark',
-        x: x,
-        y: y,
-        startX: x,
-        startY: y,
-        curveOffsetX: (Math.random() - 0.5) * 160,
-        curveOffsetY: (Math.random() - 0.5) * 160,
-        size: isFragment ? 10 : 1.5,
-        alpha: 0.12 + Math.random() * 0.22,
-        orbitOffset: Math.random() * Math.PI * 2,
-        driftSpeed: 0.0002 + Math.random() * 0.0004
-      });
-    }
-  }
-
-  function draw(time) {
-    ctx.clearRect(0, 0, width, height);
-
-    if (isLaunching && launchStartTime === 0) launchStartTime = time;
-    if (isLaunching) {
-      launchProgress = Math.min(1, (time - launchStartTime) / 1000);
-    }
-
-    const eased = easeInOutCubic(launchProgress);
-
-    // Draw Central Soft Core
-    const corePulse = Math.sin(time / 800) * 3;
-    const coreRadius = isLaunching 
-      ? 80 + eased * 100
-      : 80 + corePulse;
-    const coreAlpha = isLaunching 
-      ? 0.18 + eased * 0.27
-      : 0.15;
-
-    if (launchProgress < 1) {
-      const gradient = ctx.createRadialGradient(centerX, centerY, 0, centerX, centerY, coreRadius);
-      gradient.addColorStop(0, `rgba(74, 222, 128, ${coreAlpha})`);
-      gradient.addColorStop(0.4, `rgba(96, 165, 250, ${coreAlpha * 0.3})`);
-      gradient.addColorStop(1, 'rgba(2, 6, 23, 0)');
-      ctx.fillStyle = gradient;
-      ctx.beginPath();
-      ctx.arc(centerX, centerY, coreRadius, 0, Math.PI * 2);
-      ctx.fill();
-    }
-
-    particles.forEach(p => {
-      if (isLaunching) {
-        // Curved movement toward center
-        const curveX = Math.sin(launchProgress * Math.PI) * p.curveOffsetX;
-        const curveY = Math.sin(launchProgress * Math.PI) * p.curveOffsetY;
-
-        p.x = lerp(p.startX, centerX, eased) + curveX;
-        p.y = lerp(p.startY, centerY, eased) + curveY;
-
-        const currentAlpha = Math.max(0, p.alpha * (1 - eased * 1.2));
-        
-        // Soft Trails
-        const trailLen = Math.min(width > 768 ? 160 : 80, 20 + eased * 140);
-        const dx = centerX - p.x;
-        const dy = centerY - p.y;
-        const angle = Math.atan2(dy, dx);
-
-        ctx.save();
-        ctx.translate(p.x, p.y);
-        ctx.rotate(angle);
-        ctx.globalAlpha = currentAlpha * 0.45;
-        ctx.fillStyle = `rgba(148, 255, 210, 0.25)`;
-        ctx.fillRect(0, -0.5, trailLen, 1);
-        
-        // Object
-        ctx.globalAlpha = currentAlpha;
-        ctx.fillStyle = '#4ade80';
-        if (p.type === 'spark') {
-          ctx.beginPath();
-          ctx.arc(0, 0, p.size, 0, Math.PI * 2);
-          ctx.fill();
-        } else {
-          ctx.font = `${p.size}px ui-monospace, monospace`;
-          ctx.fillText(p.text, 0, 0);
-        }
-        ctx.restore();
-      } else {
-        // Idle Drift
-        const idleAngle = p.orbitOffset + time * p.driftSpeed;
-        const driftX = Math.cos(idleAngle) * 15;
-        const driftY = Math.sin(idleAngle * 0.8) * 15;
-        
-        const currentX = p.startX + driftX;
-        const currentY = p.startY + driftY;
-
-        ctx.globalAlpha = p.alpha;
-        ctx.fillStyle = '#4ade80';
-        if (p.type === 'spark') {
-          ctx.beginPath();
-          ctx.arc(currentX, currentY, p.size, 0, Math.PI * 2);
-          ctx.fill();
-        } else {
-          ctx.font = `${p.size}px ui-monospace, monospace`;
-          ctx.fillText(p.text, currentX, currentY);
-        }
-        // Update current for start point of launch
-        p.x = currentX;
-        p.y = currentY;
-      }
-    });
-
-    if (launchProgress < 1) {
-      rafId = requestAnimationFrame(draw);
-    } else if (isLaunching) {
-      closeSplashFinal();
-    }
+  function skipSplash() {
+    splash.classList.add('is-hidden');
+    document.body.classList.remove('is-splash-open');
+    document.body.classList.add('splash-complete');
+    const mainContent = document.getElementById('main-content');
+    if (mainContent) mainContent.classList.add('is-visible');
   }
 
   function startLaunch() {
-    if (isLaunching) return;
-    if (prefersReducedMotion) {
-      closeSplashFinal();
-      return;
-    }
-    isLaunching = true;
-    launchStartTime = 0;
-    // Capture positions at the moment of launch
-    particles.forEach(p => {
-      p.startX = p.x;
-      p.startY = p.y;
-    });
-    splash.classList.add('is-launching');
+    splash.classList.add('is-hidden');
+    document.body.classList.remove('is-splash-open');
+    document.body.classList.add('splash-complete');
+    const mainContent = document.getElementById('main-content');
+    if (mainContent) mainContent.classList.add('is-visible');
+    sessionStorage.setItem('portfolioSplashSeen', 'true');
   }
 
-  function closeSplashFinal() {
-    cancelAnimationFrame(rafId);
-    splash.classList.add('is-revealing');
-    
-    setTimeout(() => {
-      splash.classList.add('is-hidden');
-      document.body.classList.remove('is-splash-open');
-      document.body.classList.add('splash-complete');
-      sessionStorage.setItem('portfolioSplashSeen', 'true');
-      
-      const mainContent = document.getElementById('main-content');
-      if (mainContent) mainContent.classList.add('is-visible');
-    }, 400); // Wait for is-revealing transition
+  if (prefersReducedMotion) {
+    skipSplash();
+    return;
   }
 
-  window.addEventListener('resize', () => {
-    resize();
-    createParticles();
-  });
-  resize();
-  createParticles();
-  rafId = requestAnimationFrame(draw);
+  // 버튼 클릭 시 포트폴리오 진입
+  if (enterBtn) {
+    enterBtn.addEventListener('click', startLaunch);
+  }
 
-  // Timeline Sequence (Softer & Smoother)
-  setTimeout(() => {
-    brand.classList.add('is-visible');
-    system.classList.add('is-visible');
-  }, 200);
-  
-  setTimeout(() => {
-    compiling.classList.add('is-visible');
-    statusItems.forEach((item, index) => {
-      setTimeout(() => {
-        item.classList.add('is-visible');
-      }, index * 250); // Slower reveal (0.25s per item)
-    });
-  }, 450);
-
-  setTimeout(() => {
-    readyMsg.classList.add('is-visible');
-    enterBtn.classList.add('is-visible');
-  }, 1700);
-
-  setTimeout(() => {
-    startLaunch(); // Auto-launch at 1.95s (approx)
-  }, 1950);
-
-  // Triggers
-  enterBtn.addEventListener('click', startLaunch);
+  // ESC 또는 Enter 키 입력 시 포트폴리오 진입
   window.addEventListener('keydown', (e) => {
-    if ((e.key === 'Escape' || e.key === 'Enter') && !alreadySeen && !isLaunching) {
+    if ((e.key === 'Escape' || e.key === 'Enter') && sessionStorage.getItem('portfolioSplashSeen') !== 'true') {
       startLaunch();
     }
   });
+
+  // 1.5초 후 자동 진입 처리 (사용자 경험 향상)
+  setTimeout(() => {
+    if (sessionStorage.getItem('portfolioSplashSeen') !== 'true') {
+      startLaunch();
+    }
+  }, 1500);
 }
 
-// 2. Header Scroll & Mobile Navigation
+/*
+  [04. Header Scroll Navigation]
+  - 스크롤 이동 시 헤더 네비게이션바의 노출 상태를 자연스럽게 제어합니다.
+*/
 function initHeaderScroll() {
   const header = document.querySelector('.site-header');
   const mobileMenu = document.getElementById('mobile-menu');
@@ -411,7 +312,6 @@ function initHeaderScroll() {
     const scrollDelta = currentScrollY - lastScrollY;
     const isNavActive = header.classList.contains('nav-active');
 
-    // 1. Position Top Handling
     if (currentScrollY <= 20) {
       header.classList.remove('is-hidden', 'is-scrolled');
       header.classList.add('is-visible');
@@ -420,17 +320,13 @@ function initHeaderScroll() {
       return;
     }
 
-    // 2. Scrolled State
     header.classList.add('is-scrolled');
 
-    // 3. Direction Handling with Threshold
     if (Math.abs(scrollDelta) > threshold) {
       if (scrollDelta > 0 && !isNavActive) {
-        // Scrolling Down & Menu Closed
         header.classList.add('is-hidden');
         header.classList.remove('is-visible');
       } else {
-        // Scrolling Up or Menu Open
         header.classList.remove('is-hidden');
         header.classList.add('is-visible');
       }
@@ -447,26 +343,31 @@ function initHeaderScroll() {
     }
   }, { passive: true });
 
-  // Mobile Menu Toggle
   if (mobileMenu) {
     mobileMenu.addEventListener('click', () => {
-      header.classList.toggle('nav-active');
+      const isActive = header.classList.toggle('nav-active');
+      mobileMenu.setAttribute('aria-expanded', isActive ? 'true' : 'false');
     });
   }
 
-  // Close menu on link click
   document.querySelectorAll('.nav-links a').forEach(link => {
     link.addEventListener('click', () => {
       header.classList.remove('nav-active');
+      if (mobileMenu) {
+        mobileMenu.setAttribute('aria-expanded', 'false');
+      }
     });
   });
 }
 
-// 3. Typing Animation
+/*
+  [05. Typing Text Animation]
+  - Hero 타이틀 내 박주은 개발자의 핵심 정체성을 교차 루핑 타이핑합니다.
+*/
 function initTyping() {
   const textElement = document.getElementById('typing-text');
   if (!textElement) return;
-  const phrases = ['Fullstack Developer', 'Product Builder', 'UI Engineer'];
+  const phrases = ['Frontend Engineer', 'Product Builder', 'UI Developer'];
   let phraseIndex = 0;
   let charIndex = 0;
   let isDeleting = false;
@@ -497,7 +398,10 @@ function initTyping() {
   type();
 }
 
-// 4. Scroll Reveal (IntersectionObserver)
+/*
+  [06. Scroll Reveal IntersectionObserver]
+  - 요소가 화면 뷰포트에 도달했을 때 클래스 활성화를 통해 가벼운 리빌 연출을 트리거합니다.
+*/
 function initScrollReveal() {
   if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
     document.querySelectorAll('.reveal, .stagger-item').forEach(el => el.classList.add('active'));
@@ -507,14 +411,13 @@ function initScrollReveal() {
   const reveals = document.querySelectorAll('.reveal');
   const observerOptions = {
     threshold: 0.1,
-    rootMargin: '0px 0px -60px 0px'
+    rootMargin: '0px 0px -40px 0px'
   };
-  
+
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
         entry.target.classList.add('active');
-        // If it's a stagger container, the items will animate via CSS
         if (entry.target.classList.contains('stagger-container')) {
           entry.target.querySelectorAll('.stagger-item').forEach((item, index) => {
             item.style.transitionDelay = `${index * 0.08}s`;
@@ -529,95 +432,68 @@ function initScrollReveal() {
   reveals.forEach(reveal => observer.observe(reveal));
 }
 
-// 4-1. Hero Scroll Morph
+/*
+  [07. Subtle Hero Morph]
+  - 스크롤 높이에 따라 Hero 본문을 은은하게 페이드 처리하여 가속 스크롤 안정감을 줍니다.
+*/
 function initHeroMorph() {
   const heroContent = document.querySelector('.hero-content');
-  const heroCanvas = document.getElementById('hero-particles');
   const gridBg = document.querySelector('.grid-bg');
-  
+
   if (!heroContent) return;
 
   const handleScroll = () => {
     const scrollY = window.scrollY;
-    // QA: Even smoother fade
-    const opacity = Math.max(0, 1 - scrollY / 1100);
-    const scale = Math.max(0.97, 1 - scrollY / 8000);
-    const translateY = scrollY * 0.12;
+    const opacity = Math.max(0, 1 - scrollY / 1000);
+    const scale = Math.max(0.98, 1 - scrollY / 9000);
+    const translateY = scrollY * 0.1;
 
     heroContent.style.opacity = opacity;
     heroContent.style.transform = `translateY(${translateY}px) scale(${scale})`;
-    
-    if (heroCanvas) heroCanvas.style.opacity = opacity * 0.5;
-    if (gridBg) gridBg.style.opacity = 0.2 + (opacity * 0.8);
+
+    if (gridBg) gridBg.style.opacity = 0.2 + (opacity * 0.6);
   };
 
   window.addEventListener('scroll', () => {
     requestAnimationFrame(handleScroll);
-  });
+  }, { passive: true });
 }
 
-// 4-2. Build Pipeline Animation
-function initProcessAnimation() {
-  const processSection = document.querySelector('.reveal-process');
-  if (!processSection) return;
-
-  const steps = processSection.querySelectorAll('.step');
-
-  const observerOptions = {
-    threshold: 0.3,
-    rootMargin: '0px'
-  };
-
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('active');
-        
-        // When a step enters, ensure previous steps are also active (for scroll down)
-        const currentIdx = Array.from(steps).indexOf(entry.target);
-        steps.forEach((s, i) => {
-          if (i < currentIdx) s.classList.add('active');
-        });
-      }
-    });
-  }, observerOptions);
-
-  steps.forEach(step => observer.observe(step));
-}
-
-// 5. Project Card Interactions (Ultra-Subtle Tilt)
+/*
+  [08. Subtle 3D Tilt for Project Cards]
+  - 프로젝트 카드에 마우스 호버 시 미세한 입체감(Divisor: 85)을 제공해 클릭 유도를 유기적으로 돕습니다.
+*/
 function initProjectInteractions() {
   if (!window.matchMedia('(pointer: fine)').matches) return;
-  
-  const cards = document.querySelectorAll('.project-card.compact');
-  
+
+  const cards = document.querySelectorAll('.project-blueprint-card');
+
   cards.forEach(card => {
     let rect;
     let rafId;
-    
+
     card.addEventListener('mouseenter', () => {
       rect = card.getBoundingClientRect();
     });
-    
+
     card.addEventListener('mousemove', (e) => {
       if (!rect) return;
       if (rafId) cancelAnimationFrame(rafId);
-      
+
       rafId = requestAnimationFrame(() => {
         const x = e.clientX - rect.left;
         const y = e.clientY - rect.top;
-        
+
         const centerX = rect.width / 2;
         const centerY = rect.height / 2;
-        
-        // QA: Extremely subtle tilt (divisor increased to 80)
-        const rotateX = (centerY - y) / 80; 
-        const rotateY = (x - centerX) / 80;
-        
-        card.style.transform = `perspective(2000px) translateY(-5px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+
+        const rotateX = (centerY - y) / 85;
+        const rotateY = (x - centerX) / 85;
+
+        card.style.transform = `perspective(2000px) translateY(-4px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
       });
     });
-    
+
     card.addEventListener('mouseleave', () => {
       if (rafId) cancelAnimationFrame(rafId);
       card.style.transform = `perspective(2000px) translateY(0) rotateX(0) rotateY(0)`;
@@ -626,28 +502,34 @@ function initProjectInteractions() {
   });
 }
 
-// 6. Skill Glow Interaction
+/*
+  [09. Skill Element Interaction]
+  - 파이프라인 노드 및 기술 영역 위 호버 시 민트 하이라이트를 연출합니다.
+*/
 function initSkillGlow() {
-  const skills = document.querySelectorAll('.skill-item, .card-tech span');
-  skills.forEach(skill => {
-    skill.addEventListener('mouseenter', () => {
-      skill.style.boxShadow = '0 0 15px var(--accent-primary)';
-      skill.style.borderColor = 'var(--accent-primary)';
+  const elements = document.querySelectorAll('.pipeline-node, .flow-step');
+  elements.forEach(el => {
+    el.addEventListener('mouseenter', () => {
+      el.style.boxShadow = '0 0 12px var(--accent-primary)';
+      el.style.borderColor = 'var(--accent-primary)';
     });
-    skill.addEventListener('mouseleave', () => {
-      skill.style.boxShadow = 'none';
-      skill.style.borderColor = 'var(--glass-border)';
+    el.addEventListener('mouseleave', () => {
+      el.style.boxShadow = 'none';
+      el.style.borderColor = 'var(--glass-border)';
     });
   });
 }
 
-// 7. Smooth Scroll
+/*
+  [10. Pure Smooth Anchor Scroll]
+  - 링크 이동 시 헤더 오프셋을 공제한 자연스러운 점프 없는 스무스 스크롤을 적용합니다.
+*/
 function initSmoothScroll() {
   document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function (e) {
       const targetId = this.getAttribute('href');
       if (targetId === '#') return;
-      
+
       e.preventDefault();
       const target = document.querySelector(targetId);
       if (target) {
@@ -664,153 +546,14 @@ function initSmoothScroll() {
   });
 }
 
-// 08. Particle Background Interaction
-function initParticles() {
-  const canvas = document.getElementById('hero-particles');
-  if (!canvas || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-
-  const ctx = canvas.getContext('2d');
-  let particlesArray = [];
-  let mouse = { x: null, y: null, radius: 100 };
-
-  // Responsive particle count
-  const getParticleCount = () => {
-    const width = window.innerWidth;
-    if (width < 480) return 25;
-    if (width < 768) return 50;
-    return 80;
-  };
-
-  // Adjust canvas size for resolution
-  function handleResize() {
-    const dpr = window.devicePixelRatio || 1;
-    const rect = canvas.getBoundingClientRect();
-    canvas.width = rect.width * dpr;
-    canvas.height = rect.height * dpr;
-    ctx.scale(dpr, dpr);
-    init();
-  }
-
-  class Particle {
-    constructor(x, y) {
-      this.baseX = x;
-      this.baseY = y;
-      this.x = x;
-      this.y = y;
-      this.size = Math.random() * 2 + 1;
-      this.density = (Math.random() * 20) + 1;
-      this.color = Math.random() > 0.5 ? '#4ade80' : '#60a5fa'; // Mint or Blue
-    }
-
-    draw() {
-      ctx.fillStyle = this.color;
-      ctx.beginPath();
-      ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-      ctx.closePath();
-      ctx.fill();
-    }
-
-    update() {
-      let dx = mouse.x - this.x;
-      let dy = mouse.y - this.y;
-      let distance = Math.sqrt(dx * dx + dy * dy);
-      let forceDirectionX = dx / distance;
-      let forceDirectionY = dy / distance;
-      let maxDistance = mouse.radius;
-      let force = (maxDistance - distance) / maxDistance;
-      let directionX = forceDirectionX * force * this.density;
-      let directionY = forceDirectionY * force * this.density;
-
-      if (distance < mouse.radius) {
-        this.x -= directionX;
-        this.y -= directionY;
-      } else {
-        if (this.x !== this.baseX) {
-          let dx = this.x - this.baseX;
-          this.x -= dx / 15;
-        }
-        if (this.y !== this.baseY) {
-          let dy = this.y - this.baseY;
-          this.y -= dy / 15;
-        }
-      }
-    }
-  }
-
-  function init() {
-    particlesArray = [];
-    const count = getParticleCount();
-    const rect = canvas.getBoundingClientRect();
-    for (let i = 0; i < count; i++) {
-      let x = Math.random() * rect.width;
-      let y = Math.random() * rect.height;
-      particlesArray.push(new Particle(x, y));
-    }
-  }
-
-  function connect() {
-    let opacityValue = 1;
-    for (let a = 0; a < particlesArray.length; a++) {
-      for (let b = a; b < particlesArray.length; b++) {
-        let dx = particlesArray[a].x - particlesArray[b].x;
-        let dy = particlesArray[a].y - particlesArray[b].y;
-        let distance = Math.sqrt(dx * dx + dy * dy);
-
-        if (distance < 100) {
-          opacityValue = 1 - (distance / 100);
-          ctx.strokeStyle = `rgba(148, 163, 184, ${opacityValue * 0.2})`; // soft blue/slate
-          ctx.lineWidth = 1;
-          ctx.beginPath();
-          ctx.moveTo(particlesArray[a].x, particlesArray[a].y);
-          ctx.lineTo(particlesArray[b].x, particlesArray[b].y);
-          ctx.stroke();
-        }
-      }
-    }
-  }
-
-  function animate() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    for (let i = 0; i < particlesArray.length; i++) {
-      particlesArray[i].draw();
-      particlesArray[i].update();
-    }
-    connect();
-    requestAnimationFrame(animate);
-  }
-
-  window.addEventListener('mousemove', (event) => {
-    const rect = canvas.getBoundingClientRect();
-    // Only react if mouse is within hero section
-    if (event.clientY <= rect.bottom) {
-      mouse.x = event.clientX;
-      mouse.y = event.clientY - rect.top;
-    } else {
-      mouse.x = undefined;
-      mouse.y = undefined;
-    }
-  });
-
-  // Mobile touch handling - minimalist reaction
-  window.addEventListener('touchstart', (event) => {
-    const rect = canvas.getBoundingClientRect();
-    if (event.touches[0].clientY <= rect.bottom) {
-      mouse.x = event.touches[0].clientX;
-      mouse.y = event.touches[0].clientY - rect.top;
-    }
-  });
-
-  window.addEventListener('resize', handleResize);
-
-  handleResize();
-  animate();
-}
-
-// 09. Summary Peek Logic
+/*
+  [11. Summary Peek Hover Bubble]
+  - data-summary 데이터를 지닌 노드 위에 마우스 오버 시 가볍고 섬세한 툴팁을 출력합니다.
+*/
 function initSummaryPeek() {
   if (!window.matchMedia('(pointer: fine)').matches) return;
 
-  const targets = document.querySelectorAll('[data-summary]');
+  const targets = document.querySelectorAll('[data-summary], .flow-step, .pipeline-node');
   if (!targets.length) return;
 
   const bubble = document.createElement('div');
@@ -828,7 +571,6 @@ function initSummaryPeek() {
     let x = mouseX + offset;
     let y = mouseY + offset;
 
-    // Check boundary overflows
     if (x + bubbleRect.width > window.innerWidth - 12) {
       x = mouseX - bubbleRect.width - offset;
     }
@@ -886,3 +628,27 @@ function initSummaryPeek() {
     target.addEventListener('blur', hideBubble);
   });
 }
+
+// Copy Email Logic
+document.addEventListener('DOMContentLoaded', () => {
+  const copyBtn = document.getElementById('copy-email-btn');
+  if (copyBtn) {
+    copyBtn.addEventListener('click', () => {
+      const email = 'pje698112@naver.com';
+      navigator.clipboard.writeText(email).then(() => {
+        const originalText = copyBtn.innerText;
+        copyBtn.innerText = '✓ Copied';
+        copyBtn.style.borderColor = 'var(--accent-primary)';
+        copyBtn.style.color = 'var(--accent-primary)';
+        
+        setTimeout(() => {
+          copyBtn.innerText = originalText;
+          copyBtn.style.borderColor = '';
+          copyBtn.style.color = '';
+        }, 1500);
+      }).catch(err => {
+        console.error('Failed to copy: ', err);
+      });
+    });
+  }
+});

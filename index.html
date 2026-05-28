@@ -1,16 +1,16 @@
-<!DOCTYPE html>
-<html lang="ko">
+﻿<!DOCTYPE html>
+<html lang="ko" class="no-js">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>박주은 | Fullstack Developer Portfolio</title>
-    <meta name="description" content="사용자의 문제를 제품으로 해결하는 Product-Minded Fullstack Developer 박주은의 포트폴리오입니다.">
+    <title>박주은 | Frontend Engineer Portfolio</title>
+    <meta name="description" content="사용자 흐름과 데이터 연결을 실제 서비스 형태로 구현하는 Frontend Engineer 박주은의 포트폴리오입니다.">
 
     <!-- Fonts -->
     <link rel="stylesheet" as="style" crossorigin
         href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&family=Fira+Code:wght@400;500;700&display=swap" rel="stylesheet">
 
     <!-- CSS -->
     <link rel="stylesheet" href="style.css">
@@ -24,342 +24,346 @@
     <!-- Background Interactive Glow -->
     <div class="bg-glow" id="mouse-glow"></div>
 
-    <!-- Splash Screen: Portfolio System Wake-up (Soft Cinematic Sequence) -->
+    <!-- Splash Screen: Cinematic Introduction -->
     <div class="splash-screen" id="splash">
-        <canvas id="splashCoreCanvas" class="splash-core-canvas" aria-hidden="true"></canvas>
+        <div class="splash-video-layer" aria-hidden="true">
+            <div class="splash-mono-grade"></div>
+            <div class="splash-aurora-grade"></div>
+            <div class="splash-cinematic-overlay"></div>
+            <div class="splash-grid"></div>
+        </div>
 
-        <div class="splash-terminal">
-            <div class="terminal-content">
-                <p class="splash-brand">JU EUN PARK</p>
-                <p class="splash-system">Portfolio System</p>
-
-                <p class="splash-compiling">Preparing portfolio environment...</p>
-
-                <ul class="splash-status-list">
-                    <li>[✓] Interface mounted</li>
-                    <li>[✓] Projects connected</li>
-                    <li>[✓] Data flow ready</li>
-                    <li>[✓] Deployment linked</li>
-                </ul>
-
-                <p class="splash-ready">Ready to launch</p>
-
-                <button class="splash-enter" id="enter-portfolio" type="button">Enter Portfolio</button>
-            </div>
+        <div class="splash-content">
+            <p class="splash-kicker">Blueprint & Pipeline</p>
+            <h1>화면과 데이터 흐름을 연결하는<br>Frontend Engineer</h1>
+            <p class="splash-desc">Product-Minded Frontend Engineer Portfolio</p>
+            <button class="splash-enter" id="enter-portfolio" type="button">Enter Portfolio</button>
         </div>
     </div>
 
+    <!-- Main Content Container -->
     <main id="main-content" class="fade-in-content">
+        
         <!-- Navigation -->
-        <nav class="glass site-header" id="navbar">
+        <nav class="site-header" id="navbar">
             <div class="container nav-content">
                 <a href="#" class="logo">JU EUN PARK<span>.</span></a>
-                <ul class="nav-links">
-                    <li><a href="#about">About</a></li>
-                    <li><a href="#projects">Projects</a></li>
-                    <li><a href="#skills">Skills</a></li>
+                <ul class="nav-links" id="primary-navigation">
+                    <li><a href="#hero">Home</a></li>
+                    <li><a href="#featured-case-study">Featured Focus</a></li>
+                    <li><a href="#projects">Blueprints</a></li>
+                    <li><a href="#tech-evidence">Tech Evidence</a></li>
+                    <li><a href="#console">Console</a></li>
                     <li><a href="#contact">Contact</a></li>
                 </ul>
-                <div class="menu-toggle" id="mobile-menu">
+                <button
+                    class="menu-toggle"
+                    id="mobile-menu"
+                    type="button"
+                    aria-label="메뉴 열기"
+                    aria-expanded="false"
+                    aria-controls="primary-navigation"
+                >
                     <span></span>
                     <span></span>
                     <span></span>
-                </div>
+                </button>
             </div>
         </nav>
 
-        <!-- Hero Section -->
-        <header class="hero section">
-            <canvas class="particle-canvas" id="hero-particles" aria-hidden="true"></canvas>
+        <!-- 01 Hero Section -->
+        <header class="hero section" id="hero">
+            <div class="hero-bg-layer" aria-hidden="true">
+                <video autoplay muted loop playsinline preload="metadata" class="custom-video-bg">
+                    <source src="assets/videos/1.mp4" type="video/mp4">
+                </video>
+                <div class="video-mint-grade"></div>
+                <div class="video-cyan-light"></div>
+                <div class="cinematic-overlay"></div>
+                <div class="grid-bg hero-grid"></div>
+            </div>
+
             <div class="container hero-container">
                 <div class="hero-content">
-                    <div class="hero-badge reveal">Product-Minded Developer</div>
+                    <div class="hero-badge reveal">Product-Minded Frontend Engineer</div>
                     <h1 class="reveal stagger-1">
-                        사용자의 문제를 제품으로 해결하는
-                        <span class="text-gradient" id="typing-text">Fullstack Developer</span>
+                        화면과 데이터 흐름을 연결하는<br>
+                        <span class="text-gradient">Frontend Engineer</span>
                     </h1>
                     <p class="reveal stagger-2">
-                        기획, UI 설계, 프론트엔드 구현, 백엔드 연동, 배포까지<br>
-                        서비스가 완성되는 전체 흐름을 이해하고 구현합니다.
+                        AI 분석 초안, 사용자 확인, 데이터 저장, 대시보드 상태 흐름까지<br>
+                        실제 사용 가능한 서비스 흐름을 구현합니다.
                     </p>
-                    <div class="hero-btns reveal stagger-3">
-                        <a href="#projects" class="btn btn-primary">프로젝트 보기</a>
-                        <a href="#skills" class="btn btn-secondary">기술 스택</a>
-                        <a href="#contact" class="btn btn-outline">연락하기</a>
+                    
+                    <!-- 2 Mini Proof Cards -->
+                    <div class="hero-proof-cards reveal stagger-3">
+                        <a href="#featured-case-study" class="proof-card">
+                            <div class="proof-header">
+                                <span class="proof-dot"></span>
+                                <strong class="proof-title">PetLog | 펫로그</strong>
+                                <span class="proof-category">Featured Focus</span>
+                            </div>
+                            <div class="proof-flow">
+                                <span class="flow-node">AI Receipt</span>
+                                <span class="flow-arrow">→</span>
+                                <span class="flow-node highlight">User Review</span>
+                                <span class="flow-arrow">→</span>
+                                <span class="flow-node">Firebase Save</span>
+                            </div>
+                        </a>
+                        <a href="#projects" class="proof-card">
+                            <div class="proof-header">
+                                <span class="proof-dot"></span>
+                                <strong class="proof-title">Chaengim | 챙김</strong>
+                                <span class="proof-category">Full-stack PWA</span>
+                            </div>
+                            <div class="proof-flow">
+                                <span class="flow-node">GOV24 API</span>
+                                <span class="flow-arrow">→</span>
+                                <span class="flow-node">Rule Scoring</span>
+                                <span class="flow-arrow">→</span>
+                                <span class="flow-node">Board/Schedule</span>
+                            </div>
+                        </a>
                     </div>
-                </div>
 
-                <!-- Hero Status Panel -->
-                <div class="hero-status-panel reveal stagger-4">
-                    <div class="panel-header">
-                        <span class="panel-title">SYSTEM STATUS</span>
-                        <span class="panel-dot"></span>
-                    </div>
-                    <div class="panel-body">
-                        <div class="status-row">
-                            <span class="label">Frontend</span>
-                            <span class="value online">Online</span>
-                        </div>
-                        <div class="status-row">
-                            <span class="label">Firebase</span>
-                            <span class="value connected">Connected</span>
-                        </div>
-                        <div class="status-row">
-                            <span class="label">AI API</span>
-                            <span class="value connected">Integrated</span>
-                        </div>
-                        <div class="status-row">
-                            <span class="label">Deploy</span>
-                            <span class="value v-text">Vercel</span>
-                        </div>
+                    <div class="hero-btns reveal stagger-4" style="margin-top: 30px;">
+                        <a href="#featured-case-study" class="btn btn-primary">PetLog Case Study</a>
+                        <a href="#contact" class="btn btn-secondary">Contact</a>
                     </div>
                 </div>
             </div>
         </header>
 
-        <!-- About Section -->
-        <section id="about" class="section">
+        <!-- 02 Featured Case Study: PetLog -->
+        <section id="featured-case-study" class="section featured-case-study">
+            <div class="grid-bg"></div>
             <div class="container">
-                <h2 class="section-title reveal">About Me</h2>
-                <p class="section-subtitle reveal">디자인을 이해하고, 개발로 구현합니다.<br>사용자가 겪는 불편함을 실제로 동작하는 서비스 흐름으로 바꾸는 데 집중합니다.
-                </p>
+                <h2 class="section-title reveal">Featured Case Study</h2>
+                <p class="section-subtitle reveal">포트폴리오의 대표 프로젝트, PetLog의 문제 해결과 아키텍처 설계도입니다.</p>
 
-                <div class="about-grid">
-                    <div class="about-card glass reveal"
-                        style="display: flex; flex-direction: column; justify-content: space-between; gap: 16px;">
-                        <h3 style="margin-bottom: 4px;">디자인과 개발의 연결</h3>
-                        <div
-                            style="border-left: 2px solid rgba(74, 222, 128, 0.3); padding-left: 16px; margin: auto 0; display: flex; flex-direction: column; gap: 12px;">
-                            <p
-                                style="font-size: 13px; color: var(--text-secondary); line-height: 1.6; margin: 0; word-break: keep-all;"
-                                data-summary="UI 구성과 서비스 구현 사이의 연결을 중요하게 생각하는 자기소개입니다.">
-                                저는 컴퓨터공학과 그래픽을 전공하며, <strong
-                                    style="color: var(--accent-secondary); font-weight: 600;">UI 구성과 서비스 구현 사이의
-                                    연결</strong>에 관심을 가져왔습니다.
-                            </p>
-                            <p
-                                style="font-size: 13px; color: var(--text-secondary); line-height: 1.6; margin: 0; word-break: keep-all;">
-                                단순히 화면을 만드는 것보다, 사용자가 어떤 흐름으로 기능을 이해하고 사용하는지 고민하며 그 흐름이 <strong
-                                    style="color: var(--text-primary); font-weight: 600;">데이터, UI, 배포</strong>까지 이어지도록
-                                구현하는 과정을 중요하게 생각합니다.
-                            </p>
-                            <p
-                                style="font-size: 13px; color: var(--text-secondary); line-height: 1.6; margin: 0; word-break: keep-all;">
-                                최근에는 <strong style="color: var(--accent-primary); font-weight: 600;">PetLog와
-                                    VetFlow</strong>를 만들며 AI 분석, 사용자 확인 흐름, Firebase 기반 데이터 구조, Vercel 배포까지 이어지는 웹 서비스
-                                제작 경험을 쌓고 있습니다.
-                            </p>
+                <div class="case-study-container reveal">
+                    <div class="case-study-header" style="display: flex; justify-content: space-between; align-items: center; gap: 20px;">
+                        <div class="case-study-title-block">
+                            <span class="blueprint-tag">AI Integration & Data Flow</span>
+                            <h3 style="margin: 2px 0;">PetLog</h3>
+                            <p class="project-one-liner">AI OCR 기반 반려동물 병원비 기록 및 사용자 검토형 데이터 관리 서비스</p>
                         </div>
-                    </div>
-                    <div class="about-card glass reveal"
-                        style="display: flex; flex-direction: column; justify-content: space-between; gap: 16px;">
-                        <h3 style="margin-bottom: 4px;">제가 만들어가는 방향</h3>
-                        <div class="direction-list"
-                            style="display: flex; flex-direction: column; gap: 14px; margin: auto 0;">
-                            <!-- Item 01 -->
-                            <div class="direction-item" style="display: flex; gap: 12px; align-items: flex-start;">
-                                <span class="direction-num"
-                                    style="font-size: 11px; font-weight: 800; color: var(--accent-primary); letter-spacing: 0.05em; line-height: 1.4; padding-top: 2px;">01</span>
-                                <div style="display: flex; flex-direction: column; gap: 4px;">
-                                    <strong
-                                        style="font-size: 14px; font-weight: 600; color: var(--text-primary); line-height: 1.4;">AI를
-                                        기능 흐름에 연결하기</strong>
-                                    <p
-                                        style="font-size: 12.5px; color: var(--text-secondary); line-height: 1.5; margin: 0; word-break: keep-all;">
-                                        AI 결과를 그대로 보여주는 것이 아니라, 사용자가 확인하고 수정할 수 있는 화면 흐름으로 연결합니다.</p>
-                                </div>
+                        <div style="display: flex; align-items: center; gap: 16px;">
+                            <div class="case-study-screenshot-thumb" style="width: 74px; height: 74px; flex-shrink: 0; overflow: hidden; border-radius: 10px; border: 1px solid var(--glass-border); background: rgba(0,0,0,0.2);">
+                                <img src="assets/images/petlog_icon.jpg" alt="PetLog Icon" style="width: 100%; height: 100%; object-fit: cover; transition: transform 0.3s ease;">
                             </div>
-
-                            <!-- Item 02 -->
-                            <div class="direction-item" style="display: flex; gap: 12px; align-items: flex-start;">
-                                <span class="direction-num"
-                                    style="font-size: 11px; font-weight: 800; color: var(--accent-primary); letter-spacing: 0.05em; line-height: 1.4; padding-top: 2px;">02</span>
-                                <div style="display: flex; flex-direction: column; gap: 4px;">
-                                    <strong
-                                        style="font-size: 14px; font-weight: 600; color: var(--text-primary); line-height: 1.4;">데이터를
-                                        검토 가능한 기록으로 만들기</strong>
-                                    <p
-                                        style="font-size: 12.5px; color: var(--text-secondary); line-height: 1.5; margin: 0; word-break: keep-all;">
-                                        분석 결과, 입력값, 저장 데이터가 사용자의 확인 과정을 거쳐 기록되도록 설계합니다.</p>
-                                </div>
-                            </div>
-
-                            <!-- Item 03 -->
-                            <div class="direction-item" style="display: flex; gap: 12px; align-items: flex-start;">
-                                <span class="direction-num"
-                                    style="font-size: 11px; font-weight: 800; color: var(--accent-primary); letter-spacing: 0.05em; line-height: 1.4; padding-top: 2px;">03</span>
-                                <div style="display: flex; flex-direction: column; gap: 4px;">
-                                    <strong
-                                        style="font-size: 14px; font-weight: 600; color: var(--text-primary); line-height: 1.4;">기획부터
-                                        배포까지 연결하기</strong>
-                                    <p
-                                        style="font-size: 12.5px; color: var(--text-secondary); line-height: 1.5; margin: 0; word-break: keep-all;">
-                                        아이디어와 화면 설계에서 끝나지 않고, 실제 배포된 웹 서비스로 이어지는 제작 과정을 경험하고 있습니다.</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Core Strength -->
-        <section class="section strength">
-            <div class="container">
-                <h2 class="section-title reveal">Core Strength</h2>
-                <p class="section-subtitle reveal">제품의 가치를 실현하고 사용자에게 더 나은 경험을 제공하기 위한 핵심 역량입니다.</p>
-
-                <div class="strength-grid">
-                    <div class="strength-item reveal">
-                        <div class="icon-svg">
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M12 2v8" />
-                                <path d="m16 6-4 4-4-4" />
-                                <path d="M12 10v12" />
-                                <path d="m8 18 4 4 4-4" />
-                            </svg>
-                        </div>
-                        <h3>Product Thinking</h3>
-                        <p>사용자 문제를 기능 요구사항과 서비스 흐름으로 연결합니다.</p>
-                    </div>
-                    <div class="strength-item reveal">
-                        <div class="icon-svg">
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <rect width="18" height="18" x="3" y="3" rx="2" ry="2" />
-                                <line x1="3" x2="21" y1="9" y2="9" />
-                                <line x1="9" x2="9" y1="21" y2="9" />
-                            </svg>
-                        </div>
-                        <h3>UI Implementation</h3>
-                        <p>반응형 UI와 인터랙션으로 명확한 사용자 경험을 만듭니다.</p>
-                    </div>
-                    <div class="strength-item reveal">
-                        <div class="icon-svg">
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <ellipse cx="12" cy="5" rx="9" ry="3" />
-                                <path d="M3 5V19A9 3 0 0 0 21 19V5" />
-                                <path d="M3 12A9 3 0 0 0 21 12" />
-                            </svg>
-                        </div>
-                        <h3>Fullstack Flow</h3>
-                        <p>인증, DB, API, 배포까지 서비스 구현 흐름을 연결합니다.</p>
-                    </div>
-                    <div class="strength-item reveal">
-                        <div class="icon-svg">
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <path
-                                    d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z" />
-                                <path d="M5 3v4" />
-                                <path d="M3 5h4" />
-                                <path d="M21 17v4" />
-                                <path d="M19 19h4" />
-                            </svg>
-                        </div>
-                        <h3>AI Integration</h3>
-                        <p>AI API 결과를 실제 서비스 기능과 사용자 확인 흐름에 결합합니다.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Projects Section -->
-        <section id="projects" class="section projects">
-            <div class="container">
-                <h2 class="section-title reveal">Projects</h2>
-                <p class="section-subtitle reveal">실제 문제를 해결하기 위해 고민하고 구현한<br>프로젝트 케이스 스터디입니다.</p>
-
-                <div class="projects-grid" id="projects-list">
-                    <!-- Project: PetLog -->
-                    <article class="project-card compact reveal stagger-container">
-                        <div class="project-img stagger-item">
-                            <img src="assets/screenshots/petlog_banner.jpg" alt="PetLog">
-                        </div>
-                        <div class="project-body stagger-item">
-                            <span class="project-badge">AI / FULLSTACK</span>
-
-                            <div class="project-heading">
-                                <h3>PetLog</h3>
-                                <p data-summary="영수증을 AI 분석 초안으로 바꾸고, 사용자가 확인한 뒤 저장하는 서비스입니다.">AI 기반 반려동물 병원비 기록 및 분석 서비스</p>
-                            </div>
-
-                            <div class="project-info-grid">
-                                <div class="info-item">
-                                    <span>Problem</span>
-                                    <strong>복잡한 영수증 관리</strong>
-                                </div>
-                                <div class="info-item">
-                                    <span>Solution</span>
-                                    <strong>OCR + Gemini 분석</strong>
-                                </div>
-                                <div class="info-item">
-                                    <span>Result</span>
-                                    <strong>OCR과 AI를 활용해 실제 기록 가능한 웹 앱 구현</strong>
-                                </div>
-                            </div>
-
-                            <div class="project-notes">
-                                <h4>Tech Notes</h4>
-                                <ul>
-                                    <li>사용자 확인 후 저장 시점 제어</li>
-                                    <li>세금/할인 항목별 오분류 검증</li>
-                                    <li>수기 입력 fallback flow 구축</li>
-                                </ul>
-                            </div>
-
-                            <div class="project-actions">
+                            <div class="project-actions" style="display: flex; flex-direction: column; gap: 6px;">
                                 <a href="https://petlog-eight.vercel.app/" target="_blank" rel="noopener noreferrer"
-                                    class="btn-pill pulse">Live App</a>
+                                    class="btn-pill pulse" style="padding: 4px 12px; font-size: 0.72rem; text-align: center;">Live App</a>
                                 <a href="https://petlogwep.vercel.app/" target="_blank" rel="noopener noreferrer"
-                                    class="btn-pill secondary">Project Web</a>
+                                    class="btn-pill secondary" style="padding: 4px 12px; font-size: 0.72rem; text-align: center;">Project Web</a>
                             </div>
                         </div>
-                    </article>
+                    </div>
 
-                    <!-- Project: VetFlow -->
-                    <article class="project-card compact reveal stagger-container">
-                        <div class="project-img stagger-item">
-                            <img src="assets/screenshots/vetflow.png" alt="VetFlow"
-                                onerror="this.src='https://images.unsplash.com/photo-1551288049-bbda48652ad8?auto=format&fit=crop&q=80&w=800'">
+                    <div class="case-study-body">
+                        <!-- Problem, Action, Result Grid -->
+                        <div class="case-study-grid">
+                            <div class="case-panel problem">
+                                <div class="panel-header">
+                                    <strong>PROBLEM</strong>
+                                </div>
+                                <div class="panel-content">
+                                    <p>AI OCR 결과를 바로 저장하면 오분류 위험이 있고, 동물병원 영수증의 항목과 금액 구조가 복잡해 사용자가 검토할 수 있는 단계가 필요했습니다.</p>
+                                </div>
+                            </div>
+                            <div class="case-panel action">
+                                <div class="panel-header">
+                                    <strong>ACTION</strong>
+                                </div>
+                                <div class="panel-content">
+                                    <p>AI 분석 결과는 초안으로만 사용하고, 사용자가 항목을 확인·수정한 뒤 최종 데이터가 Firebase에 저장되도록 검토 흐름을 구성했습니다.</p>
+                                </div>
+                            </div>
+                            <div class="case-panel result">
+                                <div class="panel-header">
+                                    <strong>RESULT</strong>
+                                </div>
+                                <div class="panel-content">
+                                    <p>영수증 업로드 → AI 분석 → 사용자 확인 → 기록 저장으로 이어지는 실제 사용 가능한 데이터 입력 흐름을 구현했습니다.</p>
+                                </div>
+                            </div>
                         </div>
-                        <div class="project-body stagger-item">
-                            <span class="project-badge">SAAS / DASHBOARD</span>
 
-                            <div class="project-heading">
-                                <h3>VetFlow</h3>
-                                <p data-summary="동물병원 운영 흐름을 실시간 대시보드로 관리하는 프로젝트입니다.">동물병원 운영 흐름을 관리하는 SaaS 대시보드</p>
+                        <!-- Architecture & Flow Section -->
+                        <div class="case-flow-section">
+                            <h4>Service Architecture Flow</h4>
+                            <div class="blueprint-flow-diagram" style="margin-top: 10px;">
+                                <div class="flow-step" data-summary="사용자가 촬영한 병원비 영수증 이미지 데이터를 수집">Receipt Image</div>
+                                <span class="flow-line"></span>
+                                <div class="flow-step ai" data-summary="Gemini OCR API로 텍스트 데이터와 진료 항목을 추출">Gemini OCR</div>
+                                <span class="flow-line"></span>
+                                <div class="flow-step engine" data-summary="영수증 항목을 금액, 할인, 진료 항목 기준으로 정리">Medical Analysis Engine</div>
+                                <span class="flow-line"></span>
+                                <div class="flow-step review" data-summary="추출 항목의 오류를 사용자가 직접 확인하고 수정하는 검토 루프 제공">User Review</div>
+                                <span class="flow-line"></span>
+                                <div class="flow-step db" data-summary="사용자 확인이 끝난 데이터를 Firebase에 저장">Firebase Save</div>
+                                <span class="flow-line"></span>
+                                <div class="flow-step report" data-summary="저장된 기록을 기반으로 반려동물 병원비 리포트 제공">Report</div>
                             </div>
+                        </div>
 
-                            <div class="project-info-grid">
-                                <div class="info-item">
-                                    <span>Focus</span>
-                                    <strong>운영 흐름 통합</strong>
-                                </div>
-                                <div class="info-item">
-                                    <span>Solution</span>
-                                    <strong>실시간 대시보드</strong>
-                                </div>
-                                <div class="info-item">
-                                    <span>Result</span>
-                                    <strong>실시간 데이터 연동 기반의 통합 대시보드 구현</strong>
-                                </div>
-                            </div>
-
-                            <div class="project-notes">
-                                <h4>Key Features</h4>
-                                <ul>
-                                    <li>실시간 데이터 시각화 엔진</li>
-                                    <li>미처리 업무 실시간 모니터링</li>
-                                    <li>권한 기반 보안 로직 구현</li>
+                        <!-- Tech Specs & Engineering Decisions -->
+                        <div class="case-details-grid">
+                            <div class="details-col">
+                                <h4>Engineering Decisions</h4>
+                                <ul class="engineering-list">
+                                    <li>
+                                        <strong>AI 결과를 바로 저장하지 않고 사용자 검토 단계를 추가</strong>
+                                        <p>OCR 분석의 한계를 인정하고, 잘못 분류된 데이터가 DB에 직접 저장되는 문제를 막기 위해 사용자 확인 화면을 연결했습니다.</p>
+                                    </li>
+                                    <li>
+                                        <strong>OCR 실패 상황에 대비한 수기 입력 fallback 제공</strong>
+                                        <p>API 응답 지연, 영수증 손상, 분석 실패 상황에서도 사용자가 기록을 이어갈 수 있도록 수기 입력 흐름을 보완했습니다.</p>
+                                    </li>
+                                    <li>
+                                        <strong>Firebase 접근 로직과 화면 로직 분리</strong>
+                                        <p>Firebase 데이터 호출을 서비스 계층으로 분리해 화면 컴포넌트가 비즈니스 로직에 과하게 의존하지 않도록 구성했습니다.</p>
+                                    </li>
+                                    <li>
+                                        <strong>TypeScript 타입 기반 분석 데이터 구조 관리</strong>
+                                        <p>OCR 응답 객체와 영수증 데이터 모델에 명확한 타입을 적용해 개발 중 오류 가능성을 줄였습니다.</p>
+                                    </li>
                                 </ul>
+                            </div>
+                            <div class="details-col">
+                                <h4>Technical Specs</h4>
+                                <div class="specs-grid-mini">
+                                    <div class="spec-tag">React</div>
+                                    <div class="spec-tag">TypeScript</div>
+                                    <div class="spec-tag">Tailwind CSS</div>
+                                    <div class="spec-tag">Gemini AI API (OCR)</div>
+                                    <div class="spec-tag">Firebase Auth</div>
+                                    <div class="spec-tag">Cloud Firestore</div>
+                                    <div class="spec-tag">수기 입력 Fallback</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 03 Project Blueprints Section -->
+        <section id="projects" class="section projects">
+            <div class="grid-bg"></div>
+            <div class="container">
+                <h2 class="section-title reveal">Project Blueprints</h2>
+                <p class="section-subtitle reveal">실제 서비스 흐름과 데이터 연동 경험을 보여주는 프로젝트 설계도입니다.</p>
+
+                <div class="projects-list">
+                    <!-- Project 1: Chaengim -->
+                    <article class="project-blueprint-card reveal stagger-container">
+                        <div class="blueprint-line-reveal"></div>
+                        <div class="blueprint-card-header" style="display: flex; justify-content: space-between; align-items: center; gap: 20px;">
+                            <div class="header-text">
+                                <span class="blueprint-tag">Government Benefits PWA</span>
+                                <h3 style="margin: 2px 0;">Chaengim</h3>
+                                <p class="project-one-liner">정부 혜택 탐색과 신청 준비 관리를 돕는 풀스택 PWA 프로젝트</p>
+                            </div>
+                            <div class="blueprint-screenshot-thumb" style="width: 74px; height: 74px; flex-shrink: 0; overflow: hidden; border-radius: 10px; border: 1px solid var(--glass-border); background: rgba(0,0,0,0.2);">
+                                <img src="assets/images/jppimg.png" alt="Chaengim project visual" style="width: 100%; height: 100%; object-fit: cover; transition: transform 0.3s ease;">
+                            </div>
+                        </div>
+                        <div class="blueprint-card-body">
+                            <div class="project-desc-wrapper">
+                                <p class="project-brief">
+                                    챙김은 나에게 맞는 정부 혜택을 찾고, 저장한 혜택의 신청 준비 상태와 마감 일정을 한 곳에서 관리할 수 있도록 설계한 모바일 앱형 PWA입니다. GOV24 공공데이터 API 동기화, React 기반 모바일 UI, Express/Prisma/MySQL 백엔드, Gemini API 기반 추천 이유 생성 흐름을 연결했습니다.
+                                </p>
+                                <ul class="blueprint-bullets" style="margin-bottom: 20px;">
+                                    <li>GOV24 공공데이터 API를 백엔드에서 동기화하고 내부 DB에 저장하는 구조 구현</li>
+                                    <li>사용자 프로필 기반 Rule-based Scoring으로 추천 후보 계산</li>
+                                    <li>Gemini API는 자격 판정이 아닌 추천 이유 생성에 제한적으로 사용</li>
+                                    <li>SavedBenefit, ChecklistItem, D-Day 일정 중심의 신청 준비 관리 흐름 설계</li>
+                                </ul>
+                                <div class="blueprint-flow-diagram" style="margin-top: 20px;">
+                                    <div class="flow-step" data-summary="정부 혜택 공공데이터를 백엔드에서 동기화">GOV24 API</div>
+                                    <span class="flow-line"></span>
+                                    <div class="flow-step auth" data-summary="Express 서버에서 데이터 정규화 및 API 제공">Data Sync</div>
+                                    <span class="flow-line"></span>
+                                    <div class="flow-step dashboard" data-summary="Prisma와 MySQL 기반 혜택, 저장, 체크리스트 모델링">Prisma/MySQL</div>
+                                    <span class="flow-line"></span>
+                                    <div class="flow-step status" data-summary="조건 매칭 이유와 신청 준비 상태를 앱 화면에 연결">Board/Schedule</div>
+                                </div>
+                            </div>
+
+                            <div class="blueprint-meta">
+                                <div class="meta-col">
+                                    <h4>Technical Specs</h4>
+                                    <ul>
+                                        <li>React, TypeScript, Tailwind CSS, Zustand</li>
+                                        <li>Express, Prisma ORM, MySQL, JWT Auth</li>
+                                        <li>GOV24 Public Data API, Gemini API</li>
+                                        <li>Vercel, Railway</li>
+                                    </ul>
+                                </div>
+                                <div class="meta-col font-monospace">
+                                    <h4>Pipeline Nodes</h4>
+                                    <p>Public Data → API Sync → DB Modeling → PWA UI → AI Reasoning → Board/Schedule</p>
+                                </div>
                             </div>
 
                             <div class="project-actions">
-                                <a href="https://vetflow-pi.vercel.app/" target="_blank" rel="noopener noreferrer"
-                                    class="btn-pill pulse">Live Demo</a>
+                                <a href="https://chaengim.vercel.app/" target="_blank" rel="noopener noreferrer" class="btn-pill pulse">Live App</a>
+                                <a href="https://chaengimweb.vercel.app/" target="_blank" rel="noopener noreferrer" class="btn-pill secondary">Project Web</a>
+                            </div>
+                        </div>
+                    </article>
+                    <!-- Project 2: Portfolio Web -->
+                    <article class="project-blueprint-card reveal stagger-container">
+                        <div class="blueprint-line-reveal"></div>
+                        <div class="blueprint-card-header">
+                            <span class="blueprint-tag">Portfolio Website</span>
+                            <h3>Portfolio Website</h3>
+                            <p class="project-one-liner">Cinematic Hero · Responsive Layout · Interaction Design</p>
+                        </div>
+                        <div class="blueprint-card-body">
+                            <div class="project-desc-wrapper">
+                                <p class="project-brief">
+                                    현재 보고 있는 포트폴리오 사이트를 하나의 프론트엔드 구현물로 설계했습니다. 프로젝트 정보를 빠르게 이해할 수 있도록 Hero, Case Study, Tech Evidence, Experience Log 구조로 정리하고, Vanilla JavaScript 기반의 가벼운 인터랙션을 적용했습니다.
+                                </p>
+                                <ul class="blueprint-bullets" style="margin-bottom: 20px;">
+                                    <li>영상 Hero와 스크롤 흐름 기반의 시각 구조 구성</li>
+                                    <li>CSS Variables 기반 색상 토큰 관리</li>
+                                    <li>커스텀 커서, Summary Peek, Scroll Reveal 인터랙션 구현</li>
+                                    <li>sessionStorage를 사용한 Splash 재노출 제어</li>
+                                    <li>모바일 375px 기준 반응형 레이아웃 점검</li>
+                                </ul>
+                                <div class="blueprint-flow-diagram" style="margin-top: 20px;">
+                                    <div class="flow-step" data-summary="CSS Variables 기반 테마 토큰 관리">Design Tokens</div>
+                                    <span class="flow-line"></span>
+                                    <div class="flow-step scroll" data-summary="스크롤 위치에 따른 배경과 모션 제어">Scroll Motion</div>
+                                    <span class="flow-line"></span>
+                                    <div class="flow-step dynamic" data-summary="커스텀 마우스 커서와 정보 Peek 기능">Interactive DOM</div>
+                                    <span class="flow-line"></span>
+                                    <div class="flow-step vercel" data-summary="GitHub 기반 Vercel 자동 배포 연결">Vercel Deploy</div>
+                                </div>
+                            </div>
+
+                            <div class="blueprint-meta">
+                                <div class="meta-col">
+                                    <h4>Technical Specs</h4>
+                                    <ul>
+                                        <li>HTML5, Vanilla CSS3, Vanilla JavaScript</li>
+                                        <li>CSS transform 기반 마우스 인터랙션 및 카드 모션</li>
+                                        <li>sessionStorage 기반 Splash 표시 상태 제어</li>
+                                        <li>CSS Variables 기반 색상 토큰 정의</li>
+                                    </ul>
+                                </div>
+                                <div class="meta-col font-monospace">
+                                    <h4>Pipeline Nodes</h4>
+                                    <p>Content Structure → Design Tokens → DOM Interaction → Responsive Layout → Vercel Deploy</p>
+                                </div>
+                            </div>
+
+                            <div class="project-actions">
+                                <span class="blueprint-status-tag font-monospace">Active Portfolio</span>
                             </div>
                         </div>
                     </article>
@@ -367,530 +371,374 @@
             </div>
         </section>
 
-        <!-- Project Architecture Section -->
-        <section id="architecture" class="section architecture">
+        <!-- 04 Tech Evidence Section -->
+        <section id="tech-evidence" class="section tech-evidence">
+            <div class="grid-bg"></div>
             <div class="container">
-                <h2 class="section-title reveal">Project Architecture</h2>
-                <p class="section-subtitle reveal">
-                    프로젝트가 단순 화면 구현에 그치지 않고,<br>
-                    데이터 입력부터 분석, 검토, 저장, 배포까지 어떤 흐름으로 동작하는지 정리했습니다.
-                </p>
+                <h2 class="section-title reveal">Tech Evidence</h2>
+                <p class="section-subtitle reveal">단순 숙련도 수치가 아니라 프로젝트에서 실제로 사용한 기술과 구현 근거를 정리했습니다.</p>
 
-                <div class="architecture-grid stagger-container reveal">
-                    <!-- Card 1: PetLog -->
-                    <article class="architecture-card glass stagger-item">
-                        <div class="arch-card-header">
-                            <span class="arch-badge" style="color: var(--accent-primary); background: rgba(74, 222, 128, 0.08); border-color: rgba(74, 222, 128, 0.16);">PETLOG</span>
-                            <h3>PetLog Architecture</h3>
+                <!-- Skill Snapshot Sub-section -->
+                <div class="skill-snapshot-container reveal" style="margin-bottom: 50px;">
+                    <h3 class="subsection-title">Skill Snapshot</h3>
+                    <p class="subsection-desc">프로젝트에서 실제로 사용한 기술 경험을 기준으로 정리한 자체 평가입니다. 카드를 마우스로 올리거나 포커스하면 근거가 보입니다.</p>
+                    
+                    <div class="skill-snapshot-grid">
+                        <!-- Skill Card 1: React / TypeScript -->
+                        <div class="skill-card" tabindex="0">
+                            <div class="skill-header">
+                                <span class="skill-name">React / TypeScript</span>
+                                <span class="skill-percent">78%</span>
+                            </div>
+                            <div class="skill-bar-wrapper">
+                                <div class="skill-bar" style="width: 78%;"></div>
+                            </div>
+                            <p class="skill-label">Project Use Level</p>
+                            <div class="skill-criteria">
+                                <strong>산정 근거:</strong> PetLog의 병원비 입력, 사용자 검토 화면, fallback UI와 Chaengim의 모바일 PWA 및 신청 보드 UI 구현 경험을 기준으로 설정했습니다.
+                            </div>
                         </div>
-                        <p class="arch-description">
-                            영수증 이미지를 AI 분석 초안으로 변환하고, 사용자가 확인한 뒤 데이터로 저장되는 흐름을 중심으로 설계했습니다.
-                        </p>
-                        <div class="flow-container">
-                            <span class="flow-pill">Receipt Image</span>
-                            <span class="flow-arrow">→</span>
-                            <span class="flow-pill ai">Gemini OCR</span>
-                            <span class="flow-arrow">→</span>
-                            <span class="flow-pill ai">Medical Analysis Engine</span>
-                            <span class="flow-arrow">→</span>
-                            <span class="flow-pill">User Review</span>
-                            <span class="flow-arrow">→</span>
-                            <span class="flow-pill db">Firebase Save</span>
-                            <span class="flow-arrow">→</span>
-                            <span class="flow-pill">Report / Care Record</span>
-                        </div>
-                    </article>
 
-                    <!-- Card 2: VetFlow -->
-                    <article class="architecture-card glass stagger-item">
-                        <div class="arch-card-header">
-                            <span class="arch-badge">VETFLOW</span>
-                            <h3>VetFlow Architecture</h3>
+                        <!-- Skill Card 2: Data / API Integration -->
+                        <div class="skill-card" tabindex="0">
+                            <div class="skill-header">
+                                <span class="skill-name">Data / API Integration</span>
+                                <span class="skill-percent">76%</span>
+                            </div>
+                            <div class="skill-bar-wrapper">
+                                <div class="skill-bar" style="width: 76%;"></div>
+                            </div>
+                            <p class="skill-label">Project Use Level</p>
+                            <div class="skill-criteria">
+                                <strong>산정 근거:</strong> PetLog의 Firebase Auth/Firestore 흐름과 Chaengim의 Express API, Prisma/MySQL 모델링, GOV24 공공데이터 동기화 흐름을 기준으로 설정했습니다.
+                            </div>
                         </div>
-                        <p class="arch-description">
-                            병원 운영 데이터를 역할과 화면 흐름에 맞게 정리하고, 실시간 대시보드에서 업무 상태를 확인할 수 있는 구조로 구성했습니다.
-                        </p>
-                        <div class="flow-container">
-                            <span class="flow-pill">Hospital Data</span>
-                            <span class="flow-arrow">→</span>
-                            <span class="flow-pill db">Auth / Role</span>
-                            <span class="flow-arrow">→</span>
-                            <span class="flow-pill ai">Realtime Dashboard</span>
-                            <span class="flow-arrow">→</span>
-                            <span class="flow-pill">Task Monitoring</span>
-                            <span class="flow-arrow">→</span>
-                            <span class="flow-pill">Operation View</span>
-                        </div>
-                    </article>
-                </div>
-            </div>
-        </section>
 
-        <!-- Tech Stack Section -->
-        <section id="skills" class="section skills">
-            <div class="container">
-                <h2 class="section-title reveal">Tech Stack</h2>
-                <p class="section-subtitle reveal">
-                    디자인 툴, 웹 기본기, 프론트엔드, AI API, 데이터 연동, 배포와 AI 활용 흐름까지<br>
-                    서비스 제작 과정에서 사용한 기술들을 정리했습니다.
-                </p>
+                        <!-- Skill Card 3: Gemini API -->
+                        <div class="skill-card" tabindex="0">
+                            <div class="skill-header">
+                                <span class="skill-name">Gemini API</span>
+                                <span class="skill-percent">68%</span>
+                            </div>
+                            <div class="skill-bar-wrapper">
+                                <div class="skill-bar" style="width: 68%;"></div>
+                            </div>
+                            <p class="skill-label">Project Use Level</p>
+                            <div class="skill-criteria">
+                                <strong>산정 근거:</strong> PetLog의 영수증 OCR 분석 흐름과 Chaengim의 Gemini 기반 추천 이유 생성 흐름을 구현한 경험을 기준으로 설정했습니다. Chaengim에서는 AI를 자격 판정이 아니라 설명 생성 역할로 제한했습니다.
+                            </div>
+                        </div>
 
-                <div class="skill-card-grid stagger-container reveal">
-                    <!-- Card 1: Design & UI/UX -->
-                    <article class="skill-card glass stagger-item" data-level="85">
-                        <div class="skill-card-top">
-                            <span class="skill-category">Design</span>
-                            <strong>Design & UI/UX</strong>
-                        </div>
-                        <p class="skill-tools">Photoshop · Illustrator · Figma · UI/UX</p>
-                        <p class="skill-description">
-                            디자인 툴을 활용한 화면 구성, 시각 디자인, UI 흐름 설계 경험
-                        </p>
-                        <div class="skill-meter">
-                            <div class="skill-meter-head">
-                                <span>프로젝트 경험 기반 자체 숙련도</span>
-                                <strong>85%</strong>
+                        <!-- Skill Card 4: Vanilla CSS / JavaScript -->
+                        <div class="skill-card" tabindex="0">
+                            <div class="skill-header">
+                                <span class="skill-name">Vanilla CSS / JavaScript</span>
+                                <span class="skill-percent">86%</span>
                             </div>
-                            <div class="skill-bar">
-                                <span style="--level: 85%;"></span>
+                            <div class="skill-bar-wrapper">
+                                <div class="skill-bar" style="width: 86%;"></div>
+                            </div>
+                            <p class="skill-label">Project Use Level</p>
+                            <div class="skill-criteria">
+                                <strong>산정 근거:</strong> 현재 포트폴리오 사이트에서 반응형 레이아웃, 커스텀 커서, 스크롤 모션, 모달, 검색·필터 UI를 구현한 경험을 기준으로 설정했습니다.
                             </div>
                         </div>
-                    </article>
 
-                    <!-- Card 2: HTML / CSS / JavaScript -->
-                    <article class="skill-card glass stagger-item" data-level="78">
-                        <div class="skill-card-top">
-                            <span class="skill-category">Web Basics</span>
-                            <strong>HTML / CSS / JavaScript</strong>
-                        </div>
-                        <p class="skill-tools">HTML · CSS · JavaScript</p>
-                        <p class="skill-description">
-                            정적 웹 페이지, 반응형 레이아웃, 기본 인터랙션 구현 경험
-                        </p>
-                        <div class="skill-meter">
-                            <div class="skill-meter-head">
-                                <span>프로젝트 경험 기반 자체 숙련도</span>
-                                <strong>78%</strong>
+                        <!-- Skill Card 5: Design / UI -->
+                        <div class="skill-card" tabindex="0">
+                            <div class="skill-header">
+                                <span class="skill-name">Design / UI</span>
+                                <span class="skill-percent">82%</span>
                             </div>
-                            <div class="skill-bar">
-                                <span style="--level: 78%;"></span>
+                            <div class="skill-bar-wrapper">
+                                <div class="skill-bar" style="width: 82%;"></div>
+                            </div>
+                            <p class="skill-label">Project Use Level</p>
+                            <div class="skill-criteria">
+                                <strong>산정 근거:</strong> Figma와 그래픽 디자인 경험을 바탕으로 화면 구조, 시각 위계, 카드형 정보 구조, 다크 톤 디자인을 설계한 경험을 기준으로 설정했습니다.
                             </div>
                         </div>
-                    </article>
 
-                    <!-- Card 3: React / TypeScript -->
-                    <article class="skill-card glass stagger-item" data-level="72">
-                        <div class="skill-card-top">
-                            <span class="skill-category">Frontend</span>
-                            <strong>React / TypeScript</strong>
-                        </div>
-                        <p class="skill-tools">React · TypeScript</p>
-                        <p class="skill-description">
-                            컴포넌트 기반 UI 구현과 타입 기반 프론트엔드 개발 경험
-                        </p>
-                        <div class="skill-meter">
-                            <div class="skill-meter-head">
-                                <span>프로젝트 경험 기반 자체 숙련도</span>
-                                <strong>72%</strong>
+                        <!-- Skill Card 6: AI Collaboration Tools -->
+                        <div class="skill-card" tabindex="0">
+                            <div class="skill-header">
+                                <span class="skill-name">AI Collaboration Tools</span>
+                                <span class="skill-percent">80%</span>
                             </div>
-                            <div class="skill-bar">
-                                <span style="--level: 72%;"></span>
+                            <div class="skill-bar-wrapper">
+                                <div class="skill-bar" style="width: 80%;"></div>
+                            </div>
+                            <p class="skill-label">Project Use Level</p>
+                            <div class="skill-criteria">
+                                <strong>산정 근거:</strong> Antigravity, Codex, ChatGPT를 활용해 요구사항 정리, 코드 리뷰, 오류 원인 분석, UI 문구 개선, 포트폴리오 문서화를 반복한 경험을 기준으로 설정했습니다.
                             </div>
                         </div>
-                    </article>
-
-                    <!-- Card 4: Gemini API / Vercel -->
-                    <article class="skill-card glass stagger-item" data-level="82">
-                        <div class="skill-card-top">
-                            <span class="skill-category">AI / Deploy</span>
-                            <strong>Gemini API / Vercel</strong>
-                        </div>
-                        <p class="skill-tools">Gemini API · Vercel</p>
-                        <p class="skill-description">
-                            AI API 연동과 Vercel 기반 웹 서비스 배포 경험
-                        </p>
-                        <div class="skill-meter">
-                            <div class="skill-meter-head">
-                                <span>프로젝트 경험 기반 자체 숙련도</span>
-                                <strong>82%</strong>
-                            </div>
-                            <div class="skill-bar">
-                                <span style="--level: 82%;"></span>
-                            </div>
-                        </div>
-                    </article>
-
-                    <!-- Card 5: Firebase / Firestore -->
-                    <article class="skill-card glass stagger-item" data-level="78">
-                        <div class="skill-card-top">
-                            <span class="skill-category">Backend</span>
-                            <strong>Firebase / Firestore</strong>
-                        </div>
-                        <p class="skill-tools">Firebase Auth · Firestore · Storage</p>
-                        <p class="skill-description">
-                            인증, 사용자별 데이터 저장, 실시간 데이터 흐름 구현 경험
-                        </p>
-                        <div class="skill-meter">
-                            <div class="skill-meter-head">
-                                <span>프로젝트 경험 기반 자체 숙련도</span>
-                                <strong>78%</strong>
-                            </div>
-                            <div class="skill-bar">
-                                <span style="--level: 78%;"></span>
-                            </div>
-                        </div>
-                    </article>
-
-                    <!-- Card 6: MySQL / Data Flow -->
-                    <article class="skill-card glass stagger-item" data-level="60">
-                        <div class="skill-card-top">
-                            <span class="skill-category">Database</span>
-                            <strong>MySQL / Data Flow</strong>
-                        </div>
-                        <p class="skill-tools">MySQL · Database Connection</p>
-                        <p class="skill-description">
-                            MySQL 연동과 기본적인 데이터 저장/조회 흐름 구현 경험
-                        </p>
-                        <div class="skill-meter">
-                            <div class="skill-meter-head">
-                                <span>프로젝트 경험 기반 자체 숙련도</span>
-                                <strong>60%</strong>
-                            </div>
-                            <div class="skill-bar">
-                                <span style="--level: 60%;"></span>
-                            </div>
-                        </div>
-                    </article>
-
-                    <!-- Card 7: AI Tools / Workflow -->
-                    <article class="skill-card glass stagger-item" data-level="85">
-                        <div class="skill-card-top">
-                            <span class="skill-category">AI Workflow</span>
-                            <strong>AI Tools / Workflow</strong>
-                        </div>
-                        <p class="skill-tools">ChatGPT · Antigravity · Gemini</p>
-                        <p class="skill-description">
-                            AI 도구를 활용한 기획, 구현 지시, 오류 분석, 프론트엔드 개선 흐름 운영 경험
-                        </p>
-                        <div class="skill-meter">
-                            <div class="skill-meter-head">
-                                <span>프로젝트 경험 기반 자체 숙련도</span>
-                                <strong>85%</strong>
-                            </div>
-                            <div class="skill-bar">
-                                <span style="--level: 85%;"></span>
-                            </div>
-                        </div>
-                    </article>
-
-                    <!-- Card 8: Product / UI Flow -->
-                    <article class="skill-card glass stagger-item" data-level="80">
-                        <div class="skill-card-top">
-                            <span class="skill-category">Product</span>
-                            <strong>Product / UI Flow</strong>
-                        </div>
-                        <p class="skill-tools">UX Writing · Flow Design · QA</p>
-                        <p class="skill-description">
-                            사용자 흐름, 확인 단계, 예외 처리, 서비스 개선 방향을 구조화한 경험
-                        </p>
-                        <div class="skill-meter">
-                            <div class="skill-meter-head">
-                                <span>프로젝트 경험 기반 자체 숙련도</span>
-                                <strong>80%</strong>
-                            </div>
-                            <div class="skill-bar">
-                                <span style="--level: 80%;"></span>
-                            </div>
-                        </div>
-                    </article>
+                    </div>
                 </div>
 
-                <!-- Code Quality Focus -->
-                <div class="code-quality reveal stagger-container">
-                    <h3 class="stagger-item">Code Quality Focus</h3>
-                    <div class="quality-grid">
-                        <div class="quality-item stagger-item">
-                            <span class="dot"></span>
-                            <p>TypeScript 기반 데이터 타입 정의</p>
+                <!-- Detailed Tech Evidence Sub-section -->
+                <div class="detailed-evidence-container reveal">
+                    <h3 class="subsection-title" style="margin-bottom: 24px;">Detailed Tech Evidence</h3>
+                    <div class="evidence-grid">
+                        <!-- Tech Item 1: React / TypeScript -->
+                        <div class="evidence-card">
+                            <div class="evidence-header">
+                                <span class="evidence-icon">React</span>
+                                <h3>React / TypeScript</h3>
+                            </div>
+                            <div class="evidence-body">
+                                <div class="evidence-meta">
+                                    <span class="meta-label">Used in:</span>
+                                    <span class="meta-val">PetLog, Chaengim</span>
+                                </div>
+                                <ul class="evidence-list-items">
+                                    <li><strong>PetLog</strong>: 병원비 입력 폼 컴포넌트 설계 및 상태 관리</li>
+                                    <li><strong>PetLog</strong>: 사용자 오분류 검토용 확인 화면 및 실패 대응 fallback UI 구현</li>
+                                    <li><strong>Chaengim</strong>: React/TypeScript 기반 모바일 PWA 화면과 신청 보드 UI 구현</li>
+                                    <li><strong>Chaengim</strong>: 사용자 프로필, 혜택 상세, 저장 보드, 체크리스트, D-Day 일정 화면 흐름 구성</li>
+                                    <li><strong>Chaengim</strong>: Zustand 기반 앱 상태 관리와 인증 이후 진입 흐름 분기</li>
+                                </ul>
+                            </div>
                         </div>
-                        <div class="quality-item stagger-item">
-                            <span class="dot"></span>
-                            <p>기능별 컴포넌트 분리 및 재사용성</p>
+
+                        <!-- Tech Item 2: Data / API Integration -->
+                        <div class="evidence-card">
+                            <div class="evidence-header">
+                                <span class="evidence-icon">DB</span>
+                                <h3>Data / API Integration</h3>
+                            </div>
+                            <div class="evidence-body">
+                                <div class="evidence-meta">
+                                    <span class="meta-label">Used in:</span>
+                                    <span class="meta-val">PetLog, Chaengim</span>
+                                </div>
+                                <ul class="evidence-list-items">
+                                    <li><strong>PetLog</strong>: Firebase Auth 기반 로그인 흐름과 사용자별 Firestore 기록 저장 구조 연결</li>
+                                    <li><strong>PetLog</strong>: AI 분석 결과를 사용자 확인 뒤 저장하는 데이터 흐름 구성</li>
+                                    <li><strong>Chaengim</strong>: GOV24 공공데이터 API를 백엔드에서 동기화하고 내부 DB로 제공하는 구조 설계</li>
+                                    <li><strong>Chaengim</strong>: Express, Prisma, MySQL 기반 혜택, 저장 상태, 체크리스트, 일정 데이터 모델링</li>
+                                    <li><strong>Chaengim</strong>: JWT 인증과 사용자 프로필 기반 추천·저장 흐름 연결</li>
+                                </ul>
+                            </div>
                         </div>
-                        <div class="quality-item stagger-item">
-                            <span class="dot"></span>
-                            <p>사용자 입력 / AI 결과 검증 흐름 분리</p>
+
+                        <!-- Tech Item 3: Gemini API -->
+                        <div class="evidence-card">
+                            <div class="evidence-header">
+                                <span class="evidence-icon">AI</span>
+                                <h3>Gemini API</h3>
+                            </div>
+                            <div class="evidence-body">
+                                <div class="evidence-meta">
+                                    <span class="meta-label">Used in:</span>
+                                    <span class="meta-val">PetLog, Chaengim</span>
+                                </div>
+                                <ul class="evidence-list-items">
+                                    <li><strong>PetLog</strong>: 영수증 이미지 기반 OCR 분석 요청 및 응답 처리</li>
+                                    <li><strong>PetLog</strong>: 진료비 항목, 금액, 할인 정보가 포함된 분석 결과를 사용자 확인 화면과 연결</li>
+                                    <li><strong>PetLog</strong>: 분석 실패 또는 응답 지연 상황에 대비한 로딩 상태와 수기 입력 fallback 구성</li>
+                                    <li><strong>Chaengim</strong>: 추천 후보는 Rule-based Scoring으로 계산하고, Gemini API는 추천 이유 생성에만 사용</li>
+                                    <li><strong>Chaengim</strong>: AI 추천이 최종 자격 판정처럼 보이지 않도록 책임 범위와 공식 확인 흐름을 분리</li>
+                                </ul>
+                            </div>
                         </div>
-                        <div class="quality-item stagger-item">
-                            <span class="dot"></span>
-                            <p>Firebase 데이터 접근 로직 분리 (Service Layer)</p>
+
+                        <!-- Tech Item 4: CSS Grid / Flexbox -->
+                        <div class="evidence-card">
+                            <div class="evidence-header">
+                                <span class="evidence-icon">CSS</span>
+                                <h3>Vanilla CSS / Responsive</h3>
+                            </div>
+                            <div class="evidence-body">
+                                <div class="evidence-meta">
+                                    <span class="meta-label">Used in:</span>
+                                    <span class="meta-val">Portfolio Website, Chaengim</span>
+                                </div>
+                                <ul class="evidence-list-items">
+                                    <li><strong>Portfolio Website</strong>: CSS Grid와 Flexbox 기반 대시보드형 레이아웃 구현</li>
+                                    <li><strong>Portfolio Website</strong>: 미디어 쿼리 기반 모바일 퍼스트 반응형 레이아웃 설계</li>
+                                    <li><strong>Portfolio Website</strong>: CSS Variables 기반 HSL 테마와 마우스 인터랙션 제어</li>
+                                    <li><strong>Chaengim</strong>: 모바일 앱형 PWA에 맞춘 터치 중심 UI와 신청 보드 화면 구성</li>
+                                </ul>
+                            </div>
                         </div>
-                        <div class="quality-item stagger-item">
-                            <span class="dot"></span>
-                            <p>에러 상태와 Fallback UI 처리</p>
+
+                        <!-- Tech Item 5: AI Collaboration Tools -->
+                        <div class="evidence-card">
+                            <div class="evidence-header">
+                                <span class="evidence-icon">AI</span>
+                                <h3>AI Collaboration Tools</h3>
+                            </div>
+                            <div class="evidence-body">
+                                <div class="evidence-meta">
+                                    <span class="meta-label">Used in:</span>
+                                    <span class="meta-val">PetLog, Chaengim, Portfolio Website</span>
+                                </div>
+                                <ul class="evidence-list-items">
+                                    <li><strong>Antigravity</strong>: 프로젝트 요구사항 정리, UI 개선 방향 도출, 구현 지시문 작성에 활용</li>
+                                    <li><strong>Codex</strong>: 코드 수정, 정적 사이트 문구 정리, 포트폴리오 섹션 리팩토링 보조에 활용</li>
+                                    <li><strong>ChatGPT</strong>: 프로젝트 설명 구조화, Problem/Action/Result 문구 정리, 기술 근거 검토에 활용</li>
+                                    <li><strong>공통 기준</strong>: AI 제안을 그대로 확정하지 않고 실제 코드와 구현 범위를 확인한 뒤 포트폴리오 문구에 반영</li>
+                                </ul>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- Process Section (Build Pipeline) -->
-        <section class="section process">
+        <!-- 05 Experience Console Section -->
+        <section id="console" class="section">
+            <div class="grid-bg"></div>
             <div class="container">
-                <h2 class="section-title reveal">Build Pipeline</h2>
-                <p class="section-subtitle reveal">단순한 개발을 넘어, 아이디어가 제품으로 빌드되고 배포되는 모든 파이프라인을 구축합니다.</p>
-                <div class="process-steps reveal-process">
-                    <div class="step">
-                        <span class="step-num">01</span>
-                        <div class="step-header">
-                            <h3>Define</h3>
-                            <span class="step-status completed">completed</span>
-                        </div>
-                        <p>사용자 문제를 관찰하고 기능 요구사항으로 정리합니다.</p>
-                    </div>
-                    <div class="step">
-                        <span class="step-num">02</span>
-                        <div class="step-header">
-                            <h3>Design</h3>
-                            <span class="step-status completed">completed</span>
-                        </div>
-                        <p>정보 구조와 화면 흐름을 설계해 사용자가 쉽게 행동하도록 만듭니다.</p>
-                    </div>
-                    <div class="step">
-                        <span class="step-num">03</span>
-                        <div class="step-header">
-                            <h3>Build</h3>
-                            <span class="step-status completed">completed</span>
-                        </div>
-                        <p>React, TypeScript, Firebase를 활용해 실제 동작하는 제품을 구현합니다.</p>
-                    </div>
-                    <div class="step">
-                        <span class="step-num">04</span>
-                        <div class="step-header">
-                            <h3>Improve</h3>
-                            <span class="step-status ongoing">ongoing</span>
-                        </div>
-                        <p>배포 이후 발생한 오류와 피드백을 바탕으로 UI와 기능 흐름을 개선합니다.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
+                <h2 class="section-title reveal">Experience Console</h2>
+                <p class="section-subtitle reveal">학습 과정, 수상 경력, 작업 경험을 로그와 타임라인 형태로 정리했습니다.</p>
 
-        <!-- Experience & Activities Section -->
-        <section id="experience" class="section">
-            <div class="container">
-                <h2 class="section-title reveal">Experience & Activities</h2>
-                <p class="section-subtitle reveal">교내 활동과 프로젝트 경험을 통해<br>협업, 문제 해결, 커뮤니케이션 역량을 쌓아왔습니다.</p>
+                <div class="console-grid reveal">
+                    <!-- Column 1: Activities Terminal -->
+                    <div class="console-panel">
+                        <div class="panel-header">
+                            <span class="terminal-indicator">ACTIVITIES_LOG</span>
+                        </div>
+                        <div class="panel-body">
+                            <!-- Item 0 -->
+                            <div class="console-log-row">
+                                <span class="log-time font-monospace">2026.03 - 2026.06</span>
+                                <div class="log-info">
+                                    <strong class="log-title">[NCS 연계] AI 바이브코딩 웹비즈니스 구현 및 실전과정 수료</strong>
+                                    <p class="log-desc">AI 도구를 연계한 인터페이스 개선, Firebase 데이터 적재, Vercel 배포 중심의 작업 흐름을 학습했습니다.</p>
+                                </div>
+                            </div>
+                            
+                            <!-- Item 1 -->
+                            <div class="console-log-row">
+                                <span class="log-time font-monospace">2025.03 - 2025.06</span>
+                                <div class="log-info">
+                                    <strong class="log-title">대전과학기술대학교 컴퓨터공학과 학생회</strong>
+                                    <p class="log-desc">학과 학생 지원 역할을 수행하며 학술제와 여러 행사 과정에서 교수진 및 학생들과 소통하고 일정 조율 경험을 쌓았습니다.</p>
+                                </div>
+                            </div>
 
-                <div class="experience-grid reveal">
-                    <!-- Item 0: AI Vibe Coding Course -->
-                    <article class="exp-card glass">
-                        <div class="exp-header">
-                            <span class="exp-time">2026.03 - 2026.06</span>
-                            <div class="exp-title-group">
-                                <h3 style="word-break: keep-all;">[NCS산대특] AI 바이브코딩 웹비즈니스 구축 및 마케팅 실전과정</h3>
-                                <p class="exp-dept">교육 과정 수료</p>
+                            <!-- Item 2 -->
+                            <div class="console-log-row">
+                                <span class="log-time font-monospace">2022.10 - 2022.12</span>
+                                <div class="log-info">
+                                    <strong class="log-title">대전과학기술대학교 학과 홍보위원</strong>
+                                    <p class="log-desc">정보 제공을 위한 시각 콘텐츠 기획과 미디어 채널 커뮤니케이션 방안을 마련한 경험이 있습니다.</p>
+                                </div>
+                            </div>
+
+                            <!-- Item 3 -->
+                            <div class="console-log-row">
+                                <span class="log-time font-monospace">2022.07 - 2022.11</span>
+                                <div class="log-info">
+                                    <strong class="log-title">LINC3.0 리빙랩 사업 학생연구원 (042팀)</strong>
+                                    <p class="log-desc">지역 생활 안전망 구현을 위한 실태 조사와 문제 발견 과정을 통해 사용자의 실제 행동과 요구를 파악하는 방식을 학습했습니다.</p>
+                                </div>
                             </div>
                         </div>
-                        <div class="exp-role">수료 / Training Completion</div>
-                        <p class="exp-desc" data-summary="AI 도구를 활용해 웹 제작, 구현 지시, 마케팅 흐름을 학습한 교육 수료 이력입니다.">AI 도구를 활용한 웹 서비스 제작 흐름, 프론트엔드 구현 지시, 웹비즈니스 구조, 마케팅 실무 흐름을 학습했습니다. 포트폴리오 웹,
-                            PetLog, VetFlow 프로젝트를 개선하며 AI 기반 제작 방식과 실제 배포 중심의 작업 흐름을 정리했습니다.</p>
-                        <div class="exp-tags">
-                            <span>AI Vibe Coding</span><span>Web
-                                Business</span><span>Frontend</span><span>Marketing</span><span>Prompt
-                                Engineering</span>
-                        </div>
-                    </article>
+                    </div>
 
-                    <!-- Item 1: Student Leader -->
-                    <article class="exp-card glass">
-                        <div class="exp-header">
-                            <span class="exp-time">2025.03 - 2025.06</span>
-                            <div class="exp-title-group">
-                                <h3>대전과학기술대학교</h3>
-                                <p class="exp-dept">컴퓨터공학 그래픽과</p>
+                    <!-- Column 2: Experience & Awards -->
+                    <div class="console-panel">
+                        <div class="panel-header">
+                            <span class="terminal-indicator">EXPERIENCE_LOG</span>
+                        </div>
+                        <div class="panel-body">
+                            <!-- Auxiliary Experience: FiveM (Subtle Log Entry) -->
+                            <div class="console-log-row auxiliary">
+                                <span class="log-time font-monospace">2020 - 2022</span>
+                                <div class="log-info">
+                                    <strong class="log-title">FiveM Game Server Development (보조 경험)</strong>
+                                    <p class="log-desc">
+                                        여러 FiveM 서버 환경에서 Lua 스크립트 수정과 MySQL 데이터 연동을 다루며 서버 로직, 데이터 흐름, 권한 기능, 오류 대응 방식을 경험했습니다.
+                                    </p>
+                                    <div class="log-tags font-monospace">
+                                        <span>Lua Scripting</span>
+                                        <span>MySQL Query</span>
+                                        <span>Data Flow Study</span>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                        <div class="exp-role">학회장 / Department Student Leader</div>
-                        <p class="exp-desc" data-summary="학과 대표로 활동하며 일정 관리, 의견 조율, 교수진 소통을 경험했습니다.">2025학년도 1학기 동안 학과 대표 역할을 맡아 학과 활동 운영과 학생 커뮤니케이션을 조율했습니다. 행사 일정 관리, 구성원 의견
-                            수렴,
-                            교수진과의 소통을 경험하며 협업과 책임감 있는 커뮤니케이션 역량을 쌓았습니다.</p>
-                        <div class="exp-tags">
-                            <span>Leadership</span><span>Communication</span><span>Project Coordination</span>
-                        </div>
-                    </article>
 
-                    <!-- Item 2: PR Assistant -->
-                    <article class="exp-card glass">
-                        <div class="exp-header">
-                            <span class="exp-time">2022.10 - 2022.12</span>
-                            <div class="exp-title-group">
-                                <h3>대전과학기술대학교</h3>
-                                <p class="exp-dept">컴퓨터공학 그래픽과</p>
+                            <!-- Award 1 -->
+                            <div class="console-log-row">
+                                <span class="log-time font-monospace">2022.11</span>
+                                <div class="log-info">
+                                    <strong class="log-title">지역혁신사업 리빙랩 성과공유회 최우수상</strong>
+                                    <p class="log-desc">Smart Bump Ramp 성과 발표를 통해 실용성을 검증했으며, 대전과학기술대학교 대표로 최우수상을 받았습니다.</p>
+                                    <a href="https://www.ccnnews.co.kr/news/articleView.html?idxno=279656"
+                                        target="_blank" rel="noopener noreferrer" class="console-link font-monospace">> view_news_source.sh</a>
+                                </div>
                             </div>
-                        </div>
-                        <div class="exp-role">학과홍보요원 / Department PR Assistant</div>
-                        <p class="exp-desc" data-summary="학과 홍보 콘텐츠와 SNS 운영을 담당한 디자인·커뮤니케이션 경험입니다.">학과 홍보 콘텐츠를 기획하고 SNS 채널 운영과 홍보물 제작을 담당했습니다. 디자인 툴을 활용한 시각 콘텐츠 제작과 정보를 명확하게
-                            전달하는
-                            커뮤니케이션 경험을 쌓았습니다.</p>
-                        <div class="exp-tags">
-                            <span>Design</span><span>Content Planning</span><span>SNS Management</span>
-                        </div>
-                    </article>
 
-                    <!-- Item 3: Student Researcher -->
-                    <article class="exp-card glass">
-                        <div class="exp-header">
-                            <span class="exp-time">2022.07 - 2022.11</span>
-                            <div class="exp-title-group">
-                                <h3>대전과학기술대학교</h3>
-                                <p class="exp-dept">LINC3.0 리빙랩 사업</p>
+                            <!-- Award 2 -->
+                            <div class="console-log-row">
+                                <span class="log-time font-monospace">2022.09</span>
+                                <div class="log-info">
+                                    <strong class="log-title">리빙랩 배리어프리 메이커톤 우수팀 선정 (2등)</strong>
+                                    <p class="log-desc">모빌리티 이동 지원을 위한 아이디어 경쟁에서 기술 실증 모델 부문 우수팀으로 선정되었습니다.</p>
+                                    <a href="https://daily.hankooki.com/news/articleView.html?idxno=875958"
+                                        target="_blank" rel="noopener noreferrer" class="console-link font-monospace">> view_news_source.sh</a>
+                                </div>
                             </div>
-                        </div>
-                        <div class="exp-role">학생연구원 / Student Researcher, 042 Team</div>
-                        <p class="exp-desc" data-summary="지역 문제 해결을 위한 리빙랩 프로젝트에서 문제 정의와 아이디어 도출을 경험했습니다.">지역 사회 문제 해결을 목표로 한 리빙랩 프로젝트에 참여하여 문제 정의, 아이디어 도출, 자료 조사, 기술 적용 가능성 검토 과정을
-                            경험했습니다. 사용자 관점에서 문제를 바라보고 해결 방향을 설계하는 Product Thinking 역량을 기를 수 있었습니다.</p>
-                        <div class="exp-tags">
-                            <span>Research</span><span>Problem Definition</span><span>Product Thinking</span><span>Team
-                                Project</span><span>Local Innovation</span>
-                        </div>
-                    </article>
-                </div>
-            </div>
-        </section>
 
-        <!-- Why Me Section -->
-        <section id="why-me" class="section why-me">
-            <div class="container">
-                <div class="why-strip reveal">
-                    <div class="why-strip-copy">
-                        <span class="why-eyebrow">WHY ME</span>
-                        <h2>직접 만든 프로젝트로 보여드립니다</h2>
-                        <p>
-                            PetLog와 VetFlow를 직접 구현하고 배포하며,<br>
-                            UI 구성, 데이터 흐름, API 활용, 배포까지 이어지는 개발 과정을 경험했습니다.
-                        </p>
-
-                        <div class="why-strip-points">
-                            <span>PetLog · AI 영수증 분석</span>
-                            <span>VetFlow · 병원 운영 대시보드</span>
-                            <span>Vercel 배포 프로젝트</span>
-                        </div>
-                    </div>
-
-                    <div class="why-avatar-card" aria-hidden="true">
-                        <img src="assets/images/avatar-call.png" alt="JU EUN PARK avatar"
-                            onerror="this.style.display='none'">
-                        <span>Frontend · Fullstack</span>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Awards Section -->
-        <section class="section">
-            <div class="container">
-                <h2 class="section-title reveal">Awards</h2>
-                <p class="section-subtitle reveal">공개 자료로 확인 가능한 수상 이력을 중심으로 정리했습니다.</p>
-
-                <div class="awards-grid">
-                    <!-- Award 1 -->
-                    <div class="award-card reveal">
-                        <div class="award-header">
-                            <span class="award-date">2022.11</span>
-                            <span class="award-badge">최우수상</span>
-                        </div>
-                        <h3>지역혁신사업 리빙랩 사업 성과공유회</h3>
-                        <div class="award-info">
-                            <p class="org">대전과학기술대학교 042팀</p>
-                            <p class="desc" data-summary="PM 사용자를 위한 Smart Bump Ramp 성과물을 발표한 리빙랩 수상 이력입니다.">대전지역 4개 대학이 참여한 배리어프리 리빙랩 사업에서 PM 사용자를 위한 Smart Bump Ramp 성과물을 발표했으며, 학과 공개
-                                기록 기준 최우수상 수상 이력이 확인됩니다. (2022.11.25)</p>
-                        </div>
-                        <div class="award-links">
-                            <a href="https://www.ccnnews.co.kr/news/articleView.html?idxno=279656"
-                                target="_blank" rel="noopener noreferrer" class="btn-pill">View Source</a>
-                        </div>
-                    </div>
-
-                    <!-- Award 2 -->
-                    <div class="award-card reveal">
-                        <div class="award-header">
-                            <span class="award-date">2022.09</span>
-                            <span class="award-badge">우수작 선정 / 2등</span>
-                        </div>
-                        <h3>리빙랩 배리어프리 메이커톤 및 아이디어</h3>
-                        <div class="award-info">
-                            <p class="org">042조팀 · 대전과학기술대학교</p>
-                            <p class="desc" data-summary="배리어프리 아이디어 경진대회에서 스마트 범프 램프를 제안한 이력입니다.">4개 대학 연합 리빙랩 경진대회(2022.09.20 - 09.26)에서 퍼스널모빌리티 사용자를 위한 스마트 범프 램프를 제안했고,
-                                우수작으로
-                                선정되었습니다.</p>
-                        </div>
-                        <div class="award-links">
-                            <a href="https://daily.hankooki.com/news/articleView.html?idxno=875958"
-                                target="_blank" rel="noopener noreferrer" class="btn-pill">View Source</a>
-                        </div>
-                    </div>
-
-                    <!-- Award 3 -->
-                    <div class="award-card reveal">
-                        <div class="award-header">
-                            <span class="award-date">2022.11</span>
-                            <span class="award-badge">우수상</span>
-                        </div>
-                        <h3>산학협력 EXPO</h3>
-                        <div class="award-info">
-                            <p class="org">컴퓨터공학&그래픽과 · 대전과학기술대학교</p>
-                            <p class="desc" data-summary="산학협력 EXPO 콘텐츠 경진대회 우수상 수상 이력입니다.">1인 크리에이터 동영상 콘텐츠 경진대회(2022.11.02 - 11.04)에서 우수상을 수상했습니다. (보도일: 2022.11.09)
-                            </p>
-                        </div>
-                        <div class="award-links">
-                            <a href="https://www.newsis.com/view/NISX20221109_0002080068" target="_blank"
-                                rel="noopener noreferrer" class="btn-pill">View Source</a>
-                            <a href="https://www.ccnnews.co.kr/news/articleView.html?idxno=275325" target="_blank"
-                                rel="noopener noreferrer" class="btn-pill">Related Article</a>
+                            <!-- Award 3 -->
+                            <div class="console-log-row">
+                                <span class="log-time font-monospace">2022.11</span>
+                                <div class="log-info">
+                                    <strong class="log-title">산학협력 EXPO 경진대회 우수상</strong>
+                                    <p class="log-desc">산학 연계 콘텐츠 부문에 기획안과 실증 비디오를 출품해 교육기관 우수상을 수상했습니다.</p>
+                                    <div class="console-link-group">
+                                        <a href="https://www.newsis.com/view/NISX20221109_0002080068" target="_blank"
+                                            rel="noopener noreferrer" class="console-link font-monospace">> view_source_01.sh</a>
+                                        <a href="https://www.ccnnews.co.kr/news/articleView.html?idxno=275325" target="_blank"
+                                            rel="noopener noreferrer" class="console-link font-monospace">> view_source_02.sh</a>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </section>
 
-        <!-- Contact Section -->
-        <section id="contact" class="contact-section reveal">
-            <div class="container">
-                <div class="contact-card">
-                    <div class="contact-command">
-                        <span class="contact-eyebrow">CONTACT</span>
-                        <h2>Ready to build something?</h2>
-                        <p>프로젝트, 협업, 포트폴리오 관련 문의는 이메일로 연락해 주세요.</p>
-
-                        <div class="command-list">
-                            <a href="#projects" class="command-link">
-                                <span>&gt;</span> view projects
-                            </a>
-                            <a href="mailto:pje698112@naver.com" class="command-link">
-                                <span>&gt;</span> send email
-                            </a>
-                        </div>
+                <!-- Contact Console Panel -->
+                <div class="contact-terminal reveal" id="contact">
+                    <div class="panel-header">
+                        <span class="terminal-indicator">CONTACT_INFO</span>
+                        <span class="panel-dot"></span>
                     </div>
-
-                    <div class="contact-info">
-                        <div>
-                            <span>Email</span>
-                            <a href="mailto:pje698112@naver.com">pje698112@naver.com</a>
+                    <div class="contact-terminal-body">
+                        <div class="contact-prompt-panel">
+                            <h2>Ready to connect?</h2>
+                            <p>프로젝트 협업, 프론트엔드 포트폴리오, 채용 관련 문의는 아래 이메일로 연락해 주세요.</p>
+                            <div class="terminal-cmd-lines" style="margin: 16px 0; color: var(--accent-secondary); font-family: var(--font-mono); font-size: 0.82rem; opacity: 0.85; line-height: 1.6;">
+                                <div>&gt; contact --email pje698112@naver.com</div>
+                                <div>&gt; read candidate.profile</div>
+                            </div>
+                            <div class="terminal-actions">
+                                <a href="mailto:pje698112@naver.com" class="btn btn-primary font-monospace">Email Me</a>
+                                <button id="copy-email-btn" class="btn btn-secondary font-monospace">Copy Email</button>
+                            </div>
                         </div>
-                        <div>
-                            <span>Location</span>
-                            <p>Daejeon, South Korea</p>
-                        </div>
-                        <div>
-                            <span>Role</span>
-                            <p>Frontend · Fullstack Developer</p>
+                        <div class="contact-meta-display font-monospace">
+                            <div class="meta-row">
+                                <span class="meta-key">EMAIL:</span>
+                                <span class="meta-val"><a href="mailto:pje698112@naver.com">pje698112@naver.com</a></span>
+                            </div>
+                            <div class="meta-row">
+                                <span class="meta-key">LOCATION:</span>
+                                <span class="meta-val">Daejeon, South Korea</span>
+                            </div>
+                            <div class="meta-row">
+                                <span class="meta-key">POSITION:</span>
+                                <span class="meta-val">Product-Minded Frontend Engineer</span>
+                            </div>
                         </div>
                     </div>
                 </div>
 
                 <footer class="footer-bottom">
-                    <p>&copy; 2026 Ju Eun Park. Built with Passion.</p>
+                    <p>&copy; 2026 Ju Eun Park. Built with Blueprint & Pipeline Philosophy.</p>
                 </footer>
             </div>
         </section>
