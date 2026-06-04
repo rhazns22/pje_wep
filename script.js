@@ -20,6 +20,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initCustomCursor();
   initSummaryPeek();
   initHeroMorph();
+  initTechTabs();
 });
 
 /*
@@ -652,3 +653,27 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 });
+
+/*
+  [12. Tech Evidence Tabs]
+  - Detailed Tech Evidence 내 5개의 카드 탭을 전환합니다.
+*/
+function initTechTabs() {
+  const tabs = document.querySelectorAll('.tech-evidence-tabs .tab-btn');
+  const panes = document.querySelectorAll('.tech-evidence-tabs .tab-pane');
+  if (!tabs.length || !panes.length) return;
+
+  tabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      const target = tab.getAttribute('data-tab');
+      tabs.forEach(t => t.classList.remove('active'));
+      panes.forEach(p => p.classList.remove('active'));
+
+      tab.classList.add('active');
+      const targetPane = document.getElementById(target);
+      if (targetPane) {
+        targetPane.classList.add('active');
+      }
+    });
+  });
+}
