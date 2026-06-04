@@ -1,7 +1,7 @@
 ﻿# Product-Minded Frontend Engineer Portfolio
 
 <div align="center">
-  <img src="assets/images/jppimg.png" alt="Ju Eun Park Banner" />
+  <img src="assets/images/gitimg.png" alt="Ju Eun Park Banner" />
 
   <p align="center">
     <strong>사용자 흐름과 데이터 연결을 실제 서비스 형태로 구현하는 프론트엔드 엔지니어, 박주은입니다.</strong>
