@@ -435,6 +435,41 @@ ul {
   font-weight: 400;
 }
 
+/* Hero Workflow Line */
+.hero-workflow {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 28px;
+  background: rgba(255, 255, 255, 0.64);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(229, 232, 235, 0.9);
+  border-radius: 999px;
+  padding: 10px 20px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.03);
+  transition: box-shadow 0.25s ease, background 0.25s ease;
+}
+
+.hero-workflow:hover {
+  background: rgba(255, 255, 255, 0.80);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.06);
+}
+
+.wf-step {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #4e5968;
+  letter-spacing: -0.01em;
+  white-space: nowrap;
+}
+
+.wf-sep {
+  font-size: 0.75rem;
+  color: #8b95a1;
+  line-height: 1;
+}
+
 /* ── CURRENT FOCUS ── */
 .callout {
   display: flex;
@@ -887,9 +922,9 @@ ul {
 
 .tech-logo-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(124px, 1fr));
-  gap: 16px;
-  min-height: 240px;
+  grid-template-columns: repeat(auto-fill, minmax(116px, 1fr));
+  gap: 14px;
+  min-height: 200px;
   justify-content: start;
   align-items: start;
 }
@@ -908,16 +943,16 @@ ul {
 .tech-item {
   background: #ffffff;
   border: 1px solid #e5e8eb;
-  border-radius: 24px;
-  padding: 16px 12px;
-  width: 124px;
-  height: 116px;
+  border-radius: 22px;
+  padding: 14px 10px;
+  width: 116px;
+  height: 108px;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 10px;
+  gap: 8px;
   text-align: center;
   cursor: default;
   transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1), 
@@ -928,8 +963,8 @@ ul {
 }
 
 .tech-item:hover {
-  transform: translateY(-6px) scale(1.03);
-  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.08);
+  transform: translateY(-5px) scale(1.025);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.07);
   border-color: #ccd2d8;
 }
 
@@ -943,25 +978,25 @@ ul {
 }
 
 .tech-logo-wrap {
-  width: 46px;
-  height: 46px;
+  width: 40px;
+  height: 40px;
   display: flex;
   align-items: center;
   justify-content: center;
   background: #f2f4f6;
-  border-radius: 12px;
-  padding: 8px;
+  border-radius: 11px;
+  padding: 7px;
   box-sizing: border-box;
 }
 
 .tech-logo-wrap img {
-  width: 26px;
-  height: 26px;
+  width: 24px;
+  height: 24px;
   object-fit: contain;
 }
 
 .tech-item span {
-  font-size: 0.82rem;
+  font-size: 0.79rem;
   font-weight: 600;
   color: #333d4b;
   white-space: nowrap;

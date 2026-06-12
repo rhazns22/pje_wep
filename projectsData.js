@@ -32,7 +32,7 @@ const projectsData = [
         content: "영수증을 업로드하면 AI가 먼저 항목을 분석하고, 사용자가 직접 확인·수정한 데이터만 저장합니다. AI 결과를 그대로 신뢰하지 않고, 보호자 검토 단계를 거쳐 기록의 신뢰도를 높이는 구조로 만들었습니다."
       },
       {
-        heading: "Core Pipeline",
+        heading: "Core Flow",
         type: "list",
         content: [
           "영수증 이미지 업로드",
@@ -214,7 +214,7 @@ const projectsData = [
     id: "portfolio",
     title: "Portfolio Website",
     subtitle: "미니멀 정보 구조 포트폴리오",
-    description: "채용 담당자의 핵심 읽기 경험을 최우선으로 고려한 포트폴리오입니다. 메인 허브는 Apple/Toss식의 넓은 여백과 가벼운 카드 뼈대로 간결함을 제공하고, 상세 분석 영역은 Notion 문서형 모달 뷰포트를 연동하여 상세 텍스트에 깊이 집중하도록 설계했습니다.",
+    description: "채용 담당자의 핵심 읽기 경험을 최우선으로 고려한 포트폴리오입니다. 메인 허브는 넓은 여백과 가벼운 카드 뼈대로 간결함을 제공하고, 상세 분석 영역은 Notion 문서형 모달 뷰포트를 연동하여 상세 텍스트에 깊이 집중하도록 설계했습니다.",
     period: "2026.06 - 2026.06",
     status: "Completed / Main Portfolio",
     role: ["개인 100% 설계 및 마크업 개발"],
@@ -226,7 +226,7 @@ const projectsData = [
       {
         heading: "Overview",
         type: "paragraph",
-        content: "채용 담당자의 핵심 읽기 경험을 최우선으로 고려한 포트폴리오입니다. 메인 허브는 Apple/Toss식의 넓은 여백과 가벼운 카드 뼈대로 간결함을 제공하고, 상세 분석 영역은 Notion 문서형 모달 뷰포트를 연동하여 상세 텍스트에 깊이 집중하도록 설계했습니다."
+        content: "채용 담당자의 핵심 읽기 경험을 최우선으로 고려한 포트폴리오입니다. 메인 허브는 넓은 여백과 가벼운 카드 뼈대로 간결함을 제공하고, 상세 분석 영역은 Notion 문서형 모달 뷰포트를 연동하여 상세 텍스트에 깊이 집중하도록 설계했습니다."
       },
       {
         heading: "Design Strategy",
