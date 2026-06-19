@@ -50,6 +50,7 @@ html {
   background: var(--bg);
   color: var(--t1);
   overflow-x: hidden;
+  font-size: 14.4px; /* 16px * 0.9 = 14.4px for 90% desktop zoom scale */
 }
 
 /* ── APP BACKGROUND LAYER (Neumorphism / Soft Depth) ── */
@@ -136,13 +137,13 @@ ul {
 
 /* ── LAYOUT & COMMON ── */
 .container {
-  max-width: 1040px;
+  max-width: 940px;
   margin: 0 auto;
   padding: 0 24px;
 }
 
 .section {
-  padding: 120px 0; /* Apple-like premium wide spacing */
+  padding: 108px 0; /* scaled down from 120px */
 }
 
 .bg-soft {
@@ -2179,6 +2180,10 @@ ul {
 }
 
 @media (max-width: 992px) {
+  html {
+    font-size: 16px; /* Restore original scale on tablet and mobile viewports */
+  }
+
   .project-card-grid {
     grid-template-columns: repeat(2, 1fr);
     gap: 20px;
@@ -2248,6 +2253,10 @@ ul {
 
 /* ── MOBILE RESPONSIVE OPTIMIZATION (768px & under) ── */
 @media (max-width: 768px) {
+  html {
+    font-size: 16px; /* Restore original scaling on mobile for readability */
+  }
+
   .pc-only {
     display: none !important;
   }
