@@ -101,7 +101,8 @@
                                     xmlns="http://www.w3.org/2000/svg">
                                     <path
                                         d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z"
-                                        stroke="#4e5968" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                                        stroke="#4e5968" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round" />
                                     <path d="M12 8V12" stroke="#4e5968" stroke-width="2" stroke-linecap="round"
                                         stroke-linejoin="round" />
                                     <path d="M12 16H12.01" stroke="#4e5968" stroke-width="2" stroke-linecap="round"
@@ -156,7 +157,8 @@
                                     xmlns="http://www.w3.org/2000/svg">
                                     <path
                                         d="M14 2H6C5.46957 2 4.96086 2.21071 4.58579 2.58579C4.21071 2.96086 4 3.46957 4 4V20C4 20.5304 4.21071 21.0391 4.58579 21.4142C4.96086 21.7893 5.46957 22 6 22H18C18.5304 22 19.0391 21.7893 19.4142 21.4142C19.7893 21.0391 20 20.5304 20 20V8L14 2Z"
-                                        stroke="#4e5968" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                                        stroke="#4e5968" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round" />
                                     <path d="M14 2V8H20" stroke="#4e5968" stroke-width="2" stroke-linecap="round"
                                         stroke-linejoin="round" />
                                     <path d="M16 13H8" stroke="#4e5968" stroke-width="2" stroke-linecap="round"
@@ -220,12 +222,12 @@
                                         style="display: flex; gap: 8px; justify-content: flex-start; align-items: center;">
                                         <span style="font-size: 0.72rem; color: #8b95a1; font-weight: 600;">외부
                                             링크:</span>
-                                        <a href="https://petlog-eight.vercel.app/" target="_blank" rel="noopener"
-                                            class="card-link-btn card-link-sub" onclick="event.stopPropagation()">앱 보기
-                                            ↗</a>
-                                        <a href="https://petlogwep.vercel.app/" target="_blank" rel="noopener"
-                                            class="card-link-btn card-link-sub" onclick="event.stopPropagation()">소개서
-                                            ↗</a>
+                                        <button type="button" data-url="https://petlog-eight.vercel.app/" data-title="PetLog 앱 미리보기"
+                                            class="card-link-btn card-link-sub preview-trigger-btn" onclick="event.stopPropagation()">앱 보기
+                                            ↗</button>
+                                        <button type="button" data-url="https://petlogwep.vercel.app/" data-title="PetLog 소개서 미리보기"
+                                            class="card-link-btn card-link-sub preview-trigger-btn" onclick="event.stopPropagation()">소개서
+                                            ↗</button>
                                     </div>
                                     <span class="view-detail-btn-main">프로젝트 문서 열기 <span class="arrow">→</span></span>
                                 </div>
@@ -260,12 +262,12 @@
                                         style="display: flex; gap: 8px; justify-content: flex-start; align-items: center;">
                                         <span style="font-size: 0.72rem; color: #8b95a1; font-weight: 600;">외부
                                             링크:</span>
-                                        <a href="https://chaengim.vercel.app/" target="_blank" rel="noopener"
-                                            class="card-link-btn card-link-sub" onclick="event.stopPropagation()">앱 보기
-                                            ↗</a>
-                                        <a href="https://chaengimweb.vercel.app/" target="_blank" rel="noopener"
-                                            class="card-link-btn card-link-sub" onclick="event.stopPropagation()">소개서
-                                            ↗</a>
+                                        <button type="button" data-url="https://chaengim.vercel.app/" data-title="Chaengim 앱 미리보기"
+                                            class="card-link-btn card-link-sub preview-trigger-btn" onclick="event.stopPropagation()">앱 보기
+                                            ↗</button>
+                                        <button type="button" data-url="https://chaengimweb.vercel.app/" data-title="Chaengim 소개서 미리보기"
+                                            class="card-link-btn card-link-sub preview-trigger-btn" onclick="event.stopPropagation()">소개서
+                                            ↗</button>
                                     </div>
                                     <span class="view-detail-btn-main">프로젝트 문서 열기 <span class="arrow">→</span></span>
                                 </div>
@@ -498,7 +500,7 @@
                         <div class="log-body">
                             <div class="log-title-wrap">
                                 <span class="log-title">지역혁신사업 리빙랩 성과공유회 최우수상</span>
-                                <span class="log-badge">대과대 대표 / 우송대</span>
+                                <span class="log-badge">과기대 대표 / 우송대</span>
                             </div>
                             <p class="log-desc">Smart Bump Ramp 성과 발표를 통해 실용성을 인정받았습니다.</p>
                             <div class="log-links">
@@ -554,7 +556,7 @@
                         <div class="log-date">2025.03 – 2025.06</div>
                         <div class="log-body">
                             <div class="log-title-wrap">
-                                <span class="log-title">대전과학기술대학교 컴퓨터공학과 학생회</span>
+                                <span class="log-title">대전과학기술대학교 컴퓨터공학과 학회장</span>
                             </div>
                             <p class="log-desc">학과 행사 서포트, 교수진·학생 소통 및 일정 조율 경험을 쌓았습니다.</p>
                         </div>
@@ -570,16 +572,25 @@
                     <div class="contact-text">
                         <h2>함께 만들어요</h2>
                         <p class="contact-desc">채용 문의나 프로젝트 협업 제안, 언제든 편하게 연락해 주세요.</p>
-                        
+
                         <div style="margin: 28px 0;">
                             <!-- Email Copy Component Target Container -->
-                            <div id="copy-email-button-container" style="position: relative; display: inline-block;"></div>
+                            <div id="copy-email-button-container" style="position: relative; display: inline-block;">
+                            </div>
                         </div>
 
-                        <div class="contact-sub-links" style="display: flex; align-items: center; gap: 16px; margin-top: 24px; border-top: 1px solid rgba(0,0,0,0.05); padding-top: 20px; flex-wrap: wrap;">
-                            <a href="mailto:pje698112@naver.com" style="font-size: 0.85rem; color: var(--t3); font-weight: 600; transition: color 0.2s;" onmouseover="this.style.color='var(--t1)'" onmouseout="this.style.color='var(--t3)'">pje698112@naver.com</a>
+                        <div class="contact-sub-links"
+                            style="display: flex; align-items: center; gap: 16px; margin-top: 24px; border-top: 1px solid rgba(0,0,0,0.05); padding-top: 20px; flex-wrap: wrap;">
+                            <a href="mailto:pje698112@naver.com"
+                                style="font-size: 0.85rem; color: var(--t3); font-weight: 600; transition: color 0.2s;"
+                                onmouseover="this.style.color='var(--t1)'"
+                                onmouseout="this.style.color='var(--t3)'">pje698112@naver.com</a>
                             <span style="color: #e5e8eb; font-size: 0.8rem;">|</span>
-                            <a href="https://www.instagram.com/front_park.03?igsh=MTNwbzExNWNycTExOA%3D%3D&utm_source=qr" target="_blank" rel="noopener" style="font-size: 0.85rem; color: var(--t3); font-weight: 600; transition: color 0.2s;" onmouseover="this.style.color='var(--t1)'" onmouseout="this.style.color='var(--t3)'">Instagram ↗</a>
+                            <a href="https://www.instagram.com/front_park.03?igsh=MTNwbzExNWNycTExOA%3D%3D&utm_source=qr"
+                                target="_blank" rel="noopener"
+                                style="font-size: 0.85rem; color: var(--t3); font-weight: 600; transition: color 0.2s;"
+                                onmouseover="this.style.color='var(--t1)'"
+                                onmouseout="this.style.color='var(--t3)'">Instagram ↗</a>
                             <span style="color: #e5e8eb; font-size: 0.8rem;">|</span>
                             <span style="font-size: 0.85rem; color: var(--t3); font-weight: 500;">Daejeon, KR</span>
                         </div>
@@ -629,6 +640,7 @@
 
     <script src="projectsData.js?v=3.6"></script>
     <script src="CopyEmailButton.js?v=3.6"></script>
+    <script src="WebsitePreviewModal.js?v=3.6"></script>
     <script src="script.js?v=3.6"></script>
 </body>
 

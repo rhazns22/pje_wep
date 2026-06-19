@@ -11,6 +11,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initNotionModals();
   initTechFilter();
   initScrollEffects();
+  initWebsitePreview();
 });
 
 /* ── MOBILE NAV TOGGLE ── */
@@ -461,6 +462,26 @@ function initTechFilter() {
         }, 450);
 
       }, 160);
+    });
+  });
+}
+
+/* ── WEBSITE PREVIEW MODAL INTEGRATION ── */
+function initWebsitePreview() {
+  const triggerButtons = document.querySelectorAll('.preview-trigger-btn');
+  triggerButtons.forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      const url = btn.getAttribute('data-url');
+      const title = btn.getAttribute('data-title') || "앱 소개 홈페이지 미리보기";
+      if (!url) return;
+
+      new WebsitePreviewModal({
+        url: url,
+        title: title,
+        onClose: () => {}
+      });
     });
   });
 }
