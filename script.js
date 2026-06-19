@@ -388,50 +388,79 @@ function initNotionModals() {
 function initTechFilter() {
   const buttons = document.querySelectorAll('.tech-filter-btn');
   const items = document.querySelectorAll('.tech-item');
+  const grid = document.querySelector('.tech-logo-grid');
 
-  if (buttons.length === 0 || items.length === 0) return;
+  if (buttons.length === 0 || items.length === 0 || !grid) return;
 
   buttons.forEach(btn => {
     btn.addEventListener('click', () => {
-      // 1. Toggle active button style
+      if (btn.classList.contains('active')) return;
+
+      // 1. Lock start height to prevent layout snapping
+      const startHeight = grid.offsetHeight;
+      grid.style.height = `${startHeight}px`;
+      grid.style.transition = 'none';
+
+      // 2. Toggle active button style
       buttons.forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
 
-      // 2. Elastic out-fade first
       const filterValue = btn.getAttribute('data-filter');
 
+      // 3. Soft fade out
       items.forEach(item => {
-        item.style.transition = 'opacity 0.2s cubic-bezier(0.22, 1, 0.36, 1), transform 0.2s cubic-bezier(0.22, 1, 0.36, 1)';
+        item.style.transition = 'opacity 0.18s cubic-bezier(0.4, 0, 0.2, 1), transform 0.18s cubic-bezier(0.4, 0, 0.2, 1)';
         item.style.opacity = '0';
-        item.style.transform = 'scale(0.92)';
+        item.style.transform = 'scale(0.88) translateY(8px)';
       });
 
-      // 3. Render and pop-in new category
+      // 4. Stagger pop-in matching items and animate container height
       setTimeout(() => {
+        let matchCount = 0;
         items.forEach(item => {
           const itemCategory = item.getAttribute('data-category');
           if (filterValue === 'all' || itemCategory === filterValue) {
             item.classList.remove('hide');
-            item.classList.remove('show-pop');
             
-            // Force browser reflow
+            // Apply delay based on match order to make it look sequential
+            item.style.transition = `opacity 0.32s cubic-bezier(0.34, 1.56, 0.64, 1) ${matchCount * 12}ms, transform 0.32s cubic-bezier(0.34, 1.56, 0.64, 1) ${matchCount * 12}ms`;
+            
+            // Trigger reflow
             void item.offsetWidth;
-            item.classList.add('show-pop');
+            
+            item.style.opacity = '1';
+            item.style.transform = 'scale(1) translateY(0)';
+            matchCount++;
           } else {
             item.classList.add('hide');
-            item.classList.remove('show-pop');
           }
         });
+
+        // 5. Measure target height of dynamic filtered layout
+        grid.style.height = 'auto';
+        const targetHeight = grid.offsetHeight;
         
-        // Clean inline override to preserve hover animations
+        // Reset height back to start and animate smoothly to target
+        grid.style.height = `${startHeight}px`;
+        void grid.offsetHeight; // force reflow
+        
+        grid.style.transition = 'height 0.4s cubic-bezier(0.2, 0.8, 0.2, 1)';
+        grid.style.height = `${targetHeight}px`;
+
+        // 6. Cleanup inline overrides after transitions finish
         setTimeout(() => {
           items.forEach(item => {
-            item.style.transition = '';
-            item.style.opacity = '';
-            item.style.transform = '';
+            if (!item.classList.contains('hide')) {
+              item.style.transition = '';
+              item.style.opacity = '';
+              item.style.transform = '';
+            }
           });
-        }, 300);
-      }, 150);
+          grid.style.transition = '';
+          grid.style.height = ''; // Release inline height for responsive scaling
+        }, 450);
+
+      }, 160);
     });
   });
 }

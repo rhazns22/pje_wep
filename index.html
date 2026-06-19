@@ -8,7 +8,7 @@
     <meta name="description" content="React와 TypeScript를 기반으로 사용자 흐름, 데이터 저장, AI 기능 연동을 구현하는 프론트엔드 개발자 박주은의 포트폴리오입니다.">
     <link rel="stylesheet" as="style" crossorigin
         href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
-    <link rel="stylesheet" href="style.css?v=2.6">
+    <link rel="stylesheet" href="style.css?v=3.4">
     <!-- Lenis Smooth Scroll CDN -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.34/css/lenis.css">
     <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.34/dist/lenis.min.js"></script>
@@ -49,11 +49,12 @@
             <!-- Subtle Ambient Blur Backgrounds -->
             <div class="hero-blur-mint"></div>
             <div class="hero-blur-gray"></div>
+            <div class="hero-bg-shape"></div>
 
             <div class="container hero-center">
                 <div class="hero-badge hero-fade-up">Frontend Engineer · Product Builder</div>
                 <h1 class="hero-main-title hero-fade-up">
-                    사용자 흐름과 데이터 흐름을 연결하는<br class="pc-only"> 프론트엔드 개발자 박주은입니다.
+                    사용자 흐름과 <span class="gradient-text-flow">데이터 흐름</span>을 연결하는<br class="pc-only"> 프론트엔드 개발자 박주은입니다.
                 </h1>
 
                 <!-- Hero Footer Tags -->
@@ -84,7 +85,6 @@
         <section class="section reveal-section" id="ai">
             <div class="container">
                 <div style="text-align: center; margin-bottom: 56px;">
-                    <p class="sec-label">Workflow</p>
                     <h2 class="sec-title" style="margin-bottom: 16px;">AI-assisted Development</h2>
                     <p class="sec-desc" style="margin: 0 auto; max-width: 680px;">
                         AI를 결과물 생성 도구로만 사용하지 않고, 문제 분석, 구현 보조, 오류 추적, 문서화 과정에 활용했습니다.
@@ -94,80 +94,89 @@
                 <div class="ai-cards-grid reveal-parent">
                     <!-- Card 1: Problem Solving -->
                     <div class="ai-card reveal-child">
-                        <div class="ai-card-icon">
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
-                                xmlns="http://www.w3.org/2000/svg">
-                                <path
-                                    d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z"
-                                    stroke="#4e5968" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                                <path d="M12 8V12" stroke="#4e5968" stroke-width="2" stroke-linecap="round"
-                                    stroke-linejoin="round" />
-                                <path d="M12 16H12.01" stroke="#4e5968" stroke-width="2" stroke-linecap="round"
-                                    stroke-linejoin="round" />
-                            </svg>
+                        <div class="ai-card-header">
+                            <span class="ai-card-index">01</span>
+                            <div class="ai-card-icon">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path
+                                        d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z"
+                                        stroke="#4e5968" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                                    <path d="M12 8V12" stroke="#4e5968" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round" />
+                                    <path d="M12 16H12.01" stroke="#4e5968" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round" />
+                                </svg>
+                            </div>
                         </div>
                         <h3>Problem Solving</h3>
                         <p class="ai-card-desc">
                             오류 메시지와 실행 흐름을 분석하고, 원인을 좁힌 뒤 직접 테스트하며 수정했습니다.
                         </p>
-                        <ul class="ai-card-bullets">
-                            <li>Gemini API quota 및 400/500 오류 패턴 분석</li>
-                            <li>OCR 분석 실패 시나리오별 수기 입력 대체 흐름 설계</li>
-                            <li>Firebase 저장 트랜잭션과 예외 케이스 직접 검증</li>
-                        </ul>
+                        <div class="ai-evidence-row">
+                            <span class="evidence-pill">Gemini API 분석</span>
+                            <span class="evidence-pill">수기 입력 대체 흐름</span>
+                            <span class="evidence-pill">Firebase 예외 검증</span>
+                        </div>
                     </div>
 
                     <!-- Card 2: Implementation Support -->
                     <div class="ai-card reveal-child">
-                        <div class="ai-card-icon">
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
-                                xmlns="http://www.w3.org/2000/svg">
-                                <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6H13a5 5 0 0 0-5 5v3" stroke="#4e5968"
-                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                                <path d="m13 14 3.3 3.3a1 1 0 0 0 1.4 0l3-3a1 1 0 0 0 0-1.4l-3-3" stroke="#4e5968"
-                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                                <path d="M4 18v-4a5 5 0 0 1 5-5h1" stroke="#4e5968" stroke-width="2"
-                                    stroke-linecap="round" stroke-linejoin="round" />
-                            </svg>
+                        <div class="ai-card-header">
+                            <span class="ai-card-index">02</span>
+                            <div class="ai-card-icon">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6H13a5 5 0 0 0-5 5v3" stroke="#4e5968"
+                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                                    <path d="m13 14 3.3 3.3a1 1 0 0 0 1.4 0l3-3a1 1 0 0 0 0-1.4l-3-3" stroke="#4e5968"
+                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                                    <path d="M4 18v-4a5 5 0 0 1 5-5h1" stroke="#4e5968" stroke-width="2"
+                                        stroke-linecap="round" stroke-linejoin="round" />
+                                </svg>
+                            </div>
                         </div>
                         <h3>Implementation Support</h3>
                         <p class="ai-card-desc">
                             컴포넌트 구조, 상태 흐름, API 연결 방식을 빠르게 정리하고 프로젝트 요구사항에 맞게 수정했습니다.
                         </p>
-                        <ul class="ai-card-bullets">
-                            <li>React 컴포넌트 구조 및 상태 관리 설계 검토</li>
-                            <li>사용자 데이터 입력부터 최종 저장까지의 상태 라이프사이클 구현</li>
-                            <li>API 응답 데이터 포맷의 상태 매핑 논리 구현</li>
-                        </ul>
+                        <div class="ai-evidence-row">
+                            <span class="evidence-pill">컴포넌트 구조 설계</span>
+                            <span class="evidence-pill">상태 라이프사이클</span>
+                            <span class="evidence-pill">API 데이터 매핑</span>
+                        </div>
                     </div>
 
                     <!-- Card 3: Documentation & Review -->
                     <div class="ai-card reveal-child">
-                        <div class="ai-card-icon">
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
-                                xmlns="http://www.w3.org/2000/svg">
-                                <path
-                                    d="M14 2H6C5.46957 2 4.96086 2.21071 4.58579 2.58579C4.21071 2.96086 4 3.46957 4 4V20C4 20.5304 4.21071 21.0391 4.58579 21.4142C4.96086 21.7893 5.46957 22 6 22H18C18.5304 22 19.0391 21.7893 19.4142 21.4142C19.7893 21.0391 20 20.5304 20 20V8L14 2Z"
-                                    stroke="#4e5968" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                                <path d="M14 2V8H20" stroke="#4e5968" stroke-width="2" stroke-linecap="round"
-                                    stroke-linejoin="round" />
-                                <path d="M16 13H8" stroke="#4e5968" stroke-width="2" stroke-linecap="round"
-                                    stroke-linejoin="round" />
-                                <path d="M16 17H8" stroke="#4e5968" stroke-width="2" stroke-linecap="round"
-                                    stroke-linejoin="round" />
-                                <path d="M10 9H8" stroke="#4e5968" stroke-width="2" stroke-linecap="round"
-                                    stroke-linejoin="round" />
-                            </svg>
+                        <div class="ai-card-header">
+                            <span class="ai-card-index">03</span>
+                            <div class="ai-card-icon">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path
+                                        d="M14 2H6C5.46957 2 4.96086 2.21071 4.58579 2.58579C4.21071 2.96086 4 3.46957 4 4V20C4 20.5304 4.21071 21.0391 4.58579 21.4142C4.96086 21.7893 5.46957 22 6 22H18C18.5304 22 19.0391 21.7893 19.4142 21.4142C19.7893 21.0391 20 20.5304 20 20V8L14 2Z"
+                                        stroke="#4e5968" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                                    <path d="M14 2V8H20" stroke="#4e5968" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round" />
+                                    <path d="M16 13H8" stroke="#4e5968" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round" />
+                                    <path d="M16 17H8" stroke="#4e5968" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round" />
+                                    <path d="M10 9H8" stroke="#4e5968" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round" />
+                                </svg>
+                            </div>
                         </div>
                         <h3>Documentation & Review</h3>
                         <p class="ai-card-desc">
                             README, 발표 자료, 트러블슈팅 기록을 정리하고 실제 구현 내용과 맞는지 검토했습니다.
                         </p>
-                        <ul class="ai-card-bullets">
-                            <li>프로젝트 아키텍처 및 상세 README 직접 작성</li>
-                            <li>포트폴리오 정보 구조 및 모달 상세 설명 검증</li>
-                            <li>실제 서비스 흐름 기반 개발 기록 및 디버깅 과정 문서화</li>
-                        </ul>
+                        <div class="ai-evidence-row">
+                            <span class="evidence-pill">아키텍처 README</span>
+                            <span class="evidence-pill">모달 상세 설계</span>
+                            <span class="evidence-pill">개발 트러블슈팅</span>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -205,16 +214,20 @@
                                             Firebase, Gemini API, OCR</span></div>
                                 </div>
 
-                                <div class="notion-card-footer">
-                                    <div class="card-quick-links">
+                                <div class="notion-card-footer-new"
+                                    style="display: flex; flex-direction: column; gap: 10px; width: 100%; border-top: 1px dashed #f2f4f6; padding-top: 14px; margin-top: auto;">
+                                    <div class="card-quick-links"
+                                        style="display: flex; gap: 8px; justify-content: flex-start; align-items: center;">
+                                        <span style="font-size: 0.72rem; color: #8b95a1; font-weight: 600;">외부
+                                            링크:</span>
                                         <a href="https://petlog-eight.vercel.app/" target="_blank" rel="noopener"
-                                            class="card-link-btn card-link-primary" onclick="event.stopPropagation()">앱
-                                            보기 ↗</a>
-                                        <a href="https://petlogweb.vercel.app/" target="_blank" rel="noopener"
-                                            class="card-link-btn card-link-secondary"
-                                            onclick="event.stopPropagation()">소개서 ↗</a>
+                                            class="card-link-btn card-link-sub" onclick="event.stopPropagation()">앱 보기
+                                            ↗</a>
+                                        <a href="https://petlogwep.vercel.app/" target="_blank" rel="noopener"
+                                            class="card-link-btn card-link-sub" onclick="event.stopPropagation()">소개서
+                                            ↗</a>
                                     </div>
-                                    <span class="view-detail-btn">프로젝트 문서 열기 <span class="arrow">→</span></span>
+                                    <span class="view-detail-btn-main">프로젝트 문서 열기 <span class="arrow">→</span></span>
                                 </div>
                             </div>
                         </div>
@@ -241,16 +254,20 @@
                                             Express, Prisma, MySQL</span></div>
                                 </div>
 
-                                <div class="notion-card-footer">
-                                    <div class="card-quick-links">
+                                <div class="notion-card-footer-new"
+                                    style="display: flex; flex-direction: column; gap: 10px; width: 100%; border-top: 1px dashed #f2f4f6; padding-top: 14px; margin-top: auto;">
+                                    <div class="card-quick-links"
+                                        style="display: flex; gap: 8px; justify-content: flex-start; align-items: center;">
+                                        <span style="font-size: 0.72rem; color: #8b95a1; font-weight: 600;">외부
+                                            링크:</span>
                                         <a href="https://chaengim.vercel.app/" target="_blank" rel="noopener"
-                                            class="card-link-btn card-link-primary" onclick="event.stopPropagation()">앱
-                                            보기 ↗</a>
+                                            class="card-link-btn card-link-sub" onclick="event.stopPropagation()">앱 보기
+                                            ↗</a>
                                         <a href="https://chaengimweb.vercel.app/" target="_blank" rel="noopener"
-                                            class="card-link-btn card-link-secondary"
-                                            onclick="event.stopPropagation()">소개서 ↗</a>
+                                            class="card-link-btn card-link-sub" onclick="event.stopPropagation()">소개서
+                                            ↗</a>
                                     </div>
-                                    <span class="view-detail-btn">프로젝트 문서 열기 <span class="arrow">→</span></span>
+                                    <span class="view-detail-btn-main">프로젝트 문서 열기 <span class="arrow">→</span></span>
                                 </div>
                             </div>
                         </div>
@@ -277,8 +294,9 @@
                                             TypeScript, Motion, Vercel</span></div>
                                 </div>
 
-                                <div class="notion-card-footer">
-                                    <span class="view-detail-btn">프로젝트 문서 열기 <span class="arrow">→</span></span>
+                                <div class="notion-card-footer-new"
+                                    style="display: flex; flex-direction: column; gap: 10px; width: 100%; border-top: 1px dashed #f2f4f6; padding-top: 14px; margin-top: auto;">
+                                    <span class="view-detail-btn-main">프로젝트 문서 열기 <span class="arrow">→</span></span>
                                 </div>
                             </div>
                         </div>
@@ -461,61 +479,84 @@
         <section class="section bg-soft" id="exp">
             <div class="container">
                 <h2 class="sec-title">경험 &amp; 수상</h2>
-                <div class="timeline reveal-parent">
-                    <div class="tl-item reveal-child">
-                        <div class="tl-period">2026.03 – 2026.06</div>
-                        <div class="tl-content">
-                            <h3>AI 바이브코딩 웹비즈니스 구현 실전과정 수료</h3>
-                            <p class="tl-org">NCS 연계 교육 이수</p>
-                            <p>AI 도구 연계 화면 구현, Firebase 데이터 적재, Vercel 배포 흐름을 실습했습니다.</p>
+                <p class="sec-desc">협업 프로젝트 수행, 경진대회 수상 및 대내외 실증 활동 기록입니다.</p>
+                <div class="notion-activity-log reveal-parent">
+                    <!-- Item 1 -->
+                    <div class="log-row reveal-child">
+                        <div class="log-date">2026.03 – 2026.06</div>
+                        <div class="log-body">
+                            <div class="log-title-wrap">
+                                <span class="log-title">AI 바이브코딩 웹비즈니스 구현 실전과정 수료</span>
+                                <span class="log-badge">NCS 연계 교육 이수</span>
+                            </div>
+                            <p class="log-desc">AI 도구 연계 화면 구현, Firebase 데이터 적재, Vercel 배포 흐름을 실습했습니다.</p>
                         </div>
                     </div>
-                    <div class="tl-item reveal-child">
-                        <div class="tl-period">2022.11</div>
-                        <div class="tl-content">
-                            <h3>지역혁신사업 리빙랩 성과공유회 최우수상</h3>
-                            <p class="tl-org">대전과학기술대학교 대표 / 우송대</p>
-                            <p>Smart Bump Ramp 성과 발표를 통해 실용성을 인정받았습니다.</p>
-                            <a href="https://www.ccnnews.co.kr/news/articleView.html?idxno=279656" target="_blank"
-                                rel="noopener" class="tl-link">보도기사 →</a>
-                        </div>
-                    </div>
-                    <div class="tl-item reveal-child">
-                        <div class="tl-period">2022.09</div>
-                        <div class="tl-content">
-                            <h3>리빙랩 배리어프리 메이커톤 우수팀 선정 (2위)</h3>
-                            <p class="tl-org">배리어프리 아이디어 기술 실증</p>
-                            <p>모빌리티 이동 지원 아이디어 경쟁에서 기술 실증 모델 부문 우수팀으로 선정되었습니다.</p>
-                            <a href="https://daily.hankooki.com/news/articleView.html?idxno=875958" target="_blank"
-                                rel="noopener" class="tl-link">보도기사 →</a>
-                        </div>
-                    </div>
-                    <div class="tl-item reveal-child">
-                        <div class="tl-period">2022.11</div>
-                        <div class="tl-content">
-                            <h3>산학협력 EXPO 경진대회 우수상</h3>
-                            <p class="tl-org">산학 연계 콘텐츠 부문</p>
-                            <p>기획안 and 실증 비디오를 출품하여 교육기관 우수상을 공동 수상했습니다.</p>
-                            <div class="tl-links">
-                                <a href="https://www.newsis.com/view/NISX20221109_0002080068" target="_blank"
-                                    rel="noopener" class="tl-link">보도기사 1 →</a>
-                                <a href="https://www.ccnnews.co.kr/news/articleView.html?idxno=275325" target="_blank"
-                                    rel="noopener" class="tl-link">보도기사 2 →</a>
+                    <!-- Item 2 -->
+                    <div class="log-row reveal-child">
+                        <div class="log-date">2022.11</div>
+                        <div class="log-body">
+                            <div class="log-title-wrap">
+                                <span class="log-title">지역혁신사업 리빙랩 성과공유회 최우수상</span>
+                                <span class="log-badge">대과대 대표 / 우송대</span>
+                            </div>
+                            <p class="log-desc">Smart Bump Ramp 성과 발표를 통해 실용성을 인정받았습니다.</p>
+                            <div class="log-links">
+                                <a href="https://www.ccnnews.co.kr/news/articleView.html?idxno=279656" target="_blank"
+                                    rel="noopener" class="log-pill-link">보도기사 ↗</a>
                             </div>
                         </div>
                     </div>
-                    <div class="tl-item reveal-child">
-                        <div class="tl-period">2022.07 – 2022.11</div>
-                        <div class="tl-content">
-                            <h3>LINC3.0 리빙랩 사업 학생연구원 (042팀)</h3>
-                            <p>지역 생활 안전망 구축을 위한 주민 실태 조사 및 사용자 리서치를 경험했습니다.</p>
+                    <!-- Item 3 -->
+                    <div class="log-row reveal-child">
+                        <div class="log-date">2022.09</div>
+                        <div class="log-body">
+                            <div class="log-title-wrap">
+                                <span class="log-title">리빙랩 배리어프리 메이커톤 우수팀 선정 (2위)</span>
+                                <span class="log-badge">배리어프리 아이디어 기술 실증</span>
+                            </div>
+                            <p class="log-desc">모빌리티 이동 지원 아이디어 경쟁에서 기술 실증 모델 부문 우수팀으로 선정되었습니다.</p>
+                            <div class="log-links">
+                                <a href="https://daily.hankooki.com/news/articleView.html?idxno=875958" target="_blank"
+                                    rel="noopener" class="log-pill-link">보도기사 ↗</a>
+                            </div>
                         </div>
                     </div>
-                    <div class="tl-item reveal-child">
-                        <div class="tl-period">2025.03 – 2025.06</div>
-                        <div class="tl-content">
-                            <h3>대전과학기술대학교 컴퓨터공학과 학생회</h3>
-                            <p>학과 행사 서포트, 교수진·학생 소통 및 일정 조율 경험을 쌓았습니다.</p>
+                    <!-- Item 4 -->
+                    <div class="log-row reveal-child">
+                        <div class="log-date">2022.11</div>
+                        <div class="log-body">
+                            <div class="log-title-wrap">
+                                <span class="log-title">산학협력 EXPO 경진대회 우수상</span>
+                                <span class="log-badge">산학 연계 콘텐츠 부문</span>
+                            </div>
+                            <p class="log-desc">기획안 및 실증 비디오를 출품하여 교육기관 우수상을 공동 수상했습니다.</p>
+                            <div class="log-links">
+                                <a href="https://www.newsis.com/view/NISX20221109_0002080068" target="_blank"
+                                    rel="noopener" class="log-pill-link">보도기사 1 ↗</a>
+                                <a href="https://www.ccnnews.co.kr/news/articleView.html?idxno=275325" target="_blank"
+                                    rel="noopener" class="log-pill-link">보도기사 2 ↗</a>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Item 5 -->
+                    <div class="log-row reveal-child">
+                        <div class="log-date">2022.07 – 2022.11</div>
+                        <div class="log-body">
+                            <div class="log-title-wrap">
+                                <span class="log-title">LINC3.0 리빙랩 사업 학생연구원 (042팀)</span>
+                            </div>
+                            <p class="log-desc">지역 생활 안전망 구축을 위한 주민 실태 조사 및 사용자 리서치를 경험했습니다.</p>
+                        </div>
+                    </div>
+                    <!-- Item 6 -->
+                    <div class="log-row reveal-child">
+                        <div class="log-date">2025.03 – 2025.06</div>
+                        <div class="log-body">
+                            <div class="log-title-wrap">
+                                <span class="log-title">대전과학기술대학교 컴퓨터공학과 학생회</span>
+                            </div>
+                            <p class="log-desc">학과 행사 서포트, 교수진·학생 소통 및 일정 조율 경험을 쌓았습니다.</p>
                         </div>
                     </div>
                 </div>
@@ -549,7 +590,7 @@
 
     <footer class="site-footer">
         <div class="container footer-inner">
-            <p>© 2026 Ju Eun Park. Designed and built with React, TypeScript, and product thinking.</p>
+            <p>© 2026 박주은. Designed and built with React, TypeScript, and product thinking.</p>
         </div>
     </footer>
 
@@ -584,9 +625,9 @@
 
     </main>
 
-    <script src="projectsData.js?v=2.6"></script>
-    <script src="CopyEmailButton.js?v=2.6"></script>
-    <script src="script.js?v=2.6"></script>
+    <script src="projectsData.js?v=3.4"></script>
+    <script src="CopyEmailButton.js?v=3.4"></script>
+    <script src="script.js?v=3.4"></script>
 </body>
 
 </html>
