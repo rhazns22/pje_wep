@@ -8,7 +8,7 @@
     <meta name="description" content="React와 TypeScript를 기반으로 사용자 흐름, 데이터 저장, AI 기능 연동을 구현하는 프론트엔드 개발자 박주은의 포트폴리오입니다.">
     <link rel="stylesheet" as="style" crossorigin
         href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css?v=2.6">
     <!-- Lenis Smooth Scroll CDN -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.34/css/lenis.css">
     <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.34/dist/lenis.min.js"></script>
@@ -16,10 +16,22 @@
 
 <body>
 
+    <!-- APP BACKGROUND LAYER (Soft Depth & Neumorphism) -->
+    <div class="app-background">
+        <div class="soft-depth-shape shape-convex shape-1"></div>
+        <div class="soft-depth-shape shape-concave shape-2"></div>
+        <div class="soft-depth-shape shape-convex shape-3"></div>
+    </div>
+
     <!-- HEADER -->
     <header class="site-header" id="navbar">
         <div class="nav-pill">
-            <ul class="nav-links">
+            <button class="nav-toggle" id="nav-toggle" aria-label="메뉴 열기">
+                <span class="hamburger-bar"></span>
+                <span class="hamburger-bar"></span>
+                <span class="hamburger-bar"></span>
+            </button>
+            <ul class="nav-links" id="nav-links">
                 <li><a href="#hero">Home</a></li>
                 <li><a href="#ai">AI Dev</a></li>
                 <li><a href="#projects">Projects</a></li>
@@ -41,7 +53,7 @@
             <div class="container hero-center">
                 <div class="hero-badge hero-fade-up">Frontend Engineer · Product Builder</div>
                 <h1 class="hero-main-title hero-fade-up">
-                    <br>사용자 흐름과 데이터 흐름을 연결하는<br>프론트엔드 개발자 박주은입니다.
+                    사용자 흐름과 데이터 흐름을 연결하는<br class="pc-only"> 프론트엔드 개발자 박주은입니다.
                 </h1>
 
                 <!-- Hero Footer Tags -->
@@ -526,10 +538,8 @@
                             <div class="ci"><span class="ci-k">Location</span><span class="ci-v">Daejeon, South
                                     Korea</span></div>
                         </div>
-                        <div class="contact-btns">
-                            <button id="copy-btn" class="btn-primary" style="width: auto; padding: 12px 28px;">이메일
-                                복사</button>
-                        </div>
+                        <!-- Email Copy Component Target Container -->
+                        <div id="copy-email-button-container" style="position: relative; display: inline-block;"></div>
                     </div>
                 </div>
             </div>
@@ -539,7 +549,7 @@
 
     <footer class="site-footer">
         <div class="container footer-inner">
-            <p>© 2026 Ju Eun Park. Built as a frontend portfolio with React, TypeScript, and product-focused UI.</p>
+            <p>© 2026 Ju Eun Park. Designed and built with React, TypeScript, and product thinking.</p>
         </div>
     </footer>
 
@@ -548,7 +558,23 @@
     <!-- MODAL CONTAINER (COMMON overlay) -->
     <div class="notion-modal-overlay" id="notion-modal">
         <div class="notion-modal-container">
-            <button class="notion-modal-close" id="modal-close-btn" aria-label="닫기">&times;</button>
+            <button class="dots-close-button project-modal-close" id="modal-close-btn" aria-label="모달 닫기">
+                <svg width="22" height="22" viewBox="0 0 22 22" aria-hidden="true" focusable="false">
+                    <!-- 4 dots (normal state) -->
+                    <circle class="dot dot-tl" cx="6" cy="6" r="1.4" fill="currentColor" />
+                    <circle class="dot dot-tr" cx="16" cy="6" r="1.4" fill="currentColor" />
+                    <circle class="dot dot-bl" cx="6" cy="16" r="1.4" fill="currentColor" />
+                    <circle class="dot dot-br" cx="16" cy="16" r="1.4" fill="currentColor" />
+
+                    <!-- 2 diagonal lines (normal state: scale 0 from origins) -->
+                    <!-- line 1: top-left to bottom-right (origin at 6,6) -->
+                    <line class="morph-line line-1" x1="6" y1="6" x2="16" y2="16" stroke="currentColor"
+                        stroke-width="2.2" stroke-linecap="round" />
+                    <!-- line 2: top-right to bottom-left (origin at 16,6) -->
+                    <line class="morph-line line-2" x1="16" y1="6" x2="6" y2="16" stroke="currentColor"
+                        stroke-width="2.2" stroke-linecap="round" />
+                </svg>
+            </button>
 
             <div class="notion-modal-scroll-wrap" id="modal-content-target" data-lenis-prevent>
                 <!-- Dynamic content will be injected here via script.js -->
@@ -558,8 +584,9 @@
 
     </main>
 
-    <script src="projectsData.js"></script>
-    <script src="script.js"></script>
+    <script src="projectsData.js?v=2.6"></script>
+    <script src="CopyEmailButton.js?v=2.6"></script>
+    <script src="script.js?v=2.6"></script>
 </body>
 
 </html>

@@ -4,7 +4,10 @@ document.addEventListener('DOMContentLoaded', () => {
   initNav();
   initReveal();
   initSmoothScroll();
-  initCopyEmail();
+  
+  // Initialize state-driven CopyEmailButton component
+  new CopyEmailButton('#copy-email-button-container', 'pje698112@naver.com');
+  
   initNotionModals();
   initTechFilter();
   initScrollEffects();
@@ -12,7 +15,37 @@ document.addEventListener('DOMContentLoaded', () => {
 
 /* ── MOBILE NAV TOGGLE ── */
 function initNav() {
-  // Floating glassmorphism pill is styling-only, no toggle state needed
+  const toggleBtn = document.getElementById('nav-toggle');
+  const navLinks = document.getElementById('nav-links');
+  const navPill = document.querySelector('.nav-pill');
+
+  if (!toggleBtn || !navLinks || !navPill) return;
+
+  toggleBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    toggleBtn.classList.toggle('active');
+    navLinks.classList.toggle('active');
+    navPill.classList.toggle('active');
+  });
+
+  // Close menu when clicking a link
+  const links = navLinks.querySelectorAll('a');
+  links.forEach(link => {
+    link.addEventListener('click', () => {
+      toggleBtn.classList.remove('active');
+      navLinks.classList.remove('active');
+      navPill.classList.remove('active');
+    });
+  });
+
+  // Close menu when clicking outside
+  document.addEventListener('click', (e) => {
+    if (!navPill.contains(e.target)) {
+      toggleBtn.classList.remove('active');
+      navLinks.classList.remove('active');
+      navPill.classList.remove('active');
+    }
+  });
 }
 
 /* ── SCROLL REVEAL (FADE-UP) ── */
@@ -152,8 +185,9 @@ function initSmoothScroll() {
       e.preventDefault();
       const el = document.querySelector(id);
       if (el) {
+        const isDesktop = window.innerWidth > 992;
         lenis.scrollTo(el, {
-          offset: -70,
+          offset: isDesktop ? 0 : -70,
           duration: 1.2,
           easing: (t) => 1 - Math.pow(1 - t, 3.5)
         });
@@ -162,22 +196,7 @@ function initSmoothScroll() {
   });
 }
 
-/* ── EMAIL COPY WITH FEEDBACK ── */
-function initCopyEmail() {
-  const btn = document.getElementById('copy-btn');
-  if (!btn) return;
-  btn.addEventListener('click', () => {
-    navigator.clipboard.writeText('pje698112@naver.com').then(() => {
-      const orig = btn.textContent;
-      btn.textContent = '✓ 복사됨';
-      btn.style.cssText = 'background:var(--ac-s);color:var(--ac);border-color:var(--ac);';
-      setTimeout(() => { 
-        btn.textContent = orig; 
-        btn.style.cssText = ''; 
-      }, 2000);
-    }).catch(() => {});
-  });
-}
+
 
 /* ── NOTION PAGE STYLE MODAL CONTROLLER ── */
 function initNotionModals() {
@@ -297,6 +316,8 @@ function initNotionModals() {
     `;
   }
 
+  let savedScrollY = 0;
+
   // Open Modal
   modalButtons.forEach(btn => {
     btn.addEventListener('click', (e) => {
@@ -315,6 +336,9 @@ function initNotionModals() {
       // Inject generated dynamic HTML
       contentTarget.innerHTML = generateNotionModalHtml(project);
 
+      // Save scroll position before opening
+      savedScrollY = window.scrollY;
+
       // Open overlay & set overflow
       modal.classList.add('active');
       document.body.classList.add('modal-open');
@@ -332,7 +356,12 @@ function initNotionModals() {
   const closeModal = () => {
     modal.classList.remove('active');
     document.body.classList.remove('modal-open');
-    if (lenis) lenis.start(); // Resume background scroll
+    if (lenis) {
+      lenis.start(); // Resume background scroll
+      lenis.scrollTo(savedScrollY, { immediate: true }); // Restore scroll position in Lenis
+    } else {
+      window.scrollTo(0, savedScrollY); // Fallback standard restore
+    }
     setTimeout(() => {
       contentTarget.innerHTML = ''; // Clean up RAM
     }, 300);
