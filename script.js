@@ -12,6 +12,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initTechFilter();
   initScrollEffects();
   initWebsitePreview();
+  initExperienceAccordion();
 });
 
 /* ── MOBILE NAV TOGGLE ── */
@@ -24,9 +25,17 @@ function initNav() {
 
   toggleBtn.addEventListener('click', (e) => {
     e.stopPropagation();
-    toggleBtn.classList.toggle('active');
+    const isActive = toggleBtn.classList.toggle('active');
     navLinks.classList.toggle('active');
     navPill.classList.toggle('active');
+    
+    if (isActive) {
+      document.body.style.overflow = 'hidden';
+      if (typeof lenis !== 'undefined' && lenis) lenis.stop();
+    } else {
+      document.body.style.overflow = '';
+      if (typeof lenis !== 'undefined' && lenis) lenis.start();
+    }
   });
 
   // Close menu when clicking a link
@@ -36,15 +45,19 @@ function initNav() {
       toggleBtn.classList.remove('active');
       navLinks.classList.remove('active');
       navPill.classList.remove('active');
+      document.body.style.overflow = '';
+      if (typeof lenis !== 'undefined' && lenis) lenis.start();
     });
   });
 
   // Close menu when clicking outside
   document.addEventListener('click', (e) => {
-    if (!navPill.contains(e.target)) {
+    if (!navPill.contains(e.target) && !navLinks.contains(e.target)) {
       toggleBtn.classList.remove('active');
       navLinks.classList.remove('active');
       navPill.classList.remove('active');
+      document.body.style.overflow = '';
+      if (typeof lenis !== 'undefined' && lenis) lenis.start();
     }
   });
 }
@@ -482,6 +495,28 @@ function initWebsitePreview() {
         title: title,
         onClose: () => {}
       });
+    });
+  });
+}
+
+/* ── EXPERIENCE ACCORDION FOR MOBILE ── */
+function initExperienceAccordion() {
+  const rows = document.querySelectorAll('.log-row');
+  rows.forEach((row, index) => {
+    // Expand the first 2 items by default
+    if (index < 2) {
+      row.classList.add('expanded');
+    }
+    
+    row.addEventListener('click', (e) => {
+      // Ignore click if it's on a link/button
+      if (e.target.closest('a') || e.target.closest('button')) {
+        return;
+      }
+      
+      if (window.innerWidth <= 768) {
+        row.classList.toggle('expanded');
+      }
     });
   });
 }
