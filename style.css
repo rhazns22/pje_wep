@@ -152,11 +152,142 @@ ul {
 
 .section {
   padding: 108px 0;
-  /* scaled down from 120px */
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  background: #ffffff;
+}
+
+.visual-bg-zone {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  background: #ffffff;
+}
+
+/* 배경 이미지 */
+.visual-bg-layer {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background-image: url('/images/soft-3d-section-background-tall.png');
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center top;
+  opacity: 0.22;
+  pointer-events: none;
+}
+
+/* 기본 오버레이 */
+.visual-bg-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background: rgba(255, 255, 255, 0.34);
+}
+
+/* 위쪽 흰색 → 이미지 전환 */
+.visual-bg-zone::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 280px;
+  z-index: 2;
+  pointer-events: none;
+  background: linear-gradient(
+    180deg,
+    #ffffff 0%,
+    rgba(255, 255, 255, 0.96) 28%,
+    rgba(255, 255, 255, 0.72) 62%,
+    rgba(255, 255, 255, 0) 100%
+  );
+}
+
+/* 아래쪽 이미지 → 흰색 전환 */
+.visual-bg-zone::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 280px;
+  z-index: 2;
+  pointer-events: none;
+  background: linear-gradient(
+    0deg,
+    #ffffff 0%,
+    rgba(255, 255, 255, 0.96) 28%,
+    rgba(255, 255, 255, 0.72) 62%,
+    rgba(255, 255, 255, 0) 100%
+  );
+}
+
+/* 콘텐츠는 fade보다 위 */
+.visual-bg-zone .section {
+  position: relative;
+  z-index: 3;
+  background: transparent;
+  opacity: 1;
+  filter: none;
+  backdrop-filter: none;
+}
+
+.visual-bg-zone .section-content,
+.visual-bg-zone .container {
+  position: relative;
+  z-index: 3;
+  opacity: 1;
+  filter: none;
+  backdrop-filter: none;
+}
+
+.ai-card,
+.project-card-mini,
+.project-card,
+.contact-card,
+.contact-wrap {
+  opacity: 1;
+  filter: none;
+}
+
+/* ── Section Specific Adjustments ── */
+
+.visual-bg-zone-main .visual-bg-layer {
+  opacity: 0.48;
+  background-position: center top;
+  background-size: cover;
+}
+
+.visual-bg-zone-contact .visual-bg-layer {
+  opacity: 0.36;
+  background-position: center bottom;
+  background-size: cover;
+}
+
+/* ── Responsive Rules for Background Layers ── */
+
+@media (max-width: 768px) {
+  .visual-bg-zone::before,
+  .visual-bg-zone::after {
+    height: 160px;
+  }
+
+  .visual-bg-zone-main .visual-bg-layer {
+    opacity: 0.28;
+    background-position: center top;
+  }
+
+  .visual-bg-zone-contact .visual-bg-layer {
+    opacity: 0.22;
+    background-position: center bottom;
+  }
 }
 
 .bg-soft {
-  background: var(--bg-s);
+  background: #ffffff;
 }
 
 .sec-label {
